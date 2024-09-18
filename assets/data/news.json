@@ -1,0 +1,42 @@
+[
+  {
+    "image": "assets/img/free-icon-news-paper.png",
+    "title": "РОЗІБРАЛИ ",
+    "newsText": "Infiniti Qx60 2015 Blue 3.5L",
+    "author": {
+      "avatar": "assets/img/icon-news.png",
+      "name": "Genbrothers",
+      "date": "20 Jan 2020"
+    }
+  },
+  {
+    "image": "assets/img/free-icon-news-paper.png",
+    "title": "РОЗІБРАЛИ",
+    "newsText": "Dodge Durango Limited 2015 Black 3.6L",
+    "author": {
+      "avatar": "assets/img/icon-news.png",
+      "name": "Genbrothers",
+      "date": "13 Dec 2019"
+    }
+  },
+  {
+    "image": "assets/img/free-icon-news-paper.png",
+    "title": " РОЗІБРАЛИ",
+    "newsText": "Dodge Durango Limited 2015 Black 3.6L",
+    "author": {
+      "avatar": "assets/img/icon-news.png",
+      "name": "Genbrothers",
+      "date": "30 Nov 2019"
+    }
+  },
+  {
+    "image": "assets/img/free-icon-news-paper.png",
+    "title": "РОЗІБРАЛИ ",
+    "newsText": "Audi A6 Prestige 2013 Black 3.0L",
+    "author": {
+      "avatar": "assets/img/icon-news.png",
+      "name": "Genbrothers",
+      "date": "20 Jan 2020"
+    }
+  }
+]

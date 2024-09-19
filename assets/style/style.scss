@@ -192,7 +192,18 @@ header.scrolled {
   padding-top: 0;
   padding-bottom: 15px;
   background: linear-gradient(to top right, rgba(65, 187, 86, 0.5), rgba(229, 231, 225, 0.5));
+  .header-container .tel ul li a {
+    color: #252525;
+}
+.header-container  .social-link ul li{
+background-color: $background-icon;
+border-radius: 50%;
+}
+.account ul li{
+  background-color: $color--porcelain;
+border-radius: 50%;
 
+}
 }
 
 main {

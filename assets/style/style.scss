@@ -120,6 +120,8 @@ header {
       display: inline-flex;
       gap: 10px;
       li {
+        margin-top: 8px;
+        padding: 1px;
         img{
           width: 28px;
           aspect-ratio: 1;
@@ -138,6 +140,8 @@ header {
   }
   .account ul li, .language ul li{
     display: inline-flex;
+    margin-top: 8px;
+    padding: 1px;
     img{
       width: 28px;
       aspect-ratio: 1;

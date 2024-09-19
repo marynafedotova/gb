@@ -106,6 +106,8 @@ header {
       padding: 10px;
       gap: 20px;
       a{
+        font-weight: 500;
+        font-size: 1.2rem;
         color: #E4E4E4;
         &:hover{
           text-decoration: underline;
@@ -119,7 +121,7 @@ header {
       gap: 10px;
       li {
         img{
-          width: 30px;
+          width: 28px;
           aspect-ratio: 1;
         }
         &:hover {
@@ -137,7 +139,7 @@ header {
   .account ul li, .language ul li{
     display: inline-flex;
     img{
-      width: 25px;
+      width: 28px;
       aspect-ratio: 1;
     }
   }
@@ -561,8 +563,7 @@ footer{
   }
   #feedback_form{
     width: 100%;
-   .name{
-    input{
+     input {
       width: 100%;
       margin-bottom: 20px;
       padding: 8px;
@@ -571,16 +572,7 @@ footer{
       &:focus{
         border: 1px solid #579816;
       }
-    }
-   }
-   .email{
-    input{
-      width: 100%;
-      margin-bottom: 20px;
-      padding: 8px;
-      border-radius: 8px;
-      border: none;
-    }
+  
    }
    .btn-primary{
     width: 100%;
@@ -698,7 +690,7 @@ footer{
     display: block;
   }
 
-  nav ul {
+  header .nav-container nav ul {
     display: none;
   }
 

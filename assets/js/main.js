@@ -12,6 +12,22 @@ window.addEventListener('scroll', function() {
   }
 });
 
+//slider first
+$(document).ready(function() {
+  $('#lightSlider').lightSlider({
+    verticalHeight:730,
+      item:1,
+      slideMargin:0,
+      slideMove:1,
+      vertical: true,
+      speed:600,
+      auto: true,
+      controls: false,
+      loop:true
+  });
+});
+
+
 //hamburger-menu
 document.getElementById('hamb-btn').addEventListener('click', function () {
   document.body.classList.toggle('open-mobile-menu')

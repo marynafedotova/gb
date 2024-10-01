@@ -484,7 +484,7 @@ h1{
 
 // news
 #news{
-  padding-bottom: 100px;
+  padding-bottom: 150px;
 .container{
   text-align: center;
 
@@ -495,118 +495,61 @@ h1{
       position: relative;
       text-transform: uppercase;
     }
-    .lSSlideOuter .lSPager.lSpg > li:hover a, .lSSlideOuter .lSPager.lSpg > li.active a {
-      display: none;
-    }
     #news_slider {
-      list-style: none;
-      margin: 0 auto;
-      position: relative;
-    }
-    #news_slider{
-      ul {
-        height: 380px;
-        li{
-          height: 100%;
-          padding-top: 30px;
-        }
-      }
+      height: 600px;
+      margin-bottom: 30px;
 
-    }
-    
-    .slide-top img {
-      width: 130px;
-      height: auto;
-      margin-bottom: 27px;
-    }
-    
-    .title {
-      font-family: 'Montserrat Bold';
-      color:$color--oslo-gray;
-      font-size: 1.1rem;
-      margin: 0 20px 11px;
-      text-align: left;
-      line-height: 1;
-      text-transform: uppercase;
-    }
-    
-    .news-text {
-      font-size: 1rem;
-      color: $color--porcelain;
-      margin: 0 20px 30px;
-      text-align: left;
-    }
-    
-    .author {
-      display: flex;
-      margin-left: 20px;
-      text-transform: uppercase;
-    
-      .author-data {
-        margin-left: 20px;
-        text-align: left;
-    
-        .name-author {
-          font-family: 'Montserrat Regular';
-          font-size: 1rem;
-          color: $cyant-gradient;
-          padding-top: 7px;
-          padding-bottom: 9px;
-        }
-    
-        .news-date {
-          font-family: 'Montserrat Regular';
-          font-size: 0.875rem;
-          color: #E4E4E4;
-        }
-      }
-    
-      .avatar {
-        width: 60px;
-        aspect-ratio: 1;
-        img {
-          width: 30px;
-          height: 30px;
-          object-fit: cover;
-        }
-      }
-    }
+        li {
+          height: 550px;
+          .slide{
+            display: flex;
+            flex-direction: column;
+            align-content: stretch;
+            height: 100%;
+            .slide-top {
+              padding-bottom: 10px;
+              .image-gallery{
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap ;
+          justify-content: space-evenly;
+                a > img{
+                  width: 180px;
+                }
+              }
+            }
+            .title{
+              color: $ForestGreen;
+              font-weight: 600;
+              padding-bottom: 20px;
+            }
+            .vehicle-details{
+              text-align: left;
+              p{
+                display: flex;
+                justify-content: space-between;
+              }
+            }
+          }
+        
   
-  }
-  .custom-prev-html {
-    content: '<';
-    position: absolute;
-    width: 17px;
-    height: 17px;
-    border-radius: 50%;
-    border: 1px solid $background-icon;
-    background-color:$color--porcelain;
-    z-index: 100000;
-    top: 50%;
-    left: 5%;
-    transform: translate(-50%, -50%);
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-    color: $blue;
-  }
+      }
+    }
+    #btn-news{
+      a{
+        padding: 10px 20px;
+        color: $color--porcelain;
+        background-color: $ForestGreen;
+        border: 1px solid $color--gray;
+        border-radius: 10px;
+        &:hover{
+          background-color: $color--porcelain;
+          color: $ForestGreen;
+        }
+      }
+      
+    }
 
-  .custom-next-html {
-    content: '>';
-    position: absolute;
-    width: 17px;
-    height: 17px;
-    border-radius: 50%;
-    border: 1px solid $background-icon;
-    background-color:$color--porcelain;
-    z-index: 10000;
-    top: 50%;
-    right: 5%;
-    transform: translate(50%, -50%);
-    transition: background-color 0.3s ease;
-    cursor: pointer;
-  }
-  .lSSlideOuter .lSPager.lSpg {
-    display: none;
   }
   
 }
@@ -803,7 +746,106 @@ li {
     }
   }
 }
+//cars
+#cars-table{
+  table{
+    width: 100%;
+    thead, tbody{
+      display: flex;
+      flex-direction: column;
+      tr{
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid $color--porcelain;
+        padding: 20px;
+        transition: all .5s ease;
+        a{
+          color: $background-icon;
+          text-decoration: underline;
+          transition: all .5s ease;
+          &:hover{
+            font-weight: 600;
+            transform: scale(1.2);
+          }
+        }
+        button{
+          padding: 10px 20px;
+          background-color: $ForestGreen;
+          border: 1px solid $color--gray;
+          border-radius: 10px;
+          color:$color--porcelain;
+          text-transform: uppercase;
+          transition: all .5s ease;
+          &:hover{
+            transform: scale(1.2);
+            background-color: $color--porcelain;
+            color: $ForestGreen;
+          }
+        }
+      }
+    }
+  }
+}
 
+
+.page-overlay.active {
+  display: block; /* Отображение при добавлении класса active */
+}
+
+.modal {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  z-index: 2000; /* Модальне вікно зверху overlay */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none; /* Сховане за замовчуванням */
+}
+
+.modal.active {
+  display: block; /* Показуємо модальне вікно при активності */
+}
+
+
+#cars-list{
+display: grid;
+grid-template-columns:  1fr 1fr;
+gap: 30px;
+}
+.car-container {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 20px;
+
+}
+.car-details {
+  margin-bottom: 10px;
+  text-align: left;
+}
+.car-gallery {
+  display: flex;
+  gap: 10px;
+  img {
+    max-width: 200px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+}
+.lg-toolbar .lg-close:after {
+  content: "\e070";
+}
+.lg-toolbar .lg-download:after {
+  content: "\e0f2";
+}
+.lg-prev:after {
+  content: "\e094";
+}
+.lg-next:before {
+  content: "\e095";
+}
 // rwd
 
 

@@ -12,20 +12,7 @@ window.addEventListener('scroll', function() {
   }
 });
 
-//slider first
-$(document).ready(function() {
-  $('#lightSlider').lightSlider({
-    verticalHeight:730,
-      item:1,
-      slideMargin:0,
-      slideMove:1,
-      vertical: true,
-      speed:600,
-      auto: true,
-      controls: false,
-      loop:true
-  });
-});
+
 
 
 //hamburger-menu
@@ -124,69 +111,7 @@ function createAdvantagesSlider(elementId, jsonData) {
     ]
   });
 }
-//news
-document.addEventListener('DOMContentLoaded', function () {
-  fetch('assets/data/news.json')
-    .then(response => response.json())
-    .then(data => {
-      createNewsSlider('news_slider', data);
-    })
-    .catch(error => console.error('Error fetching data:', error));
-});
 
-function createNewsSlider(elementId, jsonData) {
-  const sliderContainer = $("#" + elementId);
-  const ulElement = $("<ul></ul>");
-  jsonData.forEach(item => {
-    const slideElement = $(`
-      <li>
-      <div>
-        <div class="slide-top">
-          <img class="lazy" src="${item.image}" alt="${item.title}">
-        </div>
-        <div class="title">${item.title}</div>
-        <div class="news-text">${item.newsText}</div>
-        <div class="author">
-          <div class="avatar">
-            <img src="${item.author.avatar}" alt="${item.author.name}">
-          </div>
-          <div class="author-data">
-            <div class="name-author">${item.author.name}</div>
-            <div class="news-date">${item.author.date}</div>
-          </div>
-        </div>
-        </div>
-      </li>
-    `);
-    ulElement.append(slideElement);
-  });
-  sliderContainer.append(ulElement);
-  ulElement.lightSlider({
-    item: 3,
-    controls: true,
-    loop: true,
-    auto: true,
-    slideMove: 1,
-    slideMargin: 20,
-    pager: true,
-    responsive: [
-      {
-        breakpoint: 1200,
-        settings: {
-          item: 2,
-          slideMove: 1
-        }
-      },
-      {
-        breakpoint: 900,
-        settings: {
-          item: 1,
-          slideMove: 1
-        }
-      }
-    ]
-  });
-}
 
 // document.addEventListener('DOMContentLoaded', function () {
 //   fetch('assets/data/news.json')

@@ -11,20 +11,6 @@ window.addEventListener('scroll', function () {
   } else {
     header.classList.remove('scrolled');
   }
-}); //slider first
-
-$(document).ready(function () {
-  $('#lightSlider').lightSlider({
-    verticalHeight: 730,
-    item: 1,
-    slideMargin: 0,
-    slideMove: 1,
-    vertical: true,
-    speed: 600,
-    auto: true,
-    controls: false,
-    loop: true
-  });
 }); //hamburger-menu
 
 document.getElementById('hamb-btn').addEventListener('click', function () {
@@ -82,49 +68,6 @@ function createAdvantagesSlider(elementId, jsonData) {
   var ulElement = $("<ul></ul>");
   jsonData.forEach(function (item) {
     var slideElement = $("\n      <li>\n      <div>\n        <img src=\"".concat(item.image, "\" alt=\"\">\n        <div>").concat(item.text, "</div>\n      </li>\n      </div>\n    "));
-    ulElement.append(slideElement);
-  });
-  sliderContainer.append(ulElement);
-  ulElement.lightSlider({
-    item: 3,
-    controls: true,
-    loop: true,
-    auto: true,
-    slideMove: 1,
-    slideMargin: 20,
-    pager: true,
-    responsive: [{
-      breakpoint: 1200,
-      settings: {
-        item: 2,
-        slideMove: 1
-      }
-    }, {
-      breakpoint: 900,
-      settings: {
-        item: 1,
-        slideMove: 1
-      }
-    }]
-  });
-} //news
-
-
-document.addEventListener('DOMContentLoaded', function () {
-  fetch('assets/data/news.json').then(function (response) {
-    return response.json();
-  }).then(function (data) {
-    createNewsSlider('news_slider', data);
-  })["catch"](function (error) {
-    return console.error('Error fetching data:', error);
-  });
-});
-
-function createNewsSlider(elementId, jsonData) {
-  var sliderContainer = $("#" + elementId);
-  var ulElement = $("<ul></ul>");
-  jsonData.forEach(function (item) {
-    var slideElement = $("\n      <li>\n      <div>\n        <div class=\"slide-top\">\n          <img class=\"lazy\" src=\"".concat(item.image, "\" alt=\"").concat(item.title, "\">\n        </div>\n        <div class=\"title\">").concat(item.title, "</div>\n        <div class=\"news-text\">").concat(item.newsText, "</div>\n        <div class=\"author\">\n          <div class=\"avatar\">\n            <img src=\"").concat(item.author.avatar, "\" alt=\"").concat(item.author.name, "\">\n          </div>\n          <div class=\"author-data\">\n            <div class=\"name-author\">").concat(item.author.name, "</div>\n            <div class=\"news-date\">").concat(item.author.date, "</div>\n          </div>\n        </div>\n        </div>\n      </li>\n    "));
     ulElement.append(slideElement);
   });
   sliderContainer.append(ulElement);

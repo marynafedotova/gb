@@ -22,7 +22,11 @@
   <title>Montichello - simple and modern</title> -->
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../style/lightslider.css">
-  <link rel="stylesheet" href="../style/leaflet.css">
+  <link rel="stylesheet" href="../style/lightgallery.css">
+  <link rel="stylesheet" href="../style/lightgallery-bundle.min.css">
+  <link rel="stylesheet" href="../style/lg-thumbnail.css">
+  <link rel="stylesheet" href="../style/lg-zoom.css">
+
   <link rel="stylesheet" href="../style/animate.min.css">
   <link rel="stylesheet" href="../style/style.min.css">
   <!-- Icons -->
@@ -35,7 +39,8 @@
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff"> -->
   <title>Автозапчастини під замовлення - бронювання запчастин на авто з США</title>
-  <meta name="description" content="Автозапчастини для авто з США ⭐️ Доставка по Україні ✅Гарантія якості і справності всіх деталей для авто ✅ Телефонуйте ☎️ 38 (068) 925-52-52 38 ">
+  <meta name="description"
+    content="Автозапчастини для авто з США ⭐️ Доставка по Україні ✅Гарантія якості і справності всіх деталей для авто ✅ Телефонуйте ☎️ 38 (068) 925-52-52 38 ">
 </head>
 
 <body>
@@ -87,9 +92,12 @@
         </div>
         <div class="social-link">
           <ul>
-            <li><a href="https://www.facebook.com/?locale=uk_UA" target="_blank" rel="nofollow"><img src="../img/facebook-176-svgrepo-com.svg" alt="link facebook"></a></li>
-            <li><a href="https://www.instagram.com/" target="_blank" rel="nofollow"><img src="../img//instagram-167-svgrepo-com.svg" alt="link instagram"></a></li>
-            <li><a href="https://www.tiktok.com/uk-UA/" target="_blank" rel="nofollow"><img src="../img/tiktok-fill-svgrepo-com.svg" alt="link tik-tok"></a></li>
+            <li><a href="https://www.facebook.com/?locale=uk_UA" target="_blank" rel="nofollow"><img
+                  src="../img/facebook-176-svgrepo-com.svg" alt="link facebook"></a></li>
+            <li><a href="https://www.instagram.com/" target="_blank" rel="nofollow"><img
+                  src="../img//instagram-167-svgrepo-com.svg" alt="link instagram"></a></li>
+            <li><a href="https://www.tiktok.com/uk-UA/" target="_blank" rel="nofollow"><img
+                  src="../img/tiktok-fill-svgrepo-com.svg" alt="link tik-tok"></a></li>
           </ul>
         </div>
         <div class="account">
@@ -115,7 +123,7 @@
             <li><a href="contacts.html" target="_parent">Контакти</a></li>
             <li><a href="reviews.html" target="_parent">Відгуки</a></li>
             <li><a href="abuotus.html">Про нас</a></li>
-        <li><a href="news.html">Статті та новини</a></li>
+            <li><a href="news.html">Статті та новини</a></li>
             <li>
               <div class="search-container">
                 <form id="search-form">
@@ -143,6 +151,31 @@
       <div class="hero-screan">
         <div class="container wow animate__animated animate__backInUp">
           <h1>Автозапчастини на авто з США під замовлення </h1>
+          <div id="cars-table"></div>
+          <<div id="car-modal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <div id="car-details"></div>
+            </div>
+          </div>
+          
+          <div id="feedback-modal" class="modal">
+            <div class="modal-content">
+              <span class="close-feedback">&times;</span>
+              <form id="feedback-form">
+                <label for="name">Ім'я:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="phone">Телефон:</label>
+                <input type="tel" id="phone" name="phone" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="comments">Коментарі:</label>
+                <textarea id="comments" name="comments"></textarea>
+                <button type="submit">Відправити</button>
+              </form>
+            </div>
+          </div>
+
         </div>
 
     </main>
@@ -200,7 +233,7 @@
           <div class="f-link"><a
               href="https://docs.google.com/document/d/12RRHKT9s_c_SQxfQrxV2p-_1SnwbsVVU8oOIIhv8MzQ/edit#heading=h.k3lgmxj1tfcj">Договір
               публічної оферти</a></div>
-              <div class="f-link"><a href="#">Співпраця</a></div>
+          <div class="f-link"><a href="#">Співпраця</a></div>
           <div class="f-link"><a href="#">PDF каталоги</a></div>
           <div class="f-link"><a href="../pages/news.html">Статті та новини</a></div>
           <!-- <div class="f-link"><a href="#">Спеціальні рішення</a></div> -->
@@ -208,17 +241,24 @@
           <div class="f-link"><a href="../pages/deliverypayment.html">Доставка і оплата</a></div>
           <div class="f-link"><a href="#">Відгуки</a></div>
           <div class="f-link"><a href="../pages/abuotus.html">Про нас</a></div>
-          <div class="f-link"><a href="https://www.work.ua/jobs/by-company/2506907/"  target="_blank" rel="nofollow">Вакансії</a></div>
+          <div class="f-link"><a href="https://www.work.ua/jobs/by-company/2506907/" target="_blank"
+              rel="nofollow">Вакансії</a></div>
         </div>
 
       </div>
       <span>© 2024</span>
     </div>
     <script src="../js/jquery/jquery-3.7.1.min.js"></script>
+    <script src="../js/plagins/lightgallery.min.js"></script>
+    <script src="../js/plagins/lightgallery.umd.js"></script>
+    <script src="../js/plagins/lg-thumbnail.min.js"></script>
+    <script src="../js/plagins/lg-zoom.min.js"></script>
+
     <script src="../js/wow.min.js"></script>
     <script src="../js/lazyload.min.js"></script>
     <script src="../js/toast.js"></script>
-    <script src="../js/main.js"></script>
+    <script src="../js/cars.js"></script>
+    <!-- <script src="../js/main.js"></script> -->
 
   </div>
 </body>

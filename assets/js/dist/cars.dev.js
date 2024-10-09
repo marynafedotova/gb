@@ -47,35 +47,53 @@ function createTable(cars) {
 function openCarModal(car) {
   var modal = document.getElementById('car-modal');
   var carDetails = document.getElementById('car-details');
-  var overlay = document.querySelector('.page-overlay');
-  carDetails.innerHTML = "<h2>".concat(car.model, " (").concat(car.year, ")</h2>");
-  modal.classList.add('active');
-  overlay.classList.add('active');
-}
 
-function openFeedbackModal() {
-  var feedbackModal = document.getElementById('feedback-modal');
-  var overlay = document.querySelector('.page-overlay');
-  feedbackModal.classList.add('active');
-  overlay.classList.add('active');
+  if (modal && carDetails) {
+    modal.classList.add('active'); // Активируем модальное окно
+
+    carDetails.innerHTML = "<h2>".concat(car.model, " (").concat(car.year, ")</h2>");
+  }
 }
 
 function closeModals() {
-  var carModal = document.getElementById('car-modal');
-  var feedbackModal = document.getElementById('feedback-modal');
-  var overlay = document.querySelector('.page-overlay');
-  carModal.classList.remove('active');
-  feedbackModal.classList.remove('active');
-  overlay.classList.remove('active');
+  var modals = document.querySelectorAll('.modal');
+  modals.forEach(function (modal) {
+    return modal.classList.remove('active');
+  }); // Закрываем все модальные окна
 }
 
-document.querySelector('.close').addEventListener('click', closeModals);
-document.querySelector('.close-feedback').addEventListener('click', closeModals);
-window.addEventListener('click', function (event) {
-  var overlay = document.querySelector('.page-overlay');
+document.addEventListener('DOMContentLoaded', function () {
+  var closeBtn = document.querySelector('.close');
+  var closeFeedbackBtn = document.querySelector('.close-feedback');
 
-  if (event.target === overlay) {
-    closeModals();
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeModals);
+  }
+
+  if (closeFeedbackBtn) {
+    closeFeedbackBtn.addEventListener('click', closeModals);
+  } // Убираем логику работы с оверлеем
+
+});
+
+function openFeedbackModal() {
+  var feedbackModal = document.getElementById('feedback-modal');
+
+  if (feedbackModal) {
+    feedbackModal.classList.add('active'); // Активируем модальное окно
+  }
+} //header
+
+
+var header = document.querySelector('header');
+window.addEventListener('scroll', function () {
+  var scrollDistance = window.scrollY;
+  var threshold = 30;
+
+  if (scrollDistance > threshold) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
   }
 }); //hamburger-menu
 

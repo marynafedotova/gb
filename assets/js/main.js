@@ -184,23 +184,6 @@ function createAdvantagesSlider(elementId, jsonData) {
 //     toggleThumb: true
 // });
 
-// maps
-function initMap(link){
-  link.remove();
-const map = L.map('map').setView([41.054501905311206, -79.15649953375353], 13);
-
-L.tileLayer('	https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
-
-const violetIcon = L.icon({
-  iconUrl: 'assets/img/Pin.png',
-  iconSize:     [106, 106],
-  iconAnchor:   [22, 94],
-});
-}
-
-// L.marker([41.054501905311206, -79.15649953375353], {icon: violetIcon}).addTo(map)}
 
 // form
 $(document).ready(function () {

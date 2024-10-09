@@ -148,11 +148,11 @@
     </header>
     <main>
       <!-- hero-section -->
-      <div class="hero-screan">
         <div class="container wow animate__animated animate__backInUp">
           <h1>Автозапчастини на авто з США під замовлення </h1>
           <div id="cars-table"></div>
-          <<div id="car-modal" class="modal">
+          <div id="car-modal" class="modal">
+
             <div class="modal-content">
               <span class="close">&times;</span>
               <div id="car-details"></div>
@@ -161,20 +161,24 @@
           
           <div id="feedback-modal" class="modal">
             <div class="modal-content">
-              <span class="close-feedback">&times;</span>
+              <div class="feedback-header">
+                <span class="feedback-title">Форма бронювання</span>
+                <span class="close-feedback">&times;</span>
+              </div>
+              
               <form id="feedback-form">
-                <label for="name">Ім'я:</label>
-                <input type="text" id="name" name="name" required>
-                <label for="phone">Телефон:</label>
-                <input type="tel" id="phone" name="phone" required>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                <label for="comments">Коментарі:</label>
-                <textarea id="comments" name="comments"></textarea>
-                <button type="submit">Відправити</button>
+                <input type="text" id="name" name="name" required placeholder="Ваше ім'я">
+                <input type="tel" id="phone" name="phone" required  placeholder="Ваш номер телефону">
+                <input type="email" id="email" name="email" required  placeholder="Ваш email">
+                <input type="text" id="rozdil" name="rozdil" required  placeholder="Розділ запчастин">
+                <input type="text" id="pidrozdil" name="pidrozdil" required  placeholder="Підрозділ запчастин">
+                <input type="text" id="zapchast" name="zapchastyny" required  placeholder="Запчастини">
+                <textarea id="comments" name="comments" placeholder="Ваше повідомлення"></textarea>
+                <div class="btn"><button type="submit" id="btn-cars-order">Відправити</button> </div>
               </form>
             </div>
           </div>
+          
 
         </div>
 

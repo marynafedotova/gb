@@ -61,43 +61,53 @@ function createTable(cars) {
 function openCarModal(car) {
   const modal = document.getElementById('car-modal');
   const carDetails = document.getElementById('car-details');
-  const overlay = document.querySelector('.page-overlay');
 
-  carDetails.innerHTML = `<h2>${car.model} (${car.year})</h2>`;
-  modal.classList.add('active');
-  overlay.classList.add('active');
+  if (modal && carDetails) {
+    modal.classList.add('active'); // Активируем модальное окно
+    carDetails.innerHTML = `<h2>${car.model} (${car.year})</h2>`;
+  }
 }
+function closeModals() {
+  const modals = document.querySelectorAll('.modal');
+  modals.forEach(modal => modal.classList.remove('active')); // Закрываем все модальные окна
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const closeBtn = document.querySelector('.close');
+  const closeFeedbackBtn = document.querySelector('.close-feedback');
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', closeModals);
+  }
+
+  if (closeFeedbackBtn) {
+    closeFeedbackBtn.addEventListener('click', closeModals);
+  }
+
+  // Убираем логику работы с оверлеем
+});
 
 function openFeedbackModal() {
   const feedbackModal = document.getElementById('feedback-modal');
-  const overlay = document.querySelector('.page-overlay');
 
-  feedbackModal.classList.add('active');
-  overlay.classList.add('active');
+  if (feedbackModal) {
+    feedbackModal.classList.add('active'); // Активируем модальное окно
+  }
 }
 
-function closeModals() {
-  const carModal = document.getElementById('car-modal');
-  const feedbackModal = document.getElementById('feedback-modal');
-  const overlay = document.querySelector('.page-overlay');
+//header
+const header = document.querySelector('header');
 
-  carModal.classList.remove('active');
-  feedbackModal.classList.remove('active');
-  overlay.classList.remove('active');
-}
+window.addEventListener('scroll', function() {
+  const scrollDistance = window.scrollY;
+  const threshold = 30;
 
-document.querySelector('.close').addEventListener('click', closeModals);
-document.querySelector('.close-feedback').addEventListener('click', closeModals);
-
-window.addEventListener('click', function(event) {
-  const overlay = document.querySelector('.page-overlay');
-  if (event.target === overlay) {
-    closeModals();
+  if (scrollDistance > threshold) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
   }
 });
-
-
-
 
 //hamburger-menu
 document.getElementById('hamb-btn').addEventListener('click', function () {

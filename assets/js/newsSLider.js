@@ -1,7 +1,7 @@
 //news
 
 document.addEventListener('DOMContentLoaded', function () {
-  fetch('assets/data/news.json')  // Укажите путь к вашему JSON с новостями
+  fetch('assets/data/news_slider.json')  // Укажите путь к вашему JSON с новостями
     .then(response => response.json())
     .then(data => {
       createNewsSlider('news_slider', data);  // Здесь вызываем вашу функцию для создания новостного слайдера
@@ -28,7 +28,7 @@ function createNewsSlider(elementId, jsonData) {
           <div class="slide-top"></div>
           <div class="title">${item.title}</div>
           <div class="vehicle-details">
-            <p><strong>Рік випуску:</strong> ${item.vehicle.year}</p>
+            <div><strong>Рік випуску:</strong> ${item.vehicle.year}</div>
             <p><strong>VIN:</strong> ${item.vehicle.vin}</p>
             <p><strong>Двигун:</strong> ${item.vehicle.engine}</p>
             <p><strong>Коробка передач:</strong> ${item.vehicle.transmission}</p>

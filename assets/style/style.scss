@@ -176,7 +176,9 @@ header {
         text-align: center;
         position: relative;
         padding-top: 5px;
-        transition: all .4s ease;
+        a{
+          transition: all 0.8s ease; 
+        }
         
         .submenu {
           display: none;
@@ -189,7 +191,7 @@ header {
                 border: 2px solid $color--porcelain;
               }
               a img{
-                width: 110px;
+                width: 80px;
                 aspect-ratio: 1;
               }
             }

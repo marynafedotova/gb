@@ -562,6 +562,15 @@ h1{
 }
 
 //footer
+#feedback_form #exampleInputName .is-invalid {
+  border: 2px solid red;
+}
+#feedback_form #exampleInputTel .is-invalid {
+  border: 2px solid red;
+}
+.is-invalid {
+  border: 2px solid red;
+}
 footer{
   border-top: 1px solid #579816;
   border-bottom: 1px solid $color--gray;
@@ -575,8 +584,12 @@ footer{
   .schedule{
     .work-time{
       padding-bottom: 20px;
+      .time{
+        padding-bottom: 8px;
+      }
       .work-time-title{
         color: $color--gray;
+        padding-bottom: 8px;
       }
       img{
         width: 24px;
@@ -590,11 +603,13 @@ footer{
       padding-bottom: 20px;
       .pay-title{
         color: $color--gray;
+        padding-bottom: 8px;
       }
     }
     .location{
       .location-title{
         color: $color--gray;
+        padding-bottom: 10px;
       }
       img{
       width: 24px;
@@ -625,9 +640,10 @@ footer{
       margin-bottom: 20px;
       padding: 8px;
       border-radius: 8px;
-      border: none;
+      border: 2px solid $ForestGreen;
+      outline: 1px solid transparent;
       &:focus{
-        border: 1px solid #579816;
+        border: 2px solid $blue;
       }
   
    }
@@ -638,10 +654,14 @@ footer{
     background-color: $ForestGreen;
     border: none;
     border-radius: 8px;
+    color: $color--porcelain;
+    font-weight: 600;
+    text-transform: uppercase;
     &:hover{
       transform: scale(1.123);
       background-color: #fff;
       color: $ForestGreen;
+      
     }
    }
   }

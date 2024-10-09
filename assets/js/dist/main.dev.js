@@ -164,61 +164,98 @@ function createAdvantagesSlider(elementId, jsonData) {
 // form
 
 
-$(document).ready(function () {
-  $('.form-control').focus(function () {
-    if ($(this).hasClass('is-invalid')) {
-      $(this).removeClass('is-invalid');
-    }
-  });
-  $('#feedback_form').submit(function (e) {
+document.addEventListener('DOMContentLoaded', function () {
+  var form = document.getElementById('feedback_form');
+  var nameFld = document.getElementById('exampleInputName');
+  var telFld = document.getElementById('exampleInputTel');
+
+  if (!form || !nameFld || !telFld) {
+    console.error('Form or fields not found!');
+    return;
+  }
+
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
-    var errors = [];
-    var nameFld = $('#exampleInputName');
-    var emailFld = $('#exampleInputEmail1');
-    var name = nameFld.val().trim();
-    var email = emailFld.val().trim();
+    var name = nameFld.value ? nameFld.value.trim() : '';
+    var tel = telFld.value ? telFld.value.trim() : '';
+    var errors = []; // Очистка классов ошибок
+
+    nameFld.classList.remove('is-invalid');
+    telFld.classList.remove('is-invalid');
 
     if (name === '') {
-      errors.push('Enter your name, please');
-      nameFld.addClass('is-invalid');
+      errors.push("Введіть, будь ласка, Ваше ім'я");
+      nameFld.classList.add('is-invalid');
     } else if (name.length < 2) {
-      errors.push('Your name is too short');
-      nameFld.addClass('is-invalid');
+      errors.push('Ваше ім\'я занадто коротке');
+      nameFld.classList.add('is-invalid');
     }
 
-    if (email === '') {
-      errors.push('Enter your email, please');
-      emailFld.addClass('is-invalid');
-    } else if (!isValidEmail(email)) {
-      errors.push('Incorrect email format, please');
-      emailFld.addClass('is-invalid');
+    if (tel === '' || tel.length < 17) {
+      // Длина номера должна быть 17 символов
+      errors.push('Введіть, будь ласка, правильний номер телефону');
+      telFld.classList.add('is-invalid');
     }
 
-    if (errors.length) {
+    if (errors.length > 0) {
       toast.error(errors.join('. '));
       return;
-    }
+    } // Отправка данных в Telegram
 
-    var CHAT_ID = '-1002005768837';
-    var BOT_TOKEN = '6752195686:AAEk2PgvXP44n-Tv5IJcvCZCkkHOrzeH7pQ';
-    var message = "<b>Name: </b> ".concat(name, "\r\n<b>Email: </b>").concat(email);
+
+    var CHAT_ID = '836622266';
+    var BOT_TOKEN = '8046931960:AAHhJdRaBEv_3zyB9evNFxZQlEdiz8FyWL8';
+    var message = "<b>\u0406\u043C'\u044F: </b> ".concat(name, "\r\n<b>\u0422\u0435\u043B\u0435\u0444\u043E\u043D: </b>").concat(tel);
     var url = "https://api.telegram.org/bot".concat(BOT_TOKEN, "/sendMessage?chat_id=").concat(CHAT_ID, "&text=").concat(encodeURIComponent(message), "&parse_mode=HTML");
-    console.log(url);
-    $.post(url, function (resp) {
-      if (resp.ok) {
-        nameFld.val('');
-        emailFld.val('');
-        toast.success('Your message successfully sent.');
+    fetch(url, {
+      method: 'POST'
+    }).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      if (data.ok) {
+        nameFld.value = '';
+        telFld.value = '';
+        toast.success('Ваше повідомлення успішно надіслано.');
       } else {
-        toast.error('Some error occurred.');
+        toast.error('Сталася помилка.');
       }
+    })["catch"](function (error) {
+      toast.error('Помилка: ' + error.message);
     });
   });
+  telFld.addEventListener('input', function (e) {
+    var input = e.target.value.replace(/\D/g, ''); // Удаляем все, кроме цифр
 
-  function isValidEmail(email) {
-    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    return regex.test(email);
-  }
+    var formattedInput = '';
+
+    if (input.length > 0) {
+      formattedInput += '+38 (';
+    }
+
+    if (input.length >= 1) {
+      formattedInput += input.substring(0, 3);
+    }
+
+    if (input.length >= 4) {
+      formattedInput += ') ' + input.substring(3, 6);
+    }
+
+    if (input.length >= 7) {
+      formattedInput += '-' + input.substring(6, 8);
+    }
+
+    if (input.length >= 9) {
+      formattedInput += '-' + input.substring(8, 10);
+    }
+
+    e.target.value = formattedInput;
+  }); // Запрещаем ввод чисел в поле имени
+
+  nameFld.addEventListener('input', function (e) {
+    var input = e.target.value; // Оставляем только буквы и специальные символы для имени
+
+    e.target.value = input.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
+  });
 }); //scroll
 // document.getElementById('scrollButton').addEventListener('click', function(event) {
 //   event.preventDefault();

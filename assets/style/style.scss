@@ -93,7 +93,7 @@ header {
   position: fixed;
   top: 0;
   min-height: 54px;
-  padding: 20px 20px 0px;
+  padding: 20px 10px 0px;
   background-color: rgba(32, 29, 34, 0.13);
   
   .header-container {
@@ -164,7 +164,7 @@ header {
   .nav-container {
     background-color: $ForestGreen;
     padding-top: 10px;
-    padding-bottom: 10px;
+
     width: 100%;
 
     nav ul {
@@ -174,25 +174,22 @@ header {
       li {
         flex-grow: 1;
         text-align: center;
-        position: relative;
-        padding-top: 5px;
-        a{
-          transition: all 0.8s ease; 
-        }
-        
+        position: relative;  
+        padding-bottom: 10px;      
         .submenu {
           display: none;
           position: absolute;
-            // top: 100%;
+          margin-top: 15px;
             transition: color 0.3s ease;
             li {
               border: 2px solid $black;
+              padding-top: 0;
               &:hover{
                 border: 2px solid $color--porcelain;
               }
               a img{
-                width: 80px;
-                aspect-ratio: 1;
+                width: 106.7px;
+                height: auto;
               }
             }
     
@@ -218,26 +215,26 @@ header {
         }
 
         a {
-          font-size: 1rem;
+          font-size: 1.1rem;
           letter-spacing: 0rem;
           color: $wite; 
           position: relative;
-          font-weight: 500;
-
+          font-weight: 600;
         }
       }
 
       li:hover a {
         text-decoration: underline;
         color: #202020;
-        font-weight: 600;
+
         transform: scale(1.2);
       }
 
       li:hover .submenu {
         display: flex;
-        flex-direction: wrap;
-        flex-wrap: wrap;
+        li{
+          padding-bottom: 0;
+        }
       }
     }
   }

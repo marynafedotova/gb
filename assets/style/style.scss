@@ -740,22 +740,49 @@ li {
 }
 //returns
 .hero-returns{
+  padding-bottom: 32px;
   .container{
-    text-align: center;
+    padding-bottom: 32px;
     h1 {
       padding-top: 50px;
       padding-bottom: 50px;
+      text-align: center;
     }
-  
+    
   }
+}
+.guarantees{
+  text-align: center;
+font-size: 1.1rem;
+  color: $ForestGreen;
+  padding-bottom: 32px;
+  font-weight: 600;
+}
+.guarantees-item{
+  padding-bottom: 16px;
+
+}
+.guarantees-weight{
+  font-weight: 600;
+  color: $green;
+}
+.guarantees-list{
+  padding: 26px 0 16px;
+  li{
+    list-style-type: ' ✔ ';
+  }
+}
+.guarantees-importantly{
+  color: $ForestGreen;
+padding-bottom: 16px;
+font-weight: 700;
 }
 #returns {
   text-align: left;
-  padding-top: 50px;
   padding-bottom: 50px;
   ul{
     li{
-      list-style-type: disc;
+      list-style-type: ' ✦ ';
       
     }
   }

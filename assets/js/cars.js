@@ -57,16 +57,93 @@ function createTable(cars) {
   
   tableContainer.appendChild(table);
 }
+document.addEventListener('touchstart', function(){}, { passive: true });
+document.addEventListener('touchmove', function(){}, { passive: true });
 
 function openCarModal(car) {
   const modal = document.getElementById('car-modal');
   const carDetails = document.getElementById('car-details');
+  const imageSlider = document.getElementById('image-slider');
+
+  // Очистка предыдущих данных
+  carDetails.innerHTML = '';
+  imageSlider.innerHTML = '';
 
   if (modal && carDetails) {
     modal.classList.add('active'); // Активируем модальное окно
-    carDetails.innerHTML = `<h2>${car.model} (${car.year})</h2>`;
+    
+    // Добавляем данные об автомобиле
+    carDetails.innerHTML = `
+      <h3>Модель: ${car.model}</h3>
+      <ul>
+        <li><div class="cardeteils-item">Рік випуску: </div> ${car.year}</li>
+        <li><div class="cardeteils-item">Аукціон:</div> ${car.auction}</li>
+        <li><div class="cardeteils-item">Дата продажу:</div> ${car.sale_date}</li>
+        <li><div class="cardeteils-item">VIN:</div> ${car.vin}</li>
+        <li><div class="cardeteils-item">Стан:</div> ${car.status}</li>
+        <li><div class="cardeteils-item">Двигун:</div> ${car.engine}</li>
+        <li><div class="cardeteils-item">Пробіг:</div> ${car.mileage}</li>
+        <li><div class="cardeteils-item">Продавець:</div> ${car.seller}</li>
+        <li><div class="cardeteils-item">Місце продажу:</div> ${car.location}</li>
+        <li><div class="cardeteils-item">Основне ушкодження:</div> ${car.primary_damage}</li>
+        <li><div class="cardeteils-item">Другорядне пошкодження:</div> ${car.secondary_damage}</li>
+        <li><div class="cardeteils-item">Оціночна вартість:</div> ${car.estimated_value}</li>
+        <li><div class="cardeteils-item">Ціна ремонту:</div> ${car.repair_cost}</li>
+        <li><div class="cardeteils-item">Коробка передач:</div> ${car.transmission}</li>
+        <li><div class="cardeteils-item">Колір кузова:</div> ${car.color}</li>
+        <li><div class="cardeteils-item">Привід:</div> ${car.drive}</li>
+      </ul>`;
+
+    // Добавляем изображения в основной слайдер
+    if (car.images && car.images.length > 0) {
+      car.images.forEach((imagePath, index) => {
+        // Правильный относительный путь с учётом вложенности
+        const fullPath = `../img/cars/${imagePath.replace('../img/cars/', '')}`;
+        
+        // Добавление изображения и миниатюры в основной слайдер
+        const imageLi = document.createElement('li');
+        imageLi.setAttribute('data-thumb', fullPath);
+        imageLi.innerHTML = `<img src="${fullPath}" alt="Изображение ${car.model} ${index + 1}">`;
+        imageSlider.appendChild(imageLi);
+    });
+    
+
+      // Инициализация основного слайдера с миниатюрами
+      $('#image-slider').lightSlider({
+        gallery: true,
+        item: 1,
+        vertical: true,
+        thumbItem: 4,
+        slideMargin: 0,
+        enableDrag: true,
+        currentPagerPosition: 'left',
+        controls: false,
+        // adaptiveHeight: true,
+        auto:true,
+        loop:true,
+        verticalHeight: 500,
+        onSliderLoad: function () {
+           console.log('Основной слайдер загружен');
+        }
+      });
+     
+    } else {
+      console.error("Изображения для автомобиля отсутствуют");
+    }
+
+    document.getElementById('image-slider').addEventListener('touchstart', function(event) {
+      // Ваш обработчик touchstart
+  }, { passive: true });
+  
+  document.getElementById('image-slider').addEventListener('touchmove', function(event) {
+      // Ваш обработчик touchmove
+  }, { passive: true });  
   }
 }
+
+
+
+
 function closeModals() {
   const modals = document.querySelectorAll('.modal');
   modals.forEach(modal => modal.classList.remove('active')); // Закрываем все модальные окна

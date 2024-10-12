@@ -545,18 +545,19 @@ h1{
     }
 
   }
+  .lSSlideOuter .lightSlider > *, .lSSlideOuter .lSGallery li {
+    padding: 20px;
+    border: 1px solid #579816;
+    border-radius: 8px;
+    background-color: hsl(0,0%,29.41%);
+  }
+  .lSSlideOuter .lSPager.lSpg > li a{
+    display: none;
+  }
+  
   
 }
 
-.lSSlideOuter .lightSlider > *, .lSSlideOuter .lSGallery li {
-  padding: 20px;
-  border: 1px solid #579816;
-  border-radius: 8px;
-  background-color: hsl(0,0%,29.41%);
-}
-.lSSlideOuter .lSPager.lSpg > li a{
-  display: none;
-}
 
 //footer
 #feedback_form #exampleInputName .is-invalid {
@@ -843,12 +844,84 @@ font-weight: 700;
   top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 101;
+  z-index: 1000000;
 }
-#car-modal, #feedback-modal{
-  background-color: $color--gray;
+#car-modal,
+#feedback-modal {
+  background-color: $color--mine-shaft;
   width: 100%;
+
 }
+#car-modal{
+  z-index: 10000000;
+}
+.modal-content {
+display: block;
+  .car-header{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid $background-icon;
+    h2{
+      text-transform: uppercase;
+      padding-left:35%;
+    }
+    .close{
+      padding: 5px 10px;
+      border: 1px solid $background-icon;
+      border-radius: 5px;
+    background-color: $ForestGreen;
+    &:hover{
+      cursor: pointer;
+      background-color: $color--mine-shaft;
+    }
+    }
+  }
+  .car-info{
+    display: flex;
+    padding: 20px;
+    
+    #car-details{
+      padding-right: 10%;
+      h3{
+        color: $color--porcelain;
+        padding-bottom: 20px;
+      }
+      ul li {
+        display: flex;
+        gap: 10px;
+        .cardeteils-item{
+          color: $ForestGreen;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+
+  #car-slider {
+    padding: 20px 10px;
+    .lSSlideOuter.vertical {
+      width: auto;
+
+      .lSSlideWrapper.usingCss {
+        #image-slider.light-slider.lightSlider.lSSlide {
+          width: 600px;
+        }
+
+        .lSPager.lSGallery {
+          display: none;
+        }
+        .lSSlideOuter .lightSlider > *,
+        .lSSlideOuter .lSGallery li {
+          float: none;
+        }
+      }
+    }
+  }
+}
+
+
+
 #feedback-modal .modal-content{
   background-color: $color--oslo-gray;
 padding-top: 20px;

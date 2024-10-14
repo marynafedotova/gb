@@ -17,8 +17,8 @@ function createTable(cars) {
   table.innerHTML = `
     <thead>
       <tr>
-        <th>Назва автомобіля</th>
-        <th>Бронювання</th>
+        <th><div class="cars-title">Назва автомобіля</div></th>
+        <th><div class="cars-title">Бронювання</div></th>
       </tr>
     </thead>
     <tbody>
@@ -30,6 +30,7 @@ function createTable(cars) {
   cars.forEach((car) => {
     const row = document.createElement('tr');
     const nameCell = document.createElement('td');
+    const wrapperDiv = document.createElement('div');
     const carLink = document.createElement('a');
     carLink.href = "#";
     carLink.textContent = car.model;
@@ -37,8 +38,9 @@ function createTable(cars) {
       event.preventDefault();
       toggleAccordion(car, row);
     });
-    nameCell.appendChild(carLink);
-    
+    wrapperDiv.appendChild(carLink);
+    nameCell.appendChild(wrapperDiv);
+    row.appendChild(nameCell);
     const bookingCell = document.createElement('td');
     const bookingButton = document.createElement('button');
     bookingButton.textContent = "Забронювати";

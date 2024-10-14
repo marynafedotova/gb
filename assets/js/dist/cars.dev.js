@@ -17,11 +17,12 @@ function createTable(cars) {
   }
 
   var table = document.createElement('table');
-  table.innerHTML = "\n    <thead>\n      <tr>\n        <th>\u041D\u0430\u0437\u0432\u0430 \u0430\u0432\u0442\u043E\u043C\u043E\u0431\u0456\u043B\u044F</th>\n        <th>\u0411\u0440\u043E\u043D\u044E\u0432\u0430\u043D\u043D\u044F</th>\n      </tr>\n    </thead>\n    <tbody>\n    </tbody>\n  ";
+  table.innerHTML = "\n    <thead>\n      <tr>\n        <th><div class=\"cars-title\">\u041D\u0430\u0437\u0432\u0430 \u0430\u0432\u0442\u043E\u043C\u043E\u0431\u0456\u043B\u044F</div></th>\n        <th><div class=\"cars-title\">\u0411\u0440\u043E\u043D\u044E\u0432\u0430\u043D\u043D\u044F</div></th>\n      </tr>\n    </thead>\n    <tbody>\n    </tbody>\n  ";
   var tbody = table.querySelector('tbody');
   cars.forEach(function (car) {
     var row = document.createElement('tr');
     var nameCell = document.createElement('td');
+    var wrapperDiv = document.createElement('div');
     var carLink = document.createElement('a');
     carLink.href = "#";
     carLink.textContent = car.model;
@@ -29,7 +30,9 @@ function createTable(cars) {
       event.preventDefault();
       toggleAccordion(car, row);
     });
-    nameCell.appendChild(carLink);
+    wrapperDiv.appendChild(carLink);
+    nameCell.appendChild(wrapperDiv);
+    row.appendChild(nameCell);
     var bookingCell = document.createElement('td');
     var bookingButton = document.createElement('button');
     bookingButton.textContent = "Забронювати";

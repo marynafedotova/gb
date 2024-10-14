@@ -11,20 +11,25 @@ fetch('../data/cars.json').then(function (response) {
 
 function createTable(cars) {
   var tableContainer = document.getElementById('cars-table');
+
+  if (!tableContainer) {
+    console.error('Таблиця не найдена в DOM');
+    return;
+  }
+
   var table = document.createElement('table');
   table.innerHTML = "\n    <thead>\n      <tr>\n        <th>\u041D\u0430\u0437\u0432\u0430 \u0430\u0432\u0442\u043E\u043C\u043E\u0431\u0456\u043B\u044F</th>\n        <th>\u0411\u0440\u043E\u043D\u044E\u0432\u0430\u043D\u043D\u044F</th>\n      </tr>\n    </thead>\n    <tbody>\n    </tbody>\n  ";
   var tbody = table.querySelector('tbody');
   cars.forEach(function (car) {
-    var row = document.createElement('tr'); // Назва автомобіля з посиланням для відкриття модального вікна
+    var row = document.createElement('tr'); // Назва автомобіля з посиланням для відкриття аккордеону
 
     var nameCell = document.createElement('td');
     var carLink = document.createElement('a');
     carLink.href = "#";
     carLink.textContent = car.model;
     carLink.addEventListener('click', function (event) {
-      event.preventDefault(); // Предотвращаем переход по ссылке
-
-      openCarModal(car);
+      event.preventDefault();
+      toggleAccordion(car, row); // Открыть/закрыть аккордеон при нажатии
     });
     nameCell.appendChild(carLink); // Кнопка для бронювання
 
@@ -39,72 +44,90 @@ function createTable(cars) {
     bookingCell.appendChild(bookingButton);
     row.appendChild(nameCell);
     row.appendChild(bookingCell);
-    tbody.appendChild(row);
-  });
-  tableContainer.appendChild(table);
-}
+    tbody.appendChild(row); // Создаем аккордеон под строкой автомобиля
 
-document.addEventListener('touchstart', function () {}, {
-  passive: true
-});
-document.addEventListener('touchmove', function () {}, {
-  passive: true
-});
+    var accordionRow = document.createElement('tr');
+    var accordionCell = document.createElement('td');
+    accordionCell.colSpan = 2; // Аккордеон занимает обе колонки
 
-function openCarModal(car) {
-  var modal = document.getElementById('car-modal');
-  var carDetails = document.getElementById('car-details');
-  var imageSlider = document.getElementById('image-slider'); // Очистка предыдущих данных
-
-  carDetails.innerHTML = '';
-  imageSlider.innerHTML = '';
-
-  if (modal && carDetails) {
-    modal.classList.add('active'); // Активируем модальное окно
-    // Добавляем данные об автомобиле
-
-    carDetails.innerHTML = "\n      <h3>\u041C\u043E\u0434\u0435\u043B\u044C: ".concat(car.model, "</h3>\n      <ul>\n        <li><div class=\"cardeteils-item\">\u0420\u0456\u043A \u0432\u0438\u043F\u0443\u0441\u043A\u0443: </div> ").concat(car.year, "</li>\n        <li><div class=\"cardeteils-item\">\u0410\u0443\u043A\u0446\u0456\u043E\u043D:</div> ").concat(car.auction, "</li>\n        <li><div class=\"cardeteils-item\">\u0414\u0430\u0442\u0430 \u043F\u0440\u043E\u0434\u0430\u0436\u0443:</div> ").concat(car.sale_date, "</li>\n        <li><div class=\"cardeteils-item\">VIN:</div> ").concat(car.vin, "</li>\n        <li><div class=\"cardeteils-item\">\u0421\u0442\u0430\u043D:</div> ").concat(car.status, "</li>\n        <li><div class=\"cardeteils-item\">\u0414\u0432\u0438\u0433\u0443\u043D:</div> ").concat(car.engine, "</li>\n        <li><div class=\"cardeteils-item\">\u041F\u0440\u043E\u0431\u0456\u0433:</div> ").concat(car.mileage, "</li>\n        <li><div class=\"cardeteils-item\">\u041F\u0440\u043E\u0434\u0430\u0432\u0435\u0446\u044C:</div> ").concat(car.seller, "</li>\n        <li><div class=\"cardeteils-item\">\u041C\u0456\u0441\u0446\u0435 \u043F\u0440\u043E\u0434\u0430\u0436\u0443:</div> ").concat(car.location, "</li>\n        <li><div class=\"cardeteils-item\">\u041E\u0441\u043D\u043E\u0432\u043D\u0435 \u0443\u0448\u043A\u043E\u0434\u0436\u0435\u043D\u043D\u044F:</div> ").concat(car.primary_damage, "</li>\n        <li><div class=\"cardeteils-item\">\u0414\u0440\u0443\u0433\u043E\u0440\u044F\u0434\u043D\u0435 \u043F\u043E\u0448\u043A\u043E\u0434\u0436\u0435\u043D\u043D\u044F:</div> ").concat(car.secondary_damage, "</li>\n        <li><div class=\"cardeteils-item\">\u041E\u0446\u0456\u043D\u043E\u0447\u043D\u0430 \u0432\u0430\u0440\u0442\u0456\u0441\u0442\u044C:</div> ").concat(car.estimated_value, "</li>\n        <li><div class=\"cardeteils-item\">\u0426\u0456\u043D\u0430 \u0440\u0435\u043C\u043E\u043D\u0442\u0443:</div> ").concat(car.repair_cost, "</li>\n        <li><div class=\"cardeteils-item\">\u041A\u043E\u0440\u043E\u0431\u043A\u0430 \u043F\u0435\u0440\u0435\u0434\u0430\u0447:</div> ").concat(car.transmission, "</li>\n        <li><div class=\"cardeteils-item\">\u041A\u043E\u043B\u0456\u0440 \u043A\u0443\u0437\u043E\u0432\u0430:</div> ").concat(car.color, "</li>\n        <li><div class=\"cardeteils-item\">\u041F\u0440\u0438\u0432\u0456\u0434:</div> ").concat(car.drive, "</li>\n      </ul>"); // Добавляем изображения в основной слайдер
+    accordionCell.innerHTML = "\n      <div class=\"accordion-content\" style=\"display: none;\">\n        <div class=\"car-deteils\">\n        <h3>\u041C\u043E\u0434\u0435\u043B\u044C: ".concat(car.model, "</h3>\n        <ul>\n          <li><div class=\"cardeteils-item\">\u0420\u0456\u043A \u0432\u0438\u043F\u0443\u0441\u043A\u0443: </div> ").concat(car.year, "</li>\n          <li><div class=\"cardeteils-item\">\u0410\u0443\u043A\u0446\u0456\u043E\u043D:</div> ").concat(car.auction, "</li>\n          <li><div class=\"cardeteils-item\">\u0414\u0430\u0442\u0430 \u043F\u0440\u043E\u0434\u0430\u0436\u0443:</div> ").concat(car.sale_date, "</li>\n          <li><div class=\"cardeteils-item\">VIN:</div> ").concat(car.vin, "</li>\n          <li><div class=\"cardeteils-item\">\u0421\u0442\u0430\u043D:</div> ").concat(car.status, "</li>\n          <li><div class=\"cardeteils-item\">\u0414\u0432\u0438\u0433\u0443\u043D:</div> ").concat(car.engine, "</li>\n          <li><div class=\"cardeteils-item\">\u041F\u0440\u043E\u0431\u0456\u0433:</div> ").concat(car.mileage, "</li>\n          <li><div class=\"cardeteils-item\">\u041F\u0440\u043E\u0434\u0430\u0432\u0435\u0446\u044C:</div> ").concat(car.seller, "</li>\n          <li><div class=\"cardeteils-item\">\u041C\u0456\u0441\u0446\u0435 \u043F\u0440\u043E\u0434\u0430\u0436\u0443:</div> ").concat(car.location, "</li>\n          <li><div class=\"cardeteils-item\">\u041E\u0441\u043D\u043E\u0432\u043D\u0435 \u0443\u0448\u043A\u043E\u0434\u0436\u0435\u043D\u043D\u044F:</div> ").concat(car.primary_damage, "</li>\n          <li><div class=\"cardeteils-item\">\u0414\u0440\u0443\u0433\u043E\u0440\u044F\u0434\u043D\u0435 \u043F\u043E\u0448\u043A\u043E\u0434\u0436\u0435\u043D\u043D\u044F:</div> ").concat(car.secondary_damage, "</li>\n          <li><div class=\"cardeteils-item\">\u041E\u0446\u0456\u043D\u043E\u0447\u043D\u0430 \u0432\u0430\u0440\u0442\u0456\u0441\u0442\u044C:</div> ").concat(car.estimated_value, "</li>\n          <li><div class=\"cardeteils-item\">\u0426\u0456\u043D\u0430 \u0440\u0435\u043C\u043E\u043D\u0442\u0443:</div> ").concat(car.repair_cost, "</li>\n          <li><div class=\"cardeteils-item\">\u041A\u043E\u0440\u043E\u0431\u043A\u0430 \u043F\u0435\u0440\u0435\u0434\u0430\u0447:</div> ").concat(car.transmission, "</li>\n          <li><div class=\"cardeteils-item\">\u041A\u043E\u043B\u0456\u0440 \u043A\u0443\u0437\u043E\u0432\u0430:</div> ").concat(car.color, "</li>\n          <li><div class=\"cardeteils-item\">\u041F\u0440\u0438\u0432\u0456\u0434:</div> ").concat(car.drive, "</li>\n        </ul>\n        </div>\n         <div id=\"car-slider\">\n        <ul id=\"image-slider-").concat(car.vin, "\" class=\"image-slider\"></ul>\n      </div>\n    ");
+    accordionRow.appendChild(accordionCell);
+    tbody.appendChild(accordionRow);
 
     if (car.images && car.images.length > 0) {
-      car.images.forEach(function (imagePath, index) {
-        // Правильный относительный путь с учётом вложенности
-        var fullPath = "../img/cars/".concat(imagePath.replace('../img/cars/', '')); // Добавление изображения и миниатюры в основной слайдер
+      setTimeout(function () {
+        var sliderElement = document.getElementById("image-slider-".concat(car.vin));
 
-        var imageLi = document.createElement('li');
-        imageLi.setAttribute('data-thumb', fullPath);
-        imageLi.innerHTML = "<img src=\"".concat(fullPath, "\" alt=\"\u0418\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 ").concat(car.model, " ").concat(index + 1, "\">");
-        imageSlider.appendChild(imageLi);
-      }); // Инициализация основного слайдера с миниатюрами
-
-      $('#image-slider').lightSlider({
-        gallery: true,
-        item: 1,
-        vertical: true,
-        thumbItem: 4,
-        slideMargin: 0,
-        enableDrag: true,
-        currentPagerPosition: 'left',
-        controls: false,
-        // adaptiveHeight: true,
-        auto: true,
-        loop: true,
-        verticalHeight: 500,
-        onSliderLoad: function onSliderLoad() {
-          console.log('Основной слайдер загружен');
+        if (sliderElement) {
+          initImageSlider(car, "image-slider-".concat(car.vin));
+        } else {
+          console.error("\u042D\u043B\u0435\u043C\u0435\u043D\u0442 \u0441\u043B\u0430\u0439\u0434\u0435\u0440\u0430 \u043D\u0435 \u043D\u0430\u0439\u0434\u0435\u043D \u0434\u043B\u044F ".concat(car.vin));
         }
-      });
-    } else {
-      console.error("Изображения для автомобиля отсутствуют");
+      }, 0);
     }
+  });
+  tableContainer.appendChild(table);
+} // Функция для открытия/закрытия аккордеона
 
-    document.getElementById('image-slider').addEventListener('touchstart', function (event) {// Ваш обработчик touchstart
-    }, {
-      passive: true
-    });
-    document.getElementById('image-slider').addEventListener('touchmove', function (event) {// Ваш обработчик touchmove
-    }, {
-      passive: true
-    });
+
+function toggleAccordion(car, row) {
+  var accordionContent = row.nextElementSibling.querySelector('.accordion-content');
+
+  if (accordionContent.style.display === 'none') {
+    accordionContent.style.display = 'flex';
+  } else {
+    accordionContent.style.display = 'none';
+  }
+}
+
+function initImageSlider(car, sliderId) {
+  var imageSlider = document.getElementById(sliderId);
+  var ulElement = document.createElement('ul');
+  car.images.forEach(function (imagePath, index) {
+    var fullPath = "../img/cars/".concat(imagePath.replace('../img/cars/', '')); // Создание элемента списка для слайдера
+
+    var imageLi = document.createElement('li');
+    imageLi.setAttribute('data-thumb', fullPath);
+    imageLi.innerHTML = "<a href=\"".concat(fullPath, "\" data-lightgallery=\"item\">\n                           <img src=\"").concat(fullPath, "\" alt=\"\u0418\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 ").concat(car.model, " ").concat(index + 1, "\">\n                         </a>");
+    ulElement.appendChild(imageLi);
+  }); // Добавляем созданный ul к слайдеру
+
+  imageSlider.appendChild(ulElement); // Инициализируем LightSlider
+
+  $(ulElement).lightSlider({
+    gallery: true,
+    item: 1,
+    vertical: true,
+    thumbItem: car.images.length,
+    // Количество миниатюр
+    slideMargin: 10,
+    enableDrag: true,
+    currentPagerPosition: 'left',
+    controls: true,
+    verticalHeight: 500,
+    auto: true,
+    loop: true,
+    onSliderLoad: function onSliderLoad() {
+      console.log('Слайдер загружен'); // Инициализация LightGallery
+
+      lightGallery(imageSlider, {
+        selector: 'a[data-lightgallery="item"]',
+        // Используем ссылку с атрибутом data-lightgallery
+        allowMediaOverlap: true,
+        toggleThumb: true
+      });
+    }
+  });
+}
+
+function openFeedbackModal() {
+  var feedbackModal = document.getElementById('feedback-modal');
+
+  if (feedbackModal) {
+    console.log('Відкриття модального вікна');
+    feedbackModal.classList.add('active');
+  } else {
+    console.error('Модальне вікно не знайдено');
   }
 }
 
@@ -127,16 +150,7 @@ document.addEventListener('DOMContentLoaded', function () {
     closeFeedbackBtn.addEventListener('click', closeModals);
   } // Убираем логику работы с оверлеем
 
-});
-
-function openFeedbackModal() {
-  var feedbackModal = document.getElementById('feedback-modal');
-
-  if (feedbackModal) {
-    feedbackModal.classList.add('active'); // Активируем модальное окно
-  }
-} //header
-
+}); //header
 
 var header = document.querySelector('header');
 window.addEventListener('scroll', function () {

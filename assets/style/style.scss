@@ -23,8 +23,6 @@ $color--torch-green : #00FF7F; // підсвітка заголовків, ко�
 
 $color--porcelain : #f1f3f4; // текст на сайті
 
-$color--mine-shaft: #252525; //  колір значення калькулятора прорахунку позицій в каталозі
-
 $color--gray : #888; // ціна в доларах в карточці товара 
 
 $color--oslo-gray: #8b8c8d;
@@ -299,8 +297,6 @@ main {
 
   .panel-top {
     height: 100px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
     padding: 20px;
     -webkit-box-align: center;
@@ -454,6 +450,12 @@ h1{
     .lSSlideOuter .lightSlider, .lSSlideOuter .lSPager{
       height: 200px;
     }
+    .lSSlideOuter .lightSlider > *, .lSSlideOuter .lSGallery li {
+      padding: 20px;
+      border: 1px solid #579816;
+      border-radius: 8px;
+      background-color: hsl(0,0%,29.41%);
+    }
     .advantages_list{
       ul {
         height: 500px;
@@ -574,6 +576,9 @@ footer{
   border-bottom: 1px solid $color--gray;
  padding-top: 50px;
  padding-bottom: 20px;
+ z-index: 1;
+ position: relative;
+
  .container{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr ;
@@ -831,93 +836,63 @@ font-weight: 700;
 }
 
 
-.modal.active .modal-overlay {
-  display: block; /* Показываем оверлей вместе с модальным окном */
-}
 .modal {
-  display: none; /* По умолчанию скрыто */
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000; // Высокий z-index для модального окна
+  background-color: rgba(0, 0, 0, 0.8); // Затемнение фона
 }
-
 .modal.active {
   display: block; 
-  position: fixed;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000000;
 }
-#car-modal,
+
 #feedback-modal {
   background-color: $color--mine-shaft;
   width: 100%;
-
+  position: fixed;
+  z-index: 10001; // Еще выше, чем футер
 }
-#car-modal{
-  z-index: 10000000;
-}
-.modal-content {
-display: block;
-  .car-header{
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    border-bottom: 1px solid $background-icon;
-    h2{
-      text-transform: uppercase;
-      padding-left:35%;
+.accordion-content {
+  display: flex;
+  justify-content: space-between;
+flex-direction: row;
+height: 100%;
+padding-bottom: 20px !important;
+  .car-deteils{
+    width: 40%;
+    height: 100%;
+    h3{
+      color: $color--porcelain;
+      padding-bottom: 20px;
     }
-    .close{
-      padding: 5px 10px;
-      border: 1px solid $background-icon;
-      border-radius: 5px;
-    background-color: $ForestGreen;
-    &:hover{
-      cursor: pointer;
-      background-color: $color--mine-shaft;
-    }
-    }
-  }
-  .car-info{
-    display: flex;
-    padding: 20px;
-    
-    #car-details{
-      padding-right: 10%;
-      h3{
-        color: $color--porcelain;
-        padding-bottom: 20px;
+    ul li {
+      display: flex;
+      gap: 10px;
+      .cardeteils-item{
+        color: $ForestGreen;
+        font-weight: 600;
       }
-      ul li {
-        display: flex;
-        gap: 10px;
-        .cardeteils-item{
-          color: $ForestGreen;
-          font-weight: 600;
-        }
+    }
+  
+  }
+  #car-slider{
+    width: 60%;
+    height: 100%;
+    .image-slider{
+      .lSSlideWrapper.usingCss{
+        height: 510px !important;
+      }
+      li {
+        border: 1px solid $ForestGreen;
+        margin-bottom: 5px;
       }
     }
   }
 
-  #car-slider {
-    padding: 20px 10px;
-    .lSSlideOuter.vertical {
-      width: auto;
-
-      .lSSlideWrapper.usingCss {
-        #image-slider.light-slider.lightSlider.lSSlide {
-          width: 600px;
-        }
-
-        .lSPager.lSGallery {
-          display: none;
-        }
-        .lSSlideOuter .lightSlider > *,
-        .lSSlideOuter .lSGallery li {
-          float: none;
-        }
-      }
-    }
-  }
 }
 
 
@@ -975,6 +950,9 @@ padding-top: 20px;
     }
   }
   
+}
+.modal.active, #car-modal, #feedback-modal {
+  z-index: 1000000;
 }
 
 //news

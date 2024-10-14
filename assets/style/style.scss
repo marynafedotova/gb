@@ -361,7 +361,7 @@ h1{
   text-transform: uppercase;
   color: #ffffff;
   text-align: center;
-  padding: 30px;
+  padding: 30px 0px 0px;
 
 }
 .first_screan{
@@ -374,7 +374,10 @@ h1{
     display: flex;
     flex-direction: column;
     border: 1px solid #579816;
-
+    h2{
+      text-align: center;
+      padding-bottom: 10px;
+    }
     form{
       display: flex;
       flex-direction: column;
@@ -383,9 +386,15 @@ h1{
       select{
         height: 40px;
         cursor: pointer;
-        border: 1px solid #7E5AFF;
+        border: 1px solid $ForestGreen;
+        font-size: 1rem;
+        font-weight: 600;
+        color: $color--mine-shaft;
         &:hover{
-          border: 1px solid #3C7FD4;
+          border: 1px solid $color--porcelain;
+        }
+        &:focus{
+          background-color: $ForestGreen;
         }
       }
     }
@@ -395,9 +404,13 @@ h1{
       border: 1px solid $ForestGreen;
       border-radius: 10px;
       color: $color--porcelain;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.2rem;
       &:hover{
         background-color: $color--porcelain;
         color: $ForestGreen;
+        
         transform: scale(1.1);
       }
     }

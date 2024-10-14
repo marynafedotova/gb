@@ -1,4 +1,3 @@
-// Завантаження даних з JSON
 fetch('../data/cars.json')
   .then(response => response.json())
   .then(data => {
@@ -8,7 +7,6 @@ fetch('../data/cars.json')
     console.error('Помилка завантаження даних:', error);
   });
 
-// Функція для створення таблиці автомобілів
 function createTable(cars) {
   const tableContainer = document.getElementById('cars-table');
   if (!tableContainer) {
@@ -31,24 +29,21 @@ function createTable(cars) {
 
   cars.forEach((car) => {
     const row = document.createElement('tr');
-    
-    // Назва автомобіля з посиланням для відкриття аккордеону
     const nameCell = document.createElement('td');
     const carLink = document.createElement('a');
     carLink.href = "#";
     carLink.textContent = car.model;
     carLink.addEventListener('click', (event) => {
       event.preventDefault();
-      toggleAccordion(car, row); // Открыть/закрыть аккордеон при нажатии
+      toggleAccordion(car, row);
     });
     nameCell.appendChild(carLink);
     
-    // Кнопка для бронювання
     const bookingCell = document.createElement('td');
     const bookingButton = document.createElement('button');
     bookingButton.textContent = "Забронювати";
     bookingButton.addEventListener('click', (event) => {
-      event.preventDefault(); // Предотвращаем действие по умолчанию кнопки
+      event.preventDefault();
       openFeedbackModal();
     });
     bookingCell.appendChild(bookingButton);
@@ -57,10 +52,9 @@ function createTable(cars) {
     row.appendChild(bookingCell);
     tbody.appendChild(row);
     
-    // Создаем аккордеон под строкой автомобиля
     const accordionRow = document.createElement('tr');
     const accordionCell = document.createElement('td');
-    accordionCell.colSpan = 2; // Аккордеон занимает обе колонки
+    accordionCell.colSpan = 2; 
     accordionCell.innerHTML = `
       <div class="accordion-content" style="display: none;">
         <div class="car-deteils">
@@ -107,7 +101,6 @@ function createTable(cars) {
   tableContainer.appendChild(table); 
 }
 
-// Функция для открытия/закрытия аккордеона
 function toggleAccordion(car, row) {
   const accordionContent = row.nextElementSibling.querySelector('.accordion-content');
   if (accordionContent.style.display === 'none') {
@@ -123,8 +116,6 @@ function initImageSlider(car, sliderId) {
 
   car.images.forEach((imagePath, index) => {
     const fullPath = `../img/cars/${imagePath.replace('../img/cars/', '')}`;
-    
-    // Создание элемента списка для слайдера
     const imageLi = document.createElement('li');
     imageLi.setAttribute('data-thumb', fullPath);
     imageLi.innerHTML = `<a href="${fullPath}" data-lightgallery="item">
@@ -133,15 +124,13 @@ function initImageSlider(car, sliderId) {
     ulElement.appendChild(imageLi);
   });
 
-  // Добавляем созданный ul к слайдеру
   imageSlider.appendChild(ulElement);
 
-  // Инициализируем LightSlider
   $(ulElement).lightSlider({
     gallery: true,
     item: 1,
     vertical: true,
-    thumbItem: car.images.length, // Количество миниатюр
+    thumbItem: car.images.length, 
     slideMargin: 10,
     enableDrag: true,
     currentPagerPosition: 'left',
@@ -151,9 +140,8 @@ function initImageSlider(car, sliderId) {
     loop: true,
     onSliderLoad: function () {
       console.log('Слайдер загружен');
-      // Инициализация LightGallery
       lightGallery(imageSlider, {
-        selector: 'a[data-lightgallery="item"]', // Используем ссылку с атрибутом data-lightgallery
+        selector: 'a[data-lightgallery="item"]', 
         allowMediaOverlap: true,
         toggleThumb: true
       });
@@ -174,7 +162,7 @@ function openFeedbackModal() {
 
 function closeModals() {
   const modals = document.querySelectorAll('.modal');
-  modals.forEach(modal => modal.classList.remove('active')); // Закрываем все модальные окна
+  modals.forEach(modal => modal.classList.remove('active'));
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -188,8 +176,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (closeFeedbackBtn) {
     closeFeedbackBtn.addEventListener('click', closeModals);
   }
-
-  // Убираем логику работы с оверлеем
 });
 
 

@@ -1001,7 +1001,32 @@ padding-top: 20px;
 }
 
 
+//catalog
+.catalog {
+  .catalog-list {
+    li {
+      display: inline-flex;
+      gap: 30px;
+      margin-bottom: 10px;
+      transition: border 0.5s ease; 
+      position: relative; 
 
+      img {
+        width: 200px;
+        aspect-ratio: 1;
+        transition: transform 0.5s ease;
+      }
+
+      &:hover {
+
+        img {
+          transform: scale(1.1); 
+          border: 1px solid $color--porcelain;
+        }
+      }
+    }
+  }
+}
 
 // rwd
 

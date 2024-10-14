@@ -29,6 +29,20 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 
 // wow
 new WOW().init();
+//baner slider
+
+$(document).ready(function() {
+  $('#baner').lightSlider({
+    item: 1,
+    controls: true,
+    loop: true,
+    auto: true,
+    slideMove: 1,
+    verticalHeight:500,
+    slideMargin: 0,
+    speed:300
+        });
+});
 
 //slider
 // $(document).ready(function() {

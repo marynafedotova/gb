@@ -402,38 +402,10 @@ h1{
       }
     }
   }
-}
-#hero-section{
-  .container{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-  }
-  .sidebar{
-    width: 35%;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #579816;
-    h1{
-      text-transform: uppercase;
-      color: #ffffff;
-      text-align: center;
-      padding: 30px;
-
-    }
-    form{
-      display: flex;
-      flex-direction: column;
-
-      select{
-        height: 40px;
-        cursor: pointer;
-        border: 1px solid #7E5AFF;
-        &:hover{
-          border: 1px solid #3C7FD4;
-        }
-      }
+  .baner-slider{
+    width: 60%;
+    .lSSlideOuter .lSPager.lSpg{
+      display: none;
     }
   }
 }

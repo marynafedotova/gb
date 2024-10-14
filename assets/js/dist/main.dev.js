@@ -22,7 +22,20 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 // var lazyLoadInstance = new LazyLoad({});
 // wow
 
-new WOW().init(); //slider
+new WOW().init(); //baner slider
+
+$(document).ready(function () {
+  $('#baner').lightSlider({
+    item: 1,
+    controls: true,
+    loop: true,
+    auto: true,
+    slideMove: 1,
+    verticalHeight: 500,
+    slideMargin: 0,
+    speed: 300
+  });
+}); //slider
 // $(document).ready(function() {
 //   $('#news_slider').lightSlider({
 //       item:3,

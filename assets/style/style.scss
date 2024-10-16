@@ -797,6 +797,14 @@ font-weight: 700;
         .cars-title{
           padding: 20px 40px;
         }
+        &:hover{
+          font-weight: 700;
+        background-color: $background-color;
+          border: 1px solid $ForestGreen;
+          a{
+            color: $color--porcelain;
+          }
+        }
         td{
           display: flex;
           align-items: center;
@@ -809,14 +817,7 @@ font-weight: 700;
             font-weight: 600;
             
           }
-          &:hover{
-            font-weight: 700;
-            transform: scale(1.1);
-
-            a{
-              color: $ForestGreen;
-            }
-          }
+          
         }
         
         button{
@@ -840,26 +841,6 @@ font-weight: 700;
 }
 
 
-.modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10000; // Высокий z-index для модального окна
-  background-color: rgba(0, 0, 0, 0.8); // Затемнение фона
-}
-.modal.active {
-  display: block; 
-}
-
-#feedback-modal {
-  background-color: $color--mine-shaft;
-  width: 100%;
-  position: fixed;
-  z-index: 10001; 
-}
 .accordion-content {
   display: flex;
   justify-content: space-between;
@@ -884,26 +865,57 @@ font-weight: 700;
   
   }
   #car-slider{
-    width: 60%;
+    width: 70%;
     height: 100%;
     .image-slider{
       .lSSlideWrapper.usingCss{
         height: 510px !important;
       }
       li {
-        border: 1px solid $ForestGreen;
+
         margin-bottom: 5px;
       }
     }
   }
 
 }
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; 
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 80%;
+  border-radius: 10px;
+}
 
+.modal.active {
+  display: block; 
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7); /* Прозрачный черный фон */
+  z-index: 999; /* Чуть ниже модального окна */
+}
+
+.overlay.active {
+  display: block; /* Активное состояние overlay */
+}
 
 
 #feedback-modal .modal-content{
   background-color: $color--oslo-gray;
 padding-top: 20px;
+width: 100%;
   .feedback-header{
     text-align: center;
     padding-bottom: 30px;
@@ -914,6 +926,7 @@ padding-top: 20px;
       font-weight: 700;
       margin-left: 38%;
       margin-right: 40%;
+      font-size: 1.1rem;
     }
     .close-feedback{
       background-color: $blue-gradient;

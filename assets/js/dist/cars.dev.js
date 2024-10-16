@@ -95,7 +95,7 @@ function initImageSlider(car, sliderId) {
     slideMargin: 10,
     enableDrag: true,
     currentPagerPosition: 'left',
-    controls: true,
+    controls: false,
     verticalHeight: 500,
     auto: true,
     loop: true,
@@ -110,31 +110,47 @@ function initImageSlider(car, sliderId) {
   });
 }
 
+var modal = document.getElementById('feedback-modal');
+var overlay = document.querySelector('.overlay');
+var closeModalButton = document.querySelector('.close-feedback');
+var openModalButton = document.querySelector('#btn-cars-order');
+openModalButton.addEventListener('click', function () {
+  modal.classList.add('active');
+  overlay.classList.add('active');
+});
+closeModalButton.addEventListener('click', function () {
+  modal.classList.remove('active');
+  overlay.classList.remove('active');
+});
+
 function openFeedbackModal() {
   var feedbackModal = document.getElementById('feedback-modal');
+  var overlay = document.querySelector('.overlay');
 
-  if (feedbackModal) {
+  if (feedbackModal && overlay) {
     console.log('Відкриття модального вікна');
     feedbackModal.classList.add('active');
+    overlay.classList.add('active'); // Добавляем активный класс для подложки
   } else {
-    console.error('Модальне вікно не знайдено');
+    console.error('Модальне вікно або overlay не знайдено');
   }
 }
 
 function closeModals() {
   var modals = document.querySelectorAll('.modal');
+  var overlay = document.querySelector('.overlay');
   modals.forEach(function (modal) {
     return modal.classList.remove('active');
   });
-}
+
+  if (overlay) {
+    overlay.classList.remove('active'); // Убираем активный класс у подложки
+  }
+} // Добавляем обработчик клика для кнопки закрытия модального окна
+
 
 document.addEventListener('DOMContentLoaded', function () {
-  var closeBtn = document.querySelector('.close');
   var closeFeedbackBtn = document.querySelector('.close-feedback');
-
-  if (closeBtn) {
-    closeBtn.addEventListener('click', closeModals);
-  }
 
   if (closeFeedbackBtn) {
     closeFeedbackBtn.addEventListener('click', closeModals);

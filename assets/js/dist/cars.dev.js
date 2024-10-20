@@ -40,8 +40,8 @@ function createTable(cars) {
       event.preventDefault();
       openFeedbackModal();
     });
-    bookingCell.appendChild(bookingButton);
-    row.appendChild(nameCell);
+    bookingCell.appendChild(bookingButton); // row.appendChild(nameCell);
+
     row.appendChild(bookingCell);
     tbody.appendChild(row);
     var accordionRow = document.createElement('tr');
@@ -130,7 +130,7 @@ function openFeedbackModal() {
   if (feedbackModal && overlay) {
     console.log('Відкриття модального вікна');
     feedbackModal.classList.add('active');
-    overlay.classList.add('active'); // Добавляем активный класс для подложки
+    overlay.classList.add('active');
   } else {
     console.error('Модальне вікно або overlay не знайдено');
   }
@@ -144,10 +144,9 @@ function closeModals() {
   });
 
   if (overlay) {
-    overlay.classList.remove('active'); // Убираем активный класс у подложки
+    overlay.classList.remove('active');
   }
-} // Добавляем обработчик клика для кнопки закрытия модального окна
-
+}
 
 document.addEventListener('DOMContentLoaded', function () {
   var closeFeedbackBtn = document.querySelector('.close-feedback');
@@ -155,7 +154,104 @@ document.addEventListener('DOMContentLoaded', function () {
   if (closeFeedbackBtn) {
     closeFeedbackBtn.addEventListener('click', closeModals);
   }
-}); //header
+}); // form
+
+document.getElementById('feedback-form_cars').addEventListener('submit', function (event) {
+  event.preventDefault();
+  var nameFld = document.getElementById('name');
+  var telFld = document.getElementById('phone');
+  var emailFld = document.getElementById('email');
+  var rozdiFld = document.getElementById('rozdil');
+  var pidrozdiFld = document.getElementById('pidrozdil');
+  var zapchastFld = document.getElementById('zapchast');
+  var commentsFld = document.getElementById('comments');
+  var name = nameFld.value.trim();
+  var phone = telFld.value.trim();
+  var email = emailFld.value.trim();
+  var rozdi = rozdiFld.value.trim();
+  var pidrozdi = pidrozdiFld.value.trim();
+  var zapchast = zapchastFld.value.trim();
+  var comments = commentsFld.value.trim();
+  var errors = []; // Очистка классов ошибок
+
+  nameFld.classList.remove('is-invalid');
+  telFld.classList.remove('is-invalid'); // Валидация имени
+
+  if (name === '') {
+    toast.error("Введіть, будь ласка, Ваше ім'я");
+    nameFld.classList.add('is-invalid');
+  } else if (name.length < 2) {
+    toast.error("Ваше ім'я занадто коротке");
+    nameFld.classList.add('is-invalid');
+  } else {
+    nameFld.classList.remove('is-invalid');
+  }
+
+  if (phone === '' || phone.length < 17) {
+    toast.error('Введіть, будь ласка, правильний номер телефону');
+    telFld.classList.add('is-invalid');
+  } else {
+    telFld.classList.remove('is-invalid');
+  }
+
+  if (email === '') {
+    toast.error("Введіть, будь ласка, Вашу електронну пошту");
+    emailFld.classList.add('is-invalid');
+  } else if (!isValidEmail(email)) {
+    toast.error("Невірний формат електронної пошти");
+    emailFld.classList.add('is-invalid');
+  } else {
+    emailFld.classList.remove('is-invalid');
+  } // Если есть ошибки, не отправляйте форму
+
+
+  if (nameFld.classList.contains('is-invalid') || telFld.classList.contains('is-invalid') || emailFld.classList.contains('is-invalid')) {
+    return;
+  } // Отправка данных в Telegram
+
+
+  var CHAT_ID = '836622266';
+  var BOT_TOKEN = '7527794477:AAFxOk9l6CH8EccTk9at2uVM3OSyEZbrUCw';
+  var message = "\n\uD83D\uDE97 <b>\u041D\u043E\u0432\u0435 \u0431\u0440\u043E\u043D\u044E\u0432\u0430\u043D\u043D\u044F \u0430\u0432\u0442\u043E</b> \uD83D\uDE97\n\n    \u0406\u043C'\u044F: ".concat(name, "\n\n    \u0422\u0435\u043B\u0435\u0444\u043E\u043D: ").concat(phone, "\n\n    Email: ").concat(email, "\n\n    \u0420\u043E\u0437\u0434\u0456\u043B \u0437\u0430\u043F\u0447\u0430\u0441\u0442\u0438\u043D: ").concat(rozdi, "\n\n    \u041F\u0456\u0434\u0440\u043E\u0437\u0434\u0456\u043B \u0437\u0430\u043F\u0447\u0430\u0441\u0442\u0438\u043D: ").concat(pidrozdi, "\n\n    \u0417\u0430\u043F\u0447\u0430\u0441\u0442\u0438\u043D\u0438: ").concat(zapchast, "\n\n    \u041A\u043E\u043C\u0435\u043D\u0442\u0430\u0440\u0456: ").concat(comments || 'Без коментарів', "\n  ");
+  var url = "https://api.telegram.org/bot".concat(BOT_TOKEN, "/sendMessage?chat_id=").concat(CHAT_ID, "&text=").concat(encodeURIComponent(message), "&parse_mode=HTML");
+  fetch(url, {
+    method: 'POST'
+  }).then(function (response) {
+    return response.json();
+  }).then(function (data) {
+    if (data.ok) {
+      nameFld.value = '';
+      telFld.value = '';
+      toast.success('Ваше повідомлення успішно надіслано.');
+      closeModals();
+    } else {
+      toast.error('Сталася помилка.');
+    }
+  })["catch"](function (error) {
+    toast.error('Помилка: ' + error.message);
+  });
+}); // Форматирование телефона
+
+document.getElementById('phone').addEventListener('input', function (e) {
+  var input = e.target.value.replace(/\D/g, '');
+  var formattedInput = '';
+  if (input.length > 0) formattedInput += '+38 (';
+  if (input.length >= 1) formattedInput += input.substring(0, 3);
+  if (input.length >= 4) formattedInput += ') ' + input.substring(3, 6);
+  if (input.length >= 7) formattedInput += '-' + input.substring(6, 8);
+  if (input.length >= 9) formattedInput += '-' + input.substring(8, 10);
+  e.target.value = formattedInput;
+}); // Запрещаем ввод чисел в поле имени
+
+document.getElementById('name').addEventListener('input', function (e) {
+  e.target.value = e.target.value.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
+});
+
+function isValidEmail(email) {
+  var emailPattern = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  return emailPattern.test(email);
+} //header
+
 
 var header = document.querySelector('header');
 window.addEventListener('scroll', function () {

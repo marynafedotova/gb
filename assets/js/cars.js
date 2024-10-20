@@ -50,7 +50,7 @@ function createTable(cars) {
     });
     bookingCell.appendChild(bookingButton);
     
-    row.appendChild(nameCell);
+    // row.appendChild(nameCell);
     row.appendChild(bookingCell);
     tbody.appendChild(row);
     
@@ -172,7 +172,7 @@ function openFeedbackModal() {
   if (feedbackModal && overlay) {
     console.log('Відкриття модального вікна');
     feedbackModal.classList.add('active');
-    overlay.classList.add('active');  // Добавляем активный класс для подложки
+    overlay.classList.add('active');
   } else {
     console.error('Модальне вікно або overlay не знайдено');
   }
@@ -184,11 +184,10 @@ function closeModals() {
   
   modals.forEach(modal => modal.classList.remove('active'));
   if (overlay) {
-    overlay.classList.remove('active');  // Убираем активный класс у подложки
+    overlay.classList.remove('active');
   }
 }
 
-// Добавляем обработчик клика для кнопки закрытия модального окна
 document.addEventListener('DOMContentLoaded', () => {
   const closeFeedbackBtn = document.querySelector('.close-feedback');
 
@@ -197,7 +196,120 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
+// form
+document.getElementById('feedback-form_cars').addEventListener('submit', function(event) {
+  event.preventDefault();
 
+  const nameFld = document.getElementById('name');
+  const telFld = document.getElementById('phone');
+  const emailFld = document.getElementById('email');
+  const rozdiFld = document.getElementById('rozdil');
+  const pidrozdiFld = document.getElementById('pidrozdil');
+  const zapchastFld = document.getElementById('zapchast');
+  const commentsFld = document.getElementById('comments');
+
+  const name = nameFld.value.trim();
+  const phone = telFld.value.trim();
+  const email = emailFld.value.trim();
+  const rozdi = rozdiFld.value.trim();
+  const pidrozdi = pidrozdiFld.value.trim();
+  const zapchast = zapchastFld.value.trim();
+  const comments = commentsFld.value.trim();
+
+  const errors = [];
+
+  // Очистка классов ошибок
+  nameFld.classList.remove('is-invalid');
+  telFld.classList.remove('is-invalid');
+
+  // Валидация имени
+  if (name === '') {
+    toast.error("Введіть, будь ласка, Ваше ім'я");
+    nameFld.classList.add('is-invalid');
+} else if (name.length < 2) {
+    toast.error("Ваше ім'я занадто коротке");
+    nameFld.classList.add('is-invalid');
+} else {
+    nameFld.classList.remove('is-invalid');
+}
+
+if (phone === '' || phone.length < 17) {
+    toast.error('Введіть, будь ласка, правильний номер телефону');
+    telFld.classList.add('is-invalid');
+} else {
+    telFld.classList.remove('is-invalid');
+}
+if (email === '') {
+  toast.error("Введіть, будь ласка, Вашу електронну пошту");
+  emailFld.classList.add('is-invalid');
+} else if (!isValidEmail(email)) {
+  toast.error("Невірний формат електронної пошти");
+  emailFld.classList.add('is-invalid');
+} else {
+  emailFld.classList.remove('is-invalid');
+}
+// Если есть ошибки, не отправляйте форму
+if (nameFld.classList.contains('is-invalid') || telFld.classList.contains('is-invalid') || emailFld.classList.contains('is-invalid')) {
+  return;
+}
+  // Отправка данных в Telegram
+  const CHAT_ID = '836622266';
+  const BOT_TOKEN = '7527794477:AAFxOk9l6CH8EccTk9at2uVM3OSyEZbrUCw';
+  const message = `
+🚗 <b>Нове бронювання авто</b> 🚗\n
+    Ім'я: ${name}\n
+    Телефон: ${phone}\n
+    Email: ${email}\n
+    Розділ запчастин: ${rozdi}\n
+    Підрозділ запчастин: ${pidrozdi}\n
+    Запчастини: ${zapchast}\n
+    Коментарі: ${comments || 'Без коментарів'}
+  `;
+
+  const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=HTML`;
+
+  fetch(url, {
+    method: 'POST',
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.ok) {
+      nameFld.value = '';
+      telFld.value = '';
+      toast.success('Ваше повідомлення успішно надіслано.');
+      closeModals();
+    } else {
+      toast.error('Сталася помилка.');
+    }
+  })
+  .catch(error => {
+    toast.error('Помилка: ' + error.message);
+  });
+});
+
+// Форматирование телефона
+document.getElementById('phone').addEventListener('input', function(e) {
+  let input = e.target.value.replace(/\D/g, ''); 
+  let formattedInput = '';
+
+  if (input.length > 0) formattedInput += '+38 (';
+  if (input.length >= 1) formattedInput += input.substring(0, 3);
+  if (input.length >= 4) formattedInput += ') ' + input.substring(3, 6);
+  if (input.length >= 7) formattedInput += '-' + input.substring(6, 8);
+  if (input.length >= 9) formattedInput += '-' + input.substring(8, 10);
+
+  e.target.value = formattedInput;
+});
+
+// Запрещаем ввод чисел в поле имени
+document.getElementById('name').addEventListener('input', function(e) {
+  e.target.value = e.target.value.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
+});
+
+function isValidEmail(email) {
+  const emailPattern = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+  return emailPattern.test(email);
+}
 
 
 //header

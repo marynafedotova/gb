@@ -800,7 +800,6 @@ font-weight: 700;
         &:hover{
           font-weight: 700;
         background-color: $background-color;
-          border: 1px solid $ForestGreen;
           a{
             color: $color--porcelain;
           }
@@ -808,18 +807,14 @@ font-weight: 700;
         td{
           display: flex;
           align-items: center;
-          
           a{
             padding-left: 40px;
             color: $background-icon;
             text-decoration: underline;
             transition: all .5s ease;
             font-weight: 600;
-            
           }
-          
         }
-        
         button{
           margin: 10px;
           padding: 10px 20px;
@@ -862,7 +857,6 @@ font-weight: 700;
         font-weight: 600;
       }
     }
-  
   }
   #car-slider{
     width: 70%;
@@ -937,7 +931,7 @@ width: 100%;
       }
     }
   }
-  #feedback-form{
+  #feedback-form_cars{
     display: flex;
     flex-direction: wrap;
     flex-wrap: wrap;
@@ -1042,6 +1036,60 @@ width: 100%;
         }
       }
     }
+  }
+}
+.product-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px; // Відстань між картками товарів
+  justify-content: center; // Центруємо картки по горизонталі
+}
+
+.product-card {
+  width: 20%; // Ширина кожної картки
+  border: 1px solid #ccc; // Обведення картки
+  border-radius: 8px; // Закруглені кути
+  padding: 15px; // Внутрішні відступи
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Тінь для картки
+  transition: transform 0.3s; // Анімація при наведенні
+
+  // Стиль для зображення
+  img {
+    max-width: 100%; // Максимальна ширина зображення
+    height: auto; // Автоматична висота
+    border-radius: 4px; // Закруглені кути зображення
+  }
+
+  h3 {
+    margin: 10px 0; // Відступи для заголовків
+    font-size: 1.2em; // Розмір шрифту заголовка
+  }
+
+  p {
+    margin: 10px 0; // Відступи для параграфа
+    font-size: 1em; // Розмір шрифту для ціни
+    color: #333; // Колір тексту
+  }
+
+  a {
+    display: inline-block; // Кнопка
+    padding: 10px 15px; // Внутрішні відступи кнопки
+    background-color: #007bff; // Колір фону кнопки
+    color: #fff; // Колір тексту кнопки
+    text-align: center; // Центрування тексту
+    border-radius: 4px; // Закруглені кути кнопки
+    text-decoration: none; // Вимкнення підкреслення
+
+    &:hover {
+      background-color: #0056b3; // Темніший колір при наведенні
+    }
+  }
+
+  // Ефект при наведенні на картку
+  &:hover {
+    transform: translateY(-5px); // Піднімання картки при наведенні
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); // Збільшення тіні
   }
 }
 

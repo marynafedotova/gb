@@ -4,9 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style/lightslider.css">
-    <link rel="stylesheet" href="../style/leaflet.css">
+    <link rel="stylesheet" href="../style/lightgallery.css">
+    <link rel="stylesheet" href="../style/lightgallery-bundle.min.css">
+    <link rel="stylesheet" href="../style/lg-thumbnail.css">
+    <link rel="stylesheet" href="../style/lg-zoom.css">
+  
     <link rel="stylesheet" href="../style/animate.min.css">
     <link rel="stylesheet" href="../style/style.min.css">
+  
     <!-- Icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="../img/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png">
@@ -144,16 +149,37 @@
 
       </div>
     </header>
-    <div class="container">
-      <div class="product-details">
-      <img class="product-image" src="" alt="">
-      <div class="product-images"></div>
-      <h1 class="product-name"></h1>
-      <p class="product-price"></p>
-      <p class="product-description"></p>
-      <a href="../pages/catalog.html">Назад до каталогу</a>
-    </div>
-  </div>
+    <section class="product-section">
+      <div class="container">
+        <div class="product-details">
+          <div class="product-image-slider"> 
+            <ul id="imageGallery">
+            </ul>
+          </div>
+          <div class="product-item">
+            <h1 class="product-name"></h1>
+            <div class="product-title-item">Ціна:<div class="product-price"></div></div>
+            <div class="product-title-item">Марка авто:<div class="product-markaavto"></div></div>
+            <div class="product-title-item">Модель:<div class="product-model"></div></div>
+            <div class="product-title-item">Рік випуску:<div class="product-god"></div></div>
+            <div class="product-title-item">Номер:<div class="product-originalnumber"></div></div>
+            <div class="product-title-item">Категорія:<div class="product-category"></div></div>
+            <div class="product-title-item">Підкатегорія:<div class="product-pod_category"></div></div>
+            <div class="product-title-item">Доп.категорія:<div class="product-dop_category"></div></div>
+            <div class="product-title-item">Паливо:<div class="product-toplivo"></div></div>
+            <div class="product-title-item">Тип кузова:<div class="product-typ_kuzova"></div></div>
+            <div class="product-title-item">Опис:<div class="product-description"></div></div>
+            <button class="add-to-cart"
+              data-id="${product.ID_EXT}"
+              data-price="${product.zena}"
+              data-tipe="${product.zapchast}">Додати до кошика</button>
+          </div>
+          </div>
+          <div class="btn-to-catalog">
+            <a href="../pages/catalog.html">Назад до каталогу</a>
+          </div>
+      </div>
+    </section>
     <footer>
       <div class="container">
         <div class="schedule">
@@ -218,10 +244,16 @@
           <div class="f-link"><a href="../pages/abuotus.html">Про нас</a></div>
           <div class="f-link"><a href="https://www.work.ua/jobs/by-company/2506907/"  target="_blank" rel="nofollow">Вакансії</a></div>
         </div>
+<!-- Підключайте jQuery перед LightSlider та LightGallery -->
         <script src="../js/jquery/jquery-3.7.1.min.js"></script>
-        <script src="../js/wow.min.js"></script>
+        <script src="../js/plagins/lightslider.min.js"></script>
+        <script src="../js/plagins/lightgallery.min.js"></script>
+        <script src="../js/plagins/lightgallery.umd.js"></script>
+        <script src="../js/plagins/lg-thumbnail.min.js"></script>
+        <script src="../js/plagins/lg-zoom.min.js"></script>
         <script src="../js/toast.js"></script>
         <script src="../js/product.js"></script>
+
       </div>
       <span>© 2024</span>
     </div>

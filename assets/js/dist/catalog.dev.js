@@ -2,76 +2,90 @@
 
 // catalog products
 var currentProductIndex = 0;
-var productsPerPage = 10;
-var products = []; // Масив для зберігання продуктів
-// Функція для відображення товарів
+var productsPerPage = 12;
+var products = [];
 
 function displayProducts() {
-  var productContainer = document.querySelector('.product-list'); // Відображаємо товари до currentProductIndex
+  var productContainer = document.querySelector('.product-list');
+
+  if (!productContainer) {
+    console.error('Контейнер для товарів не знайдено.');
+    return;
+  }
 
   var productsToDisplay = products.slice(currentProductIndex, currentProductIndex + productsPerPage);
   productsToDisplay.forEach(function (product) {
-    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\">\n        <h3>").concat(product.ID_EXT, "</h3>\n        <h3>").concat(product.zapchast, "</h3>\n        <p>").concat(product.zena, " ").concat(product.valyuta, "</p>\n       <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n      </div>\n    ");
-    productContainer.innerHTML += productCard;
-  }); // Оновлюємо індекс для наступного завантаження
-
-  currentProductIndex += productsPerPage; // Перевіряємо, чи є ще товари для завантаження
+    var productCard = "\n    <div class=\"product-card\">\n      <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\">\n      <h3>").concat(product.ID_EXT, "</h3>\n      <h3>").concat(product.zapchast, "</h3>\n      <p>").concat(product.zena, " ").concat(product.valyuta, "</p>\n      \n      <div class=\"btn-cart\"><button class=\"add-to-cart\"\n        data-id=\"").concat(product.ID_EXT, "\"\n        data-price=\"").concat(product.zena, "\"\n        data-tipe=\"").concat(product.zapchast, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n      <div class=\"product_btn\">\n        <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n      </div>\n    </div>\n  ");
+    productContainer.insertAdjacentHTML('beforeend', productCard);
+  });
+  currentProductIndex += productsPerPage;
 
   if (currentProductIndex >= products.length) {
-    document.querySelector('.load-more').style.display = 'none'; // Ховаємо кнопку, якщо більше немає товарів
+    document.querySelector('.load-more').style.display = 'none';
   }
-} // Завантажуємо товари з JSON
+}
 
+fetch('../data/data.json').then(function (response) {
+  if (!response.ok) {
+    throw new Error('Ошибка загрузки файла JSON');
+  }
 
-fetch('../data/products.json').then(function (response) {
   return response.json();
 }).then(function (data) {
-  products = data.Sheet1; // Зберігаємо продукти в масиві
+  if (!data || !data.Sheet1) {
+    throw new Error('Некорректный формат данных');
+  }
 
-  displayProducts(); // Відображаємо перші 10 товарів
-  // Додаємо обробник події для кнопки "Завантажити більше" тільки після завантаження продуктів
-
+  products = data.Sheet1;
+  displayProducts();
   var loadMoreButton = document.querySelector('.load-more');
 
   if (loadMoreButton) {
-    loadMoreButton.addEventListener('click', displayProducts);
-  } else {
-    console.error('Кнопка "Завантажити більше" не знайдена.');
+    loadMoreButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      displayProducts();
+    });
   }
 })["catch"](function (error) {
   return console.error('Помилка завантаження каталогу:', error);
-}); // Отримуємо ID продукту з URL
-
+});
 var urlParams = new URLSearchParams(window.location.search);
-var productId = urlParams.get('id'); // // Завантажуємо конкретний продукт на сторінці товару
-// if (productId) {
-//   fetch('../data/products.json')
-//     .then(response => response.json())
-//     .then(data => {
-//       const product = data.Sheet1.find(item => item.ID_EXT === productId);
-//       if (product) {
-//         // Відображаємо деталі продукту
-//         document.querySelector('.product-name').textContent = product.zapchast;
-//         document.querySelector('.product-price').textContent = product.zena + ' ' + product.valyuta;
-//         document.querySelector('.product-description').textContent = product.opysanye;
-//         document.querySelector('.product-image').src = product.photo.split(',')[0].trim();
-//         // Додаємо додаткові зображення товару
-//         const imageContainer = document.querySelector('.product-images');
-//         if (product.photo && typeof product.photo === 'string') {
-//           product.photo.split(',').forEach(photoUrl => {
-//             const imgElement = `<img src="${photoUrl.trim()}" alt="${product.zapchast}" style="width: 150px; height: auto;">`;
-//             imageContainer.innerHTML += imgElement;
-//           });
-//         } else {
-//           console.error('Поле photo не містить даних або не є рядком для товару з ID:', product.ID_EXT);
-//         }
-//       } else {
-//         console.error('Продукт з ID не знайдено:', productId);
-//       }
-//     })
-//     .catch(error => console.error('Помилка завантаження даних продукту:', error));
-// }
-//header
+var productId = urlParams.get('id');
+document.addEventListener('DOMContentLoaded', function () {
+  shoppingCart.initCart();
+  var openCartButton = document.getElementById('openCartBtn');
+
+  if (openCartButton) {
+    openCartButton.addEventListener('click', function () {
+      if (shoppingCart.cart.length === 0) {
+        toast.warning('Кошик порожній!');
+        console.log('Кошик порожній!');
+      } else {
+        showCartModal();
+        shoppingCart.updateCartDisplay();
+      }
+    });
+  }
+
+  document.addEventListener('click', function (event) {
+    if (event.target.classList.contains('add-to-cart')) {
+      event.preventDefault();
+      var button = event.target;
+      var item = {
+        id: button.getAttribute('data-id'),
+        price: Number(button.getAttribute('data-price')),
+        tipe: button.getAttribute('data-tipe'),
+        quantity: 1
+      };
+      shoppingCart.addItemToCart(item);
+      showCartModal();
+      console.log("Кнопка 'Добавить в корзину' нажата!");
+      console.log("ID товара:", button.getAttribute('data-id')); // Проверяем ID
+
+      console.log("Добавляем товар:", item); // Проверяем объект товара
+    }
+  });
+}); //header
 
 var header = document.querySelector('header');
 window.addEventListener('scroll', function () {

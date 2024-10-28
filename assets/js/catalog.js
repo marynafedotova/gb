@@ -1,88 +1,109 @@
 // catalog products
 let currentProductIndex = 0;
-const productsPerPage = 10;
-let products = []; // Масив для зберігання продуктів
+const productsPerPage = 12;
+let products = [];
 
-// Функція для відображення товарів
 function displayProducts() {
   const productContainer = document.querySelector('.product-list');
-  
-  // Відображаємо товари до currentProductIndex
+  if (!productContainer) {
+    console.error('Контейнер для товарів не знайдено.');
+    return;
+  }
+
   const productsToDisplay = products.slice(currentProductIndex, currentProductIndex + productsPerPage);
-  
+
   productsToDisplay.forEach(product => {
     const productCard = `
-      <div class="product-card">
-        <img src="${product.photo.split(',')[0].trim()}" alt="${product.zapchast}">
-        <h3>${product.ID_EXT}</h3>
-        <h3>${product.zapchast}</h3>
-        <p>${product.zena} ${product.valyuta}</p>
-       <a href="product.html?id=${product.ID_EXT}">Детальніше</a>
+    <div class="product-card">
+      <img src="${product.photo.split(',')[0].trim()}" alt="${product.zapchast}">
+      <h3>${product.ID_EXT}</h3>
+      <h3>${product.zapchast}</h3>
+      <p>${product.zena} ${product.valyuta}</p>
+      
+      <div class="btn-cart"><button class="add-to-cart"
+        data-id="${product.ID_EXT}"
+        data-price="${product.zena}"
+        data-tipe="${product.zapchast}">Додати до кошика</button>
+        </div>
+      <div class="product_btn">
+        <a href="product.html?id=${product.ID_EXT}">Детальніше</a>
       </div>
-    `;
-    productContainer.innerHTML += productCard;
+    </div>
+  `;
+      productContainer.insertAdjacentHTML('beforeend', productCard);
   });
-  
-  // Оновлюємо індекс для наступного завантаження
+
   currentProductIndex += productsPerPage;
 
-  // Перевіряємо, чи є ще товари для завантаження
   if (currentProductIndex >= products.length) {
-    document.querySelector('.load-more').style.display = 'none'; // Ховаємо кнопку, якщо більше немає товарів
+    document.querySelector('.load-more').style.display = 'none'; 
   }
 }
-
-// Завантажуємо товари з JSON
-fetch('../data/products.json')
-  .then(response => response.json())
+fetch('../data/data.json')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Ошибка загрузки файла JSON');
+    }
+    return response.json();
+  })
   .then(data => {
-    products = data.Sheet1; // Зберігаємо продукти в масиві
-    displayProducts(); // Відображаємо перші 10 товарів
-
-    // Додаємо обробник події для кнопки "Завантажити більше" тільки після завантаження продуктів
+    if (!data || !data.Sheet1) {
+      throw new Error('Некорректный формат данных');
+    }
+    products = data.Sheet1;
+    displayProducts(); 
     const loadMoreButton = document.querySelector('.load-more');
     if (loadMoreButton) {
-      loadMoreButton.addEventListener('click', displayProducts);
-    } else {
-      console.error('Кнопка "Завантажити більше" не знайдена.');
-    }
+      loadMoreButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        displayProducts();
+      });
+    }    
   })
   .catch(error => console.error('Помилка завантаження каталогу:', error));
 
-// Отримуємо ID продукту з URL
+
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('id');
 
-// // Завантажуємо конкретний продукт на сторінці товару
-// if (productId) {
-//   fetch('../data/products.json')
-//     .then(response => response.json())
-//     .then(data => {
-//       const product = data.Sheet1.find(item => item.ID_EXT === productId);
+document.addEventListener('DOMContentLoaded', function() {
+  shoppingCart.initCart();
 
-//       if (product) {
-//         // Відображаємо деталі продукту
-//         document.querySelector('.product-name').textContent = product.zapchast;
-//         document.querySelector('.product-price').textContent = product.zena + ' ' + product.valyuta;
-//         document.querySelector('.product-description').textContent = product.opysanye;
-//         document.querySelector('.product-image').src = product.photo.split(',')[0].trim();
+  const openCartButton = document.getElementById('openCartBtn');
+  if (openCartButton) {
+    openCartButton.addEventListener('click', function() {
+      if (shoppingCart.cart.length === 0) {
+        toast.warning('Кошик порожній!');
+        console.log('Кошик порожній!');
+      } else {
+        showCartModal();
+        shoppingCart.updateCartDisplay();
+      }
+    });
+  }
 
-//         // Додаємо додаткові зображення товару
-//         const imageContainer = document.querySelector('.product-images');
-//         if (product.photo && typeof product.photo === 'string') {
-//           product.photo.split(',').forEach(photoUrl => {
-//             const imgElement = `<img src="${photoUrl.trim()}" alt="${product.zapchast}" style="width: 150px; height: auto;">`;
-//             imageContainer.innerHTML += imgElement;
-//           });
-//         } else {
-//           console.error('Поле photo не містить даних або не є рядком для товару з ID:', product.ID_EXT);
-//         }
-//       } else {
-//         console.error('Продукт з ID не знайдено:', productId);
-//       }
-//     })
-//     .catch(error => console.error('Помилка завантаження даних продукту:', error));
-// }
+  document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('add-to-cart')) {
+      event.preventDefault();
+      const button = event.target;
+      const item = {
+        id: button.getAttribute('data-id'),
+        price: Number(button.getAttribute('data-price')), 
+        tipe: button.getAttribute('data-tipe'), 
+        quantity: 1
+        
+      };
+      shoppingCart.addItemToCart(item);
+      showCartModal();
+      console.log("Кнопка 'Добавить в корзину' нажата!");
+      console.log("ID товара:", button.getAttribute('data-id')); // Проверяем ID
+console.log("Добавляем товар:", item); // Проверяем объект товара
+    }
+  });
+  
+});
+
+
 
 
 //header

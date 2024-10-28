@@ -1150,11 +1150,41 @@ width: 100%;
     }
   }
 }
-
+.first_screan_catalog .sidebar {
+  background-color: transparent;
+margin-top: 32px;
+box-shadow: 8px 8px 16px rgba(240, 235, 235, 0.1); 
+border-top: 1px solid $form-text;
+h2{
+  text-align: center;
+  padding: 24px;
+  color: $ForestGreen;
+}
+form#search-product{
+  padding: 16px;
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+  select{
+    width: 100%;
+    border: 1px solid $background-icon;
+  }
+  #search-sidebar-catalog{
+    padding: 16px 16px;
+    margin-left: 8px;
+    width: 100%;
+    background-color: $ForestGreen;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 700;
+    border: 1px solid $color--porcelain;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1); 
+  }
+}
+}
 //product-details
-// .product-details{
 
-// }
 
 
 

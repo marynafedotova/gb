@@ -1154,6 +1154,30 @@ width: 100%;
     }
   }
 }
+
+.info-block{
+  padding: 32px 0;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1); 
+  .info-header{
+    display: flex;
+    justify-content: space-around;
+    .info-tab{
+      background-color: $form-text;
+      padding: 16px 8%;
+      border: 1px solid $color--oslo-gray;
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: all .3s ease;
+      &:hover{
+        background-color: $background-icon;
+      }
+    }
+  }
+  .guarantees-info{
+    padding-top: 32px;
+  }
+}
 .info-content {
   display: none;  
 }
@@ -1163,27 +1187,10 @@ width: 100%;
 }
 
 .info-tab.active {
-  font-weight: bold;
+  font-weight: 800;
+  color: $ForestGreen;
 }
 
-.info-block{
-  padding: 32px 0;
-  margin-bottom: 24px;
-  box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1); 
-  .info-header{
-    display: flex;
-    justify-content: space-around;
-    #deteils, #analog,#delivery, #guarantees{
-      background-color: $color--gray;
-      padding: 16px 8%;
-      border: 1px solid $color--oslo-gray;
-      border-radius: 8px;
-    }
-  }
-  .guarantees-info{
-    padding-top: 32px;
-  }
-}
  .catalog{
   text-align: center;
   .product-list{

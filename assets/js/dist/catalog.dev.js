@@ -1,5 +1,13 @@
 "use strict";
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
+
+function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) { return; } var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 // catalog products
 var currentProductIndex = 0;
 var productsPerPage = 12;
@@ -85,6 +93,110 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log("Добавляем товар:", item); // Проверяем объект товара
     }
   });
+});
+fetch('../data/data.json').then(function (response) {
+  return response.json();
+}).then(function (data) {
+  var cars = data.Sheet1.map(function (item) {
+    return {
+      markaavto: item.markaavto,
+      model: item.model
+    };
+  });
+  var carAccordionData = cars.reduce(function (acc, car) {
+    if (!acc[car.markaavto]) {
+      acc[car.markaavto] = new Set();
+    }
+
+    acc[car.markaavto].add(car.model);
+    return acc;
+  }, {});
+  var accordionContainer = document.getElementById('carAccordion');
+
+  var _loop = function _loop() {
+    var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+        make = _Object$entries$_i[0],
+        models = _Object$entries$_i[1];
+
+    var makeDiv = document.createElement('div');
+    makeDiv.classList.add('accordion-item');
+    var makeHeader = document.createElement('h3');
+    makeHeader.textContent = make;
+    makeHeader.classList.add('accordion-header');
+    makeHeader.addEventListener('click', function () {
+      modelList.classList.toggle('active');
+    });
+    makeDiv.appendChild(makeHeader);
+    var modelList = document.createElement('div');
+    modelList.classList.add('accordion-content');
+    models.forEach(function (model) {
+      var modelItem = document.createElement('p');
+      modelItem.textContent = model;
+      modelList.appendChild(modelItem);
+    });
+    makeDiv.appendChild(modelList);
+    accordionContainer.appendChild(makeDiv);
+  };
+
+  for (var _i = 0, _Object$entries = Object.entries(carAccordionData); _i < _Object$entries.length; _i++) {
+    _loop();
+  }
+})["catch"](function (error) {
+  return console.error('Помилка завантаження даних:', error);
+}); //cars
+
+fetch('../data/data.json').then(function (response) {
+  return response.json();
+}).then(function (data) {
+  var carsCatalog = document.getElementById('cars-catalog');
+  var uniqueCars = new Set();
+  var carsArray = []; // Додаємо визначення масиву
+  // Збираємо унікальні автомобілі
+
+  data.Sheet1.forEach(function (car) {
+    var uniqueKey = "".concat(car.markaavto, "-").concat(car.model, "-").concat(car.god);
+
+    if (!uniqueCars.has(uniqueKey)) {
+      uniqueCars.add(uniqueKey); // Додаємо автомобіль до масиву
+
+      var carObject = {
+        markaavto: car.markaavto,
+        model: car.model,
+        god: car.god,
+        pictures: car.pictures // Змінити на правильне поле для зображення
+
+      };
+      carsArray.push(carObject); // Додаємо об'єкт автомобіля в масив
+    }
+  }); // Сортуємо масив автомобілів за маркою в алфавітному порядку
+
+  var sortedCars = carsArray.sort(function (a, b) {
+    // Перевіряємо, чи markaavto не є null або undefined
+    var makeA = a.markaavto || '';
+    var makeB = b.markaavto || '';
+    return makeA.localeCompare(makeB);
+  }); // Відображаємо відсортовані автомобілі
+
+  sortedCars.forEach(function (car) {
+    var carCard = document.createElement('div');
+    carCard.classList.add('car-card');
+    var carImage = document.createElement('img');
+    carImage.src = car.pictures;
+    carImage.alt = "".concat(car.markaavto, " ").concat(car.model);
+    carCard.appendChild(carImage);
+    var carDetails = document.createElement('div');
+    carDetails.classList.add('car-details');
+    var carMakeModel = document.createElement('h3');
+    carMakeModel.textContent = "".concat(car.markaavto, " ").concat(car.model);
+    carDetails.appendChild(carMakeModel);
+    var carYear = document.createElement('p');
+    carYear.textContent = "\u0420\u0456\u043A: ".concat(car.god);
+    carDetails.appendChild(carYear);
+    carCard.appendChild(carDetails);
+    carsCatalog.appendChild(carCard);
+  });
+})["catch"](function (error) {
+  return console.error('Помилка завантаження даних:', error);
 }); //header
 
 var header = document.querySelector('header');

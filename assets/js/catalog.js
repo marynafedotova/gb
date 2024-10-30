@@ -103,7 +103,108 @@ console.log("Добавляем товар:", item); // Проверяем об�
   
 });
 
+fetch('../data/data.json')
+    .then(response => response.json())
+    .then(data => {
+        const cars = data.Sheet1.map(item => ({
+            markaavto: item.markaavto,
+            model: item.model
+        }));
 
+        const carAccordionData = cars.reduce((acc, car) => {
+            if (!acc[car.markaavto]) {
+                acc[car.markaavto] = new Set();
+            }
+            acc[car.markaavto].add(car.model);
+            return acc;
+        }, {});
+
+        const accordionContainer = document.getElementById('carAccordion');
+        for (const [make, models] of Object.entries(carAccordionData)) {
+            const makeDiv = document.createElement('div');
+            makeDiv.classList.add('accordion-item');
+
+            const makeHeader = document.createElement('h3');
+            makeHeader.textContent = make;
+            makeHeader.classList.add('accordion-header');
+            makeHeader.addEventListener('click', () => {
+                modelList.classList.toggle('active');
+            });
+            makeDiv.appendChild(makeHeader);
+
+            const modelList = document.createElement('div');
+            modelList.classList.add('accordion-content');
+            models.forEach(model => {
+                const modelItem = document.createElement('p');
+                modelItem.textContent = model;
+                modelList.appendChild(modelItem);
+            });
+
+            makeDiv.appendChild(modelList);
+            accordionContainer.appendChild(makeDiv);
+        }
+    })
+    .catch(error => console.error('Помилка завантаження даних:', error));
+//cars
+fetch('../data/data.json')
+    .then(response => response.json())
+    .then(data => {
+        const carsCatalog = document.getElementById('cars-catalog');
+        const uniqueCars = new Set();
+        const carsArray = []; // Додаємо визначення масиву
+
+        // Збираємо унікальні автомобілі
+        data.Sheet1.forEach(car => {
+            const uniqueKey = `${car.markaavto}-${car.model}-${car.god}`;
+
+            if (!uniqueCars.has(uniqueKey)) {
+                uniqueCars.add(uniqueKey);
+
+                // Додаємо автомобіль до масиву
+                const carObject = {
+                    markaavto: car.markaavto,
+                    model: car.model,
+                    god: car.god,
+                    pictures: car.pictures // Змінити на правильне поле для зображення
+                };
+                carsArray.push(carObject); // Додаємо об'єкт автомобіля в масив
+            }
+        });
+
+        // Сортуємо масив автомобілів за маркою в алфавітному порядку
+        const sortedCars = carsArray.sort((a, b) => {
+            // Перевіряємо, чи markaavto не є null або undefined
+            const makeA = a.markaavto || '';
+            const makeB = b.markaavto || '';
+            return makeA.localeCompare(makeB);
+        });
+
+        // Відображаємо відсортовані автомобілі
+        sortedCars.forEach(car => {
+            const carCard = document.createElement('div');
+            carCard.classList.add('car-card');
+
+            const carImage = document.createElement('img');
+            carImage.src = car.pictures; 
+            carImage.alt = `${car.markaavto} ${car.model}`;
+            carCard.appendChild(carImage);
+
+            const carDetails = document.createElement('div');
+            carDetails.classList.add('car-details');
+
+            const carMakeModel = document.createElement('h3');
+            carMakeModel.textContent = `${car.markaavto} ${car.model}`;
+            carDetails.appendChild(carMakeModel);
+
+            const carYear = document.createElement('p');
+            carYear.textContent = `Рік: ${car.god}`;
+            carDetails.appendChild(carYear);
+
+            carCard.appendChild(carDetails);
+            carsCatalog.appendChild(carCard);
+        });
+    })
+    .catch(error => console.error('Помилка завантаження даних:', error));
 
 
 //header

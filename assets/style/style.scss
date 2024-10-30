@@ -1130,6 +1130,60 @@ width: 100%;
     }
   }
 }
+//product-section
+.product-section{
+  .container{
+    .delivery {
+      border: none;
+      .delivery-name{
+        text-align: center;
+        font-weight: 700;
+        padding-bottom: 32px;
+        font-size: 1.2rem;
+      }
+      ul li{
+        display: flex;
+        justify-content: space-between;
+        padding: 16px 8px;
+        border: 1px solid $color--gray;
+        .delivery-title{
+          color: $ForestGreen;
+          font-weight: 600;
+        }
+      }
+    }
+  }
+}
+.info-content {
+  display: none;  
+}
+
+.info-content.active {
+  display: block; 
+}
+
+.info-tab.active {
+  font-weight: bold;
+}
+
+.info-block{
+  padding: 32px 0;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1); 
+  .info-header{
+    display: flex;
+    justify-content: space-around;
+    #deteils, #analog,#delivery, #guarantees{
+      background-color: $color--gray;
+      padding: 16px 8%;
+      border: 1px solid $color--oslo-gray;
+      border-radius: 8px;
+    }
+  }
+  .guarantees-info{
+    padding-top: 32px;
+  }
+}
  .catalog{
   text-align: center;
   .product-list{

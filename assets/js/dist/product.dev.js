@@ -57,6 +57,24 @@ document.addEventListener("DOMContentLoaded", function () {
       return console.error('Помилка завантаження даних продукту:', error);
     });
   }
+});
+document.addEventListener("DOMContentLoaded", function () {
+  var tabs = document.querySelectorAll(".info-tab");
+  var contents = document.querySelectorAll(".info-content");
+  tabs.forEach(function (tab) {
+    tab.addEventListener("click", function () {
+      // Видалити активні класи з усіх табів і блоків
+      tabs.forEach(function (item) {
+        return item.classList.remove("active");
+      });
+      contents.forEach(function (content) {
+        return content.classList.remove("active");
+      }); // Додати активний клас для вибраного таба і відповідного контенту
+
+      tab.classList.add("active");
+      document.querySelector(".".concat(tab.id, "-info")).classList.add("active");
+    });
+  });
 }); //header
 
 var header = document.querySelector('header');

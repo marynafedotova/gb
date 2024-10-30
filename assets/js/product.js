@@ -63,6 +63,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const tabs = document.querySelectorAll(".info-tab");
+  const contents = document.querySelectorAll(".info-content");
+
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      // Видалити активні класи з усіх табів і блоків
+      tabs.forEach(item => item.classList.remove("active"));
+      contents.forEach(content => content.classList.remove("active"));
+
+      // Додати активний клас для вибраного таба і відповідного контенту
+      tab.classList.add("active");
+      document.querySelector(`.${tab.id}-info`).classList.add("active");
+    });
+  });
+});
 
 
 

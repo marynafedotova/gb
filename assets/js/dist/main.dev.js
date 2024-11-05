@@ -80,7 +80,7 @@ function createAdvantagesSlider(elementId, jsonData) {
   var sliderContainer = $("#" + elementId);
   var ulElement = $("<ul></ul>");
   jsonData.forEach(function (item) {
-    var slideElement = $("\n      <li>\n      <div>\n        <img src=\"".concat(item.image, "\" alt=\"\">\n        <div>").concat(item.text, "</div>\n      </li>\n      </div>\n    "));
+    var slideElement = $("\n      <li>\n      <div class=\"adventages-slide\">\n        <img src=\"".concat(item.image, "\" alt=\"\">\n        <div class=\"adventages-text\">").concat(item.text, "</div>\n      </li>\n      </div>\n    "));
     ulElement.append(slideElement);
   });
   sliderContainer.append(ulElement);
@@ -91,6 +91,7 @@ function createAdvantagesSlider(elementId, jsonData) {
     auto: true,
     slideMove: 1,
     slideMargin: 20,
+    verticalHeight: 500,
     pager: true,
     responsive: [{
       breakpoint: 1200,

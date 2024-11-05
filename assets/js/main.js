@@ -87,9 +87,9 @@ function createAdvantagesSlider(elementId, jsonData) {
   jsonData.forEach(item => {
     const slideElement = $(`
       <li>
-      <div>
+      <div class="adventages-slide">
         <img src="${item.image}" alt="">
-        <div>${item.text}</div>
+        <div class="adventages-text">${item.text}</div>
       </li>
       </div>
     `);
@@ -103,6 +103,7 @@ function createAdvantagesSlider(elementId, jsonData) {
     auto: true,
     slideMove: 1,
     slideMargin: 20,
+    verticalHeight: 500,
     pager: true,
     responsive: [
       {

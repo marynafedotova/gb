@@ -150,33 +150,26 @@ fetch('../data/data.json').then(function (response) {
 }).then(function (data) {
   var carsCatalog = document.getElementById('cars-catalog');
   var uniqueCars = new Set();
-  var carsArray = []; // Додаємо визначення масиву
-  // Збираємо унікальні автомобілі
-
+  var carsArray = [];
   data.Sheet1.forEach(function (car) {
     var uniqueKey = "".concat(car.markaavto, "-").concat(car.model, "-").concat(car.god);
 
     if (!uniqueCars.has(uniqueKey)) {
-      uniqueCars.add(uniqueKey); // Додаємо автомобіль до масиву
-
+      uniqueCars.add(uniqueKey);
       var carObject = {
         markaavto: car.markaavto,
         model: car.model,
         god: car.god,
-        pictures: car.pictures // Змінити на правильне поле для зображення
-
+        pictures: car.pictures
       };
-      carsArray.push(carObject); // Додаємо об'єкт автомобіля в масив
+      carsArray.push(carObject);
     }
-  }); // Сортуємо масив автомобілів за маркою в алфавітному порядку
-
+  });
   var sortedCars = carsArray.sort(function (a, b) {
-    // Перевіряємо, чи markaavto не є null або undefined
     var makeA = a.markaavto || '';
     var makeB = b.markaavto || '';
     return makeA.localeCompare(makeB);
-  }); // Відображаємо відсортовані автомобілі
-
+  });
   sortedCars.forEach(function (car) {
     var carCard = document.createElement('div');
     carCard.classList.add('car-card');

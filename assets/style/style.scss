@@ -377,61 +377,65 @@ h1{
   padding: 30px 0px 0px;
 
 }
-.first_screan{
-  padding-top: 100px;
+#first-section_index .container {
   display: flex;
-  .sidebar{
-    top: 10%;
-    width: 35%;
-    padding: 30px;
+  flex-direction: column;
+  .first_screan{
+    padding-top: 100px;
     display: flex;
-    flex-direction: column;
-    border: 1px solid #579816;
-    h2{
-      text-align: center;
-      padding-bottom: 10px;
-    }
-    form{
+    .sidebar_filter{
+      top: 10%;
+      width: 35%;
+      padding: 30px;
       display: flex;
       flex-direction: column;
-      margin-bottom: 20px;
-
-      select{
-        height: 40px;
-        cursor: pointer;
+      border: 1px solid #579816;
+      h2{
+        text-align: center;
+        padding-bottom: 10px;
+      }
+      form{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+  
+        select{
+          height: 40px;
+          cursor: pointer;
+          border: 1px solid $ForestGreen;
+          font-size: 1rem;
+          font-weight: 600;
+          color: $color--mine-shaft;
+          &:hover{
+            border: 1px solid $color--porcelain;
+          }
+          &:focus{
+            background-color: $ForestGreen;
+          }
+        }
+      }
+      #search-sidebar{
+        background-color: $ForestGreen;
+        padding: 10px;
         border: 1px solid $ForestGreen;
-        font-size: 1rem;
+        border-radius: 10px;
+        color: $color--porcelain;
+        text-transform: uppercase;
         font-weight: 600;
-        color: $color--mine-shaft;
+        letter-spacing: 0.2rem;
         &:hover{
-          border: 1px solid $color--porcelain;
-        }
-        &:focus{
-          background-color: $ForestGreen;
+          background-color: $color--porcelain;
+          color: $ForestGreen;
+          
+          transform: scale(1.1);
         }
       }
     }
-    #search-sidebar{
-      background-color: $ForestGreen;
-      padding: 10px;
-      border: 1px solid $ForestGreen;
-      border-radius: 10px;
-      color: $color--porcelain;
-      text-transform: uppercase;
-      font-weight: 600;
-      letter-spacing: 0.2rem;
-      &:hover{
-        background-color: $color--porcelain;
-        color: $ForestGreen;
-        
-        transform: scale(1.1);
+    .baner-slider{
+      width: 60%;
+      .lSSlideOuter .lSPager.lSpg{
+        display: none;
       }
-    }
-  }
-  .baner-slider{
-    width: 60%;
-    .lSSlideOuter .lSPager.lSpg{
-      display: none;
     }
   }
 }
@@ -1218,12 +1222,10 @@ width: 100%;
   }
 
   .container {
-    display: flex;
-    justify-content: space-between;
-    gap: 2px;
-
+display: flex;
+flex-direction: row;
     #carAccordion {
-      width: 20%;
+      width: 15%;
       padding: 16px;
       border-radius: 8px;
     }
@@ -1259,11 +1261,10 @@ width: 100%;
 
     .first_screan_catalog {
       flex-grow: 1;
-      // width: 65%;
+      width: 60%;
       background-color: $color--mine-shaft;
       box-shadow: 8px 8px 16px rgba(240, 235, 235, 0.1); 
       border-radius: 8px;
-
       .sidebar {
         padding: 8px;
 

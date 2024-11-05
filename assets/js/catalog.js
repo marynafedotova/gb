@@ -151,35 +151,30 @@ fetch('../data/data.json')
     .then(data => {
         const carsCatalog = document.getElementById('cars-catalog');
         const uniqueCars = new Set();
-        const carsArray = []; // Додаємо визначення масиву
+        const carsArray = [];
 
-        // Збираємо унікальні автомобілі
         data.Sheet1.forEach(car => {
             const uniqueKey = `${car.markaavto}-${car.model}-${car.god}`;
 
             if (!uniqueCars.has(uniqueKey)) {
                 uniqueCars.add(uniqueKey);
 
-                // Додаємо автомобіль до масиву
                 const carObject = {
                     markaavto: car.markaavto,
                     model: car.model,
                     god: car.god,
-                    pictures: car.pictures // Змінити на правильне поле для зображення
+                    pictures: car.pictures
                 };
-                carsArray.push(carObject); // Додаємо об'єкт автомобіля в масив
+                carsArray.push(carObject);
             }
         });
 
-        // Сортуємо масив автомобілів за маркою в алфавітному порядку
         const sortedCars = carsArray.sort((a, b) => {
-            // Перевіряємо, чи markaavto не є null або undefined
             const makeA = a.markaavto || '';
             const makeB = b.markaavto || '';
             return makeA.localeCompare(makeB);
         });
 
-        // Відображаємо відсортовані автомобілі
         sortedCars.forEach(car => {
             const carCard = document.createElement('div');
             carCard.classList.add('car-card');
@@ -206,7 +201,6 @@ fetch('../data/data.json')
     })
     .catch(error => console.error('Помилка завантаження даних:', error));
 
-
 //header
 const header = document.querySelector('header');
 
@@ -220,8 +214,6 @@ window.addEventListener('scroll', function() {
     header.classList.remove('scrolled');
   }
 });
-
-
 
 //hamburger-menu
 document.getElementById('hamb-btn').addEventListener('click', function () {

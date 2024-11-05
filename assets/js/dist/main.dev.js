@@ -33,7 +33,7 @@ $(document).ready(function () {
     slideMove: 1,
     verticalHeight: 500,
     slideMargin: 0,
-    speed: 300
+    speed: 700
   });
 }); //slider
 // $(document).ready(function() {

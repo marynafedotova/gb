@@ -12,9 +12,6 @@ window.addEventListener('scroll', function() {
   }
 });
 
-
-
-
 //hamburger-menu
 document.getElementById('hamb-btn').addEventListener('click', function () {
   document.body.classList.toggle('open-mobile-menu')
@@ -40,7 +37,7 @@ $(document).ready(function() {
     slideMove: 1,
     verticalHeight:500,
     slideMargin: 0,
-    speed:300
+    speed:700
         });
 });
 

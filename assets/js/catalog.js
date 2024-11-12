@@ -73,20 +73,21 @@ fetch('../data/data.json')
             .filter(item => item.markaavto && item.model) // Исключаем записи с null или пустыми значениями
             .map(item => ({
                 markaavto: item.markaavto,
-                model: item.model
+                model: item.model,
+                god: item.god // Добавляем год, чтобы передать его в ссылку
             }));
 
         const carAccordionData = cars.reduce((acc, car) => {
             if (!acc[car.markaavto]) {
                 acc[car.markaavto] = new Set();
             }
-            acc[car.markaavto].add(car.model);
+            acc[car.markaavto].add(JSON.stringify({ model: car.model, god: car.god }));
             return acc;
         }, {});
 
         const accordionContainer = document.getElementById('carAccordion');
         for (const [make, models] of Object.entries(carAccordionData)) {
-            if (!make) continue; // Пропускаем если марка null или пустая
+            if (!make) continue; // Пропускаем, если марка null или пустая
 
             const makeDiv = document.createElement('div');
             makeDiv.classList.add('accordion-item');
@@ -101,10 +102,15 @@ fetch('../data/data.json')
 
             const modelList = document.createElement('div');
             modelList.classList.add('accordion-content');
-            models.forEach(model => {
-                if (model) { // Пропускаем если модель null или пустая
+            models.forEach(modelData => {
+                const { model, god } = JSON.parse(modelData);
+                if (model) { // Пропускаем, если модель null или пустая
                     const modelItem = document.createElement('p');
                     modelItem.textContent = model;
+                    modelItem.classList.add('model-item');
+                    modelItem.addEventListener('click', () => {
+                        window.location.href = `./car-page.html?make=${make}&model=${model}&year=${god}`;
+                    });
                     modelList.appendChild(modelItem);
                 }
             });
@@ -114,6 +120,7 @@ fetch('../data/data.json')
         }
     })
     .catch(error => console.error('Помилка завантаження даних:', error));
+
 //cars
 fetch('../data/data.json')
     .then(response => response.json())
@@ -123,18 +130,21 @@ fetch('../data/data.json')
         const carsArray = [];
 
         data.Sheet1.forEach(car => {
-            const uniqueKey = `${car.markaavto}-${car.model}-${car.god}`;
+            // Проверяем, что марка, модель и год не null и не пусты
+            if (car.markaavto && car.model && car.god) {
+                const uniqueKey = `${car.markaavto}-${car.model}-${car.god}`;
 
-            if (!uniqueCars.has(uniqueKey)) {
-                uniqueCars.add(uniqueKey);
+                if (!uniqueCars.has(uniqueKey)) {
+                    uniqueCars.add(uniqueKey);
 
-                const carObject = {
-                    markaavto: car.markaavto,
-                    model: car.model,
-                    god: car.god,
-                    pictures: car.pictures
-                };
-                carsArray.push(carObject);
+                    const carObject = {
+                        markaavto: car.markaavto,
+                        model: car.model,
+                        god: car.god,
+                        pictures: car.pictures
+                    };
+                    carsArray.push(carObject);
+                }
             }
         });
 
@@ -164,7 +174,7 @@ fetch('../data/data.json')
             carYear.textContent = `Рік: ${car.god}`;
             carDetails.appendChild(carYear);
 
-            // Обробник події для картки машини
+            // Обработчик события для картки машины
             carCard.addEventListener('click', () => {
                 window.location.href = `./car-page.html?make=${car.markaavto}&model=${car.model}&year=${car.god}`;
             });
@@ -174,6 +184,7 @@ fetch('../data/data.json')
         });
     })
     .catch(error => console.error('Помилка завантаження даних:', error));
+
 
 //cart
 document.addEventListener("DOMContentLoaded", function () {

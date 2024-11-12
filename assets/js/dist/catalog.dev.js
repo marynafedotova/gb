@@ -69,7 +69,9 @@ fetch('../data/data.json').then(function (response) {
   .map(function (item) {
     return {
       markaavto: item.markaavto,
-      model: item.model
+      model: item.model,
+      god: item.god // Добавляем год, чтобы передать его в ссылку
+
     };
   });
   var carAccordionData = cars.reduce(function (acc, car) {
@@ -77,7 +79,10 @@ fetch('../data/data.json').then(function (response) {
       acc[car.markaavto] = new Set();
     }
 
-    acc[car.markaavto].add(car.model);
+    acc[car.markaavto].add(JSON.stringify({
+      model: car.model,
+      god: car.god
+    }));
     return acc;
   }, {});
   var accordionContainer = document.getElementById('carAccordion');
@@ -87,7 +92,7 @@ fetch('../data/data.json').then(function (response) {
         make = _Object$entries$_i[0],
         models = _Object$entries$_i[1];
 
-    if (!make) return "continue"; // Пропускаем если марка null или пустая
+    if (!make) return "continue"; // Пропускаем, если марка null или пустая
 
     var makeDiv = document.createElement('div');
     makeDiv.classList.add('accordion-item');
@@ -100,11 +105,19 @@ fetch('../data/data.json').then(function (response) {
     makeDiv.appendChild(makeHeader);
     var modelList = document.createElement('div');
     modelList.classList.add('accordion-content');
-    models.forEach(function (model) {
+    models.forEach(function (modelData) {
+      var _JSON$parse = JSON.parse(modelData),
+          model = _JSON$parse.model,
+          god = _JSON$parse.god;
+
       if (model) {
-        // Пропускаем если модель null или пустая
+        // Пропускаем, если модель null или пустая
         var modelItem = document.createElement('p');
         modelItem.textContent = model;
+        modelItem.classList.add('model-item');
+        modelItem.addEventListener('click', function () {
+          window.location.href = "./car-page.html?make=".concat(make, "&model=").concat(model, "&year=").concat(god);
+        });
         modelList.appendChild(modelItem);
       }
     });
@@ -128,17 +141,20 @@ fetch('../data/data.json').then(function (response) {
   var uniqueCars = new Set();
   var carsArray = [];
   data.Sheet1.forEach(function (car) {
-    var uniqueKey = "".concat(car.markaavto, "-").concat(car.model, "-").concat(car.god);
+    // Проверяем, что марка, модель и год не null и не пусты
+    if (car.markaavto && car.model && car.god) {
+      var uniqueKey = "".concat(car.markaavto, "-").concat(car.model, "-").concat(car.god);
 
-    if (!uniqueCars.has(uniqueKey)) {
-      uniqueCars.add(uniqueKey);
-      var carObject = {
-        markaavto: car.markaavto,
-        model: car.model,
-        god: car.god,
-        pictures: car.pictures
-      };
-      carsArray.push(carObject);
+      if (!uniqueCars.has(uniqueKey)) {
+        uniqueCars.add(uniqueKey);
+        var carObject = {
+          markaavto: car.markaavto,
+          model: car.model,
+          god: car.god,
+          pictures: car.pictures
+        };
+        carsArray.push(carObject);
+      }
     }
   });
   var sortedCars = carsArray.sort(function (a, b) {
@@ -160,7 +176,7 @@ fetch('../data/data.json').then(function (response) {
     carDetails.appendChild(carMakeModel);
     var carYear = document.createElement('p');
     carYear.textContent = "\u0420\u0456\u043A: ".concat(car.god);
-    carDetails.appendChild(carYear); // Обробник події для картки машини
+    carDetails.appendChild(carYear); // Обработчик события для картки машины
 
     carCard.addEventListener('click', function () {
       window.location.href = "./car-page.html?make=".concat(car.markaavto, "&model=").concat(car.model, "&year=").concat(car.god);

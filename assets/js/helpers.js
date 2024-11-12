@@ -12,9 +12,6 @@ window.addEventListener('scroll', function() {
   }
 });
 
-
-
-
 //hamburger-menu
 document.getElementById('hamb-btn').addEventListener('click', function () {
   document.body.classList.toggle('open-mobile-menu')
@@ -29,8 +26,16 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 
 // wow
 new WOW().init();
-//baner slider
-
+//scroll
+// document.getElementById('scrollButton').addEventListener('click', function(event) {
+//   event.preventDefault();
+//   const targetElement = document.getElementById('news');
+//   const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+//   window.scrollTo({
+//     top: targetPosition,
+//     behavior: 'smooth'
+//   });
+// });
 // form
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('feedback_form');
@@ -125,14 +130,3 @@ document.addEventListener('DOMContentLoaded', function () {
   e.target.value = input.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
 });
 });
-//scroll
-// document.getElementById('scrollButton').addEventListener('click', function(event) {
-//   event.preventDefault();
-//   const targetElement = document.getElementById('news');
-//   const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
-//   window.scrollTo({
-//     top: targetPosition,
-//     behavior: 'smooth'
-//   });
-// });
-

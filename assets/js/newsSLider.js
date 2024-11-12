@@ -1,10 +1,10 @@
 //news
 
 document.addEventListener('DOMContentLoaded', function () {
-  fetch('assets/data/news_slider.json')  // Укажите путь к вашему JSON с новостями
+  fetch('assets/data/news_slider.json')
     .then(response => response.json())
     .then(data => {
-      createNewsSlider('news_slider', data);  // Здесь вызываем вашу функцию для создания новостного слайдера
+      createNewsSlider('news_slider', data); 
     })
     .catch(error => console.error('Error fetching news data:', error));
 });
@@ -45,7 +45,6 @@ function createNewsSlider(elementId, jsonData) {
 
   sliderContainer.append(ulElement);
 
-  // Инициализируем основной слайдер
   ulElement.lightSlider({
     item: 3,
     controls: true,
@@ -57,8 +56,7 @@ function createNewsSlider(elementId, jsonData) {
     verticalHeight: 1000
   });
 
-  // Инициализируем LightGallery после добавления всех слайдов
-  setTimeout(() => { // Добавим небольшую задержку, чтобы гарантировать, что все элементы добавлены
+  setTimeout(() => { 
     $('.image-gallery').each(function() {
       lightGallery(this, {
         allowMediaOverlap: true,
@@ -67,8 +65,3 @@ function createNewsSlider(elementId, jsonData) {
     });
   }, 100);
 }
-// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  // Ваш код
-  // sendResponse({ status: "success" }); // Убедитесь, что вы отправляете ответ
-  // return true; // Указывает на асинхронный ответ
-// });

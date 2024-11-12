@@ -160,25 +160,6 @@ fetch('../data/data.json').then(function (response) {
   });
 })["catch"](function (error) {
   return console.error('Помилка завантаження даних:', error);
-}); //header
-
-var header = document.querySelector('header');
-window.addEventListener('scroll', function () {
-  var scrollDistance = window.scrollY;
-  var threshold = 30;
-
-  if (scrollDistance > threshold) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
-  }
-}); //hamburger-menu
-
-document.getElementById('hamb-btn').addEventListener('click', function () {
-  document.body.classList.toggle('open-mobile-menu');
-});
-document.getElementById('hamb-btn-mobile').addEventListener('click', function () {
-  document.body.classList.toggle('open-mobile-menu');
 }); //cart
 
 document.addEventListener("DOMContentLoaded", function () {

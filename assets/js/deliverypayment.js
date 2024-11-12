@@ -7,7 +7,6 @@ async function loadData() {
 function generateContent(data) {
   const contentSection = document.getElementById('content');
 
-  // Генерация раздела доставки
   const deliverySection = document.createElement('div');
   deliverySection.innerHTML = `
   <div class="container">
@@ -16,7 +15,6 @@ function generateContent(data) {
   </div>`;
   contentSection.appendChild(deliverySection);
 
-  // Генерация раздела оплаты
   const paymentSection = document.createElement('div');
   paymentSection.innerHTML = `
   <div class="container">
@@ -26,7 +24,6 @@ function generateContent(data) {
   </div>`;
   contentSection.appendChild(paymentSection);
 
-  // Генерация графика работы
   const workSchedule = document.createElement('div');
   workSchedule.innerHTML = `
     <div class="container">
@@ -35,7 +32,6 @@ function generateContent(data) {
   </div>`;
   contentSection.appendChild(workSchedule);
 
-  // Генерация таблицы запчастей
   const partsSection = document.createElement('div');
   partsSection.innerHTML = `
   <div class="container">
@@ -56,27 +52,4 @@ function generateContent(data) {
   contentSection.appendChild(partsSection);
 }
 
-// Вызов функции загрузки данных
 loadData();
-//header
-const header = document.querySelector('header');
-
-window.addEventListener('scroll', function() {
-  const scrollDistance = window.scrollY;
-  const threshold = 30;
-
-  if (scrollDistance > threshold) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
-  }
-});
-
-//hamburger-menu
-document.getElementById('hamb-btn').addEventListener('click', function () {
-  document.body.classList.toggle('open-mobile-menu')
-})
-
-document.getElementById('hamb-btn-mobile').addEventListener('click', function () {
-  document.body.classList.toggle('open-mobile-menu')
-})

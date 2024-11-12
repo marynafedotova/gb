@@ -93,13 +93,6 @@ window.addEventListener('scroll', function () {
   } else {
     header.classList.remove('scrolled');
   }
-}); //hamburger-menu
-
-document.getElementById('hamb-btn').addEventListener('click', function () {
-  document.body.classList.toggle('open-mobile-menu');
-});
-document.getElementById('hamb-btn-mobile').addEventListener('click', function () {
-  document.body.classList.toggle('open-mobile-menu');
 }); // Функция добавления товара в корзину
 
 function addToCart(product) {

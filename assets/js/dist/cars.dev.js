@@ -250,24 +250,4 @@ document.getElementById('name').addEventListener('input', function (e) {
 function isValidEmail(email) {
   var emailPattern = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   return emailPattern.test(email);
-} //header
-
-
-var header = document.querySelector('header');
-window.addEventListener('scroll', function () {
-  var scrollDistance = window.scrollY;
-  var threshold = 30;
-
-  if (scrollDistance > threshold) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
-  }
-}); //hamburger-menu
-
-document.getElementById('hamb-btn').addEventListener('click', function () {
-  document.body.classList.toggle('open-mobile-menu');
-});
-document.getElementById('hamb-btn-mobile').addEventListener('click', function () {
-  document.body.classList.toggle('open-mobile-menu');
-});
+}

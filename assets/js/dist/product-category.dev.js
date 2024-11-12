@@ -26,22 +26,17 @@ document.addEventListener("DOMContentLoaded", function () {
         category: car.category && car.category.toLowerCase(),
         markaavto: car.markaavto && car.markaavto.toLowerCase(),
         model: car.model && car.model.toLowerCase(),
-        god: car.god ? Math.floor(car.god) : null // Приводимо рік до цілих чисел
-
+        god: car.god ? Math.floor(car.god) : null
       });
     });
     console.log("Дані з бази даних:", carsArray);
     var filteredParts;
-    var alternativeMessage = ''; // Перевірка параметра року
-
-    var isYearNull = year === "null"; // Перевірка, чи рік не заданий
-    // Фільтрація за всіма параметрами (якщо вони не порожні)
-
+    var alternativeMessage = '';
+    var isYearNull = year === "null";
     filteredParts = carsArray.filter(function (car) {
       return car.category === category && car.markaavto === markaavto && car.model === model && (!isYearNull ? car.god === parseInt(year) : true);
-    } // Якщо рік не заданий, не фільтруємо за ним
-    );
-    console.log("Результат після першого фільтрування (повний збіг):", filteredParts); // Альтернативні варіанти
+    });
+    console.log("Результат після першого фільтрування (повний збіг):", filteredParts);
 
     if (filteredParts.length === 0) {
       filteredParts = carsArray.filter(function (car) {
@@ -62,7 +57,7 @@ document.addEventListener("DOMContentLoaded", function () {
             return car.category === category && car.markaavto === markaavto;
           });
           alternativeMessage = "Підходящі запчастини в цій категорії не знайдені, але можливо вас зацікавлять інші варіанти для цієї марки.";
-          console.log("Результат після четвертого фільтрування (категорія і марка):", filteredParts); // Якщо не знайшли жодних запчастин, показуємо всі запчастини для цієї марки
+          console.log("Результат після четвертого фільтрування (категорія і марка):", filteredParts);
 
           if (filteredParts.length === 0) {
             filteredParts = carsArray.filter(function (car) {

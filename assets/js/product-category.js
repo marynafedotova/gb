@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         category: car.category && car.category.toLowerCase(),
         markaavto: car.markaavto && car.markaavto.toLowerCase(),
         model: car.model && car.model.toLowerCase(),
-        god: car.god ? Math.floor(car.god) : null // Приводимо рік до цілих чисел
+        god: car.god ? Math.floor(car.god) : null
       }));
       
       console.log("Дані з бази даних:", carsArray);
@@ -23,19 +23,15 @@ document.addEventListener("DOMContentLoaded", () => {
       let filteredParts;
       let alternativeMessage = '';
 
-      // Перевірка параметра року
-      const isYearNull = year === "null"; // Перевірка, чи рік не заданий
+      const isYearNull = year === "null"; 
 
-      // Фільтрація за всіма параметрами (якщо вони не порожні)
       filteredParts = carsArray.filter(car =>
         car.category === category &&
         car.markaavto === markaavto &&
         car.model === model &&
-        (!isYearNull ? car.god === parseInt(year) : true) // Якщо рік не заданий, не фільтруємо за ним
+        (!isYearNull ? car.god === parseInt(year) : true) 
       );
       console.log("Результат після першого фільтрування (повний збіг):", filteredParts);
-
-      // Альтернативні варіанти
       if (filteredParts.length === 0) {
         filteredParts = carsArray.filter(car =>
           car.category === category &&
@@ -62,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
             alternativeMessage = "Підходящі запчастини в цій категорії не знайдені, але можливо вас зацікавлять інші варіанти для цієї марки.";
             console.log("Результат після четвертого фільтрування (категорія і марка):", filteredParts);
 
-            // Якщо не знайшли жодних запчастин, показуємо всі запчастини для цієї марки
             if (filteredParts.length === 0) {
               filteredParts = carsArray.filter(car => car.markaavto === markaavto);
               alternativeMessage = "Запчастини для цієї марки авто:";

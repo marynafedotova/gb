@@ -69,10 +69,12 @@ const productId = urlParams.get('id');
 fetch('../data/data.json')
     .then(response => response.json())
     .then(data => {
-        const cars = data.Sheet1.map(item => ({
-            markaavto: item.markaavto,
-            model: item.model
-        }));
+        const cars = data.Sheet1
+            .filter(item => item.markaavto && item.model) // Исключаем записи с null или пустыми значениями
+            .map(item => ({
+                markaavto: item.markaavto,
+                model: item.model
+            }));
 
         const carAccordionData = cars.reduce((acc, car) => {
             if (!acc[car.markaavto]) {
@@ -84,6 +86,8 @@ fetch('../data/data.json')
 
         const accordionContainer = document.getElementById('carAccordion');
         for (const [make, models] of Object.entries(carAccordionData)) {
+            if (!make) continue; // Пропускаем если марка null или пустая
+
             const makeDiv = document.createElement('div');
             makeDiv.classList.add('accordion-item');
 
@@ -98,9 +102,11 @@ fetch('../data/data.json')
             const modelList = document.createElement('div');
             modelList.classList.add('accordion-content');
             models.forEach(model => {
-                const modelItem = document.createElement('p');
-                modelItem.textContent = model;
-                modelList.appendChild(modelItem);
+                if (model) { // Пропускаем если модель null или пустая
+                    const modelItem = document.createElement('p');
+                    modelItem.textContent = model;
+                    modelList.appendChild(modelItem);
+                }
             });
 
             makeDiv.appendChild(modelList);

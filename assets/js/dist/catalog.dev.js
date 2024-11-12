@@ -63,7 +63,10 @@ var productId = urlParams.get('id'); //accordion
 fetch('../data/data.json').then(function (response) {
   return response.json();
 }).then(function (data) {
-  var cars = data.Sheet1.map(function (item) {
+  var cars = data.Sheet1.filter(function (item) {
+    return item.markaavto && item.model;
+  }) // Исключаем записи с null или пустыми значениями
+  .map(function (item) {
     return {
       markaavto: item.markaavto,
       model: item.model
@@ -84,6 +87,8 @@ fetch('../data/data.json').then(function (response) {
         make = _Object$entries$_i[0],
         models = _Object$entries$_i[1];
 
+    if (!make) return "continue"; // Пропускаем если марка null или пустая
+
     var makeDiv = document.createElement('div');
     makeDiv.classList.add('accordion-item');
     var makeHeader = document.createElement('h3');
@@ -96,16 +101,21 @@ fetch('../data/data.json').then(function (response) {
     var modelList = document.createElement('div');
     modelList.classList.add('accordion-content');
     models.forEach(function (model) {
-      var modelItem = document.createElement('p');
-      modelItem.textContent = model;
-      modelList.appendChild(modelItem);
+      if (model) {
+        // Пропускаем если модель null или пустая
+        var modelItem = document.createElement('p');
+        modelItem.textContent = model;
+        modelList.appendChild(modelItem);
+      }
     });
     makeDiv.appendChild(modelList);
     accordionContainer.appendChild(makeDiv);
   };
 
   for (var _i = 0, _Object$entries = Object.entries(carAccordionData); _i < _Object$entries.length; _i++) {
-    _loop();
+    var _ret = _loop();
+
+    if (_ret === "continue") continue;
   }
 })["catch"](function (error) {
   return console.error('Помилка завантаження даних:', error);

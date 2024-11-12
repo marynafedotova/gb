@@ -1,5 +1,11 @@
 "use strict";
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 document.addEventListener("DOMContentLoaded", function () {
   var urlParams = new URLSearchParams(window.location.search);
   var productId = urlParams.get('id');
@@ -94,4 +100,40 @@ document.getElementById('hamb-btn').addEventListener('click', function () {
 });
 document.getElementById('hamb-btn-mobile').addEventListener('click', function () {
   document.body.classList.toggle('open-mobile-menu');
+}); // Функция добавления товара в корзину
+
+function addToCart(product) {
+  // Получаем текущую корзину из Session Storage или создаем пустую корзину
+  var cart = JSON.parse(sessionStorage.getItem('cart')) || []; // Проверка, есть ли товар уже в корзине
+
+  var existingProduct = cart.find(function (item) {
+    return item.id === product.id;
+  });
+
+  if (existingProduct) {
+    // Если товар уже есть, увеличиваем его количество
+    existingProduct.quantity += 1;
+  } else {
+    // Если товара нет в корзине, добавляем его
+    cart.push(_objectSpread({}, product, {
+      quantity: 1
+    }));
+  } // Сохраняем корзину обратно в Session Storage
+
+
+  sessionStorage.setItem('cart', JSON.stringify(cart));
+} // Обработчик события на кнопке
+
+
+document.querySelectorAll('.add-to-cart').forEach(function (button) {
+  button.addEventListener('click', function () {
+    var product = {
+      id: button.getAttribute('data-id'),
+      price: button.getAttribute('data-price'),
+      tipe: button.getAttribute('data-tipe'),
+      name: button.closest('.product-item').querySelector('.product-name').textContent
+    };
+    addToCart(product);
+    alert('Товар добавлен в корзину!');
+  });
 });

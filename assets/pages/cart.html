@@ -21,7 +21,9 @@
   <!-- <link rel="mask-icon" href="assets/img/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff"> -->
-  <title>Контакти|Авторозбiрка|Автозапчастини б/у</title>
+  <title>Кошик</title>
+  <meta name="description" content="Замовити запчастини на автомобілі з США з доставкою по Україні  ✔️ Висока якість ✔️ Гарантії ✔️ Низькі ціни ☎️ 38 (068) 925-52-52 38 | (050) 925-52-52">
+
 </head>
 
 <body>
@@ -40,14 +42,16 @@
     <nav>
       <ul class="mobile-menu">
         <li><a href="catalog.html" target="_parent">Каталог запчастин</a></li>
-        <li><a href="pre-order.html" target="_parent">Авто в дорозі передзамовлення</a></li>
+        <li><a href="pre-order.html" target="_parent">Авто в дорозі</a></li>
         <li><a href="warrantyreturns.html" target="_parent">Гарантія та повернення</a></li>
         <li><a href="deliverypayment.html" target="_parent">Доставка і оплата </a></li>
         <li><a href="contacts.html" target="_parent">Контакти</a></li>
-        <li><a href="reviews.html" target="_parent">Відгуки</a></li>
-        <li><a href="abuotus.html">Про нас</a></li>
-        <li><a href="news.html">Статті та новини</a></li>
+        <li><a href="abuotus.html" target="_parent">Про нас</a></li>
+        <li><a href="news.html" target="_parent">Статті та новини</a></li>
         <li>
+          <!-- <a href="#"><img src="../img/person-circle-fill-svgrepo-com.svg" alt=""></a> -->
+
+          <a href="cart.html"><img src="../img/cart-large-svgrepo-com.svg" alt="cart"></a>
           <div class="search-container">
             <form id="search-form-m">
               <input type="text" id="search-input-m" placeholder="Пошук..." name="search">
@@ -116,14 +120,15 @@
                 <li><a href="../pages/cars-catalog/nissan.html"><img src="../img/nissan.svg" alt="nissan"></a></li>
                 <li><a href="../pages/cars-catalog/volkswagen.html"><img src="../img/volkswagen.svg"
                       alt="volkswagen"></a></li>
-              </ul></li>
-            <li><a href="pre-order.html" target="_parent">Авто в дорозі передзамовлення</a></li>
+              </ul>
+            </li>
+            <li><a href="pre-order.html" target="_parent">Авто в дорозі</a></li>
             <li><a href="warrantyreturns.html" target="_parent">Гарантія та повернення</a></li>
             <li><a href="deliverypayment.html" target="_parent">Доставка і оплата </a></li>
             <li><a href="contacts.html" target="_parent">Контакти</a></li>
             <li><a href="reviews.html" target="_parent">Відгуки</a></li>
-            <li><a href="abuotus.html">Про нас</a></li>
-        <li><a href="news.html">Статті та новини</a></li>
+            <li><a href="../pages/cars-catalog/acura.html" target="_parent"><img src="../img/acura.svg" alt="Acura"></a></li>
+            <li><a href="../pages/cars-catalog/acura.html" target="_parent"><img src="../img/acura.svg" alt="Acura"></a></li>
             <li>
               <div class="search-container">
                 <form id="search-form">
@@ -147,12 +152,13 @@
       </div>
     </header>
     <main>
-      <!-- hero-section -->
-      <div class="hero-screan">
-        <div class="container wow animate__animated animate__backInUp">
-          <h1>Відгуки</h1>
-        </div>
-
+      <div class="container">
+          <h1>Ваш Кошик</h1>
+          <div id="cartItems"></div>
+        
+         
+        
+      </div>
     </main>
     <footer>
       <div class="container">
@@ -223,12 +229,23 @@
       <span>© 2024</span>
     </div>
     <script src="../js/jquery/jquery-3.7.1.min.js"></script>
-    <script src="../js/plagins/lightslider.min.js"></script>
-    <script src="../js/plagins/leaflet/leaflet.js"></script>
     <script src="../js/wow.min.js"></script>
-    <script src="../js/lazyload.min.js"></script>
     <script src="../js/toast.js"></script>
-    <script src="../js/main.js"></script>
+    <!-- <script src="../js/cart.js"></script> -->
+    <script>
+      // Получаем данные корзины из sessionStorage
+      const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+      
+      // Контейнер для отображения товаров
+      const cartItemsContainer = document.getElementById("cartItems");
+  
+      // Отображаем товары в корзине
+      cart.forEach(item => {
+        const itemElement = document.createElement("div");
+        itemElement.textContent = `Товар: ${item.name}, Цена: ${item.price} грн, Количество: ${item.quantity}`;
+        cartItemsContainer.appendChild(itemElement);
+      });
+    </script>
 
   </div>
 </body>

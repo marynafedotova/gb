@@ -91,7 +91,6 @@ function createAdvantagesSlider(elementId, jsonData) {
     auto: true,
     slideMove: 1,
     slideMargin: 20,
-    verticalHeight: 500,
     pager: true,
     responsive: [{
       breakpoint: 1200,

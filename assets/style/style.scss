@@ -453,7 +453,7 @@ h1{
       .lSSlideWrapper.usingCss{
         .lightSlider .lsGrab .lSSlide{
           li{
-            height: 500px;
+            height: 700px;
           }
        }
       }
@@ -465,9 +465,7 @@ h1{
       background-color: hsl(0,0%,29.41%);
     }
     #advantages_slider{
-      height: 500px;
       ul {
-
         li{
           height: 100%;
           .adventages-slide{
@@ -484,7 +482,7 @@ h1{
           }
           .adventages-text{
             flex-grow: 1;
-            padding-top: 24px;
+            padding: 24px auto;
           }
         }
       }
@@ -1008,6 +1006,91 @@ width: 100%;
   z-index: 1000000;
 }
 
+//modal cart
+/* Стиль для затемнения заднего фона */
+.page-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 10;
+}
+
+/* Основной стиль модального окна */
+.modal {
+  display: none; /* скрыто по умолчанию */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 20;
+}
+
+/* Кнопки внутри модального окна */
+.modal-buttons button {
+  margin: 10px 5px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Заголовок и текст */
+.modal-content p {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #333;
+}
+
+/* Кнопки */
+.modal-content button {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Кнопка "Продовжити покупку" */
+#continueShopping {
+  background-color: #4CAF50; /* Зеленый фон */
+  color: white;
+  transition: background-color 0.3s;
+}
+
+#continueShopping:hover {
+  background-color: #45a049;
+}
+
+/* Кнопка "Оформлення замовлення" */
+#checkout {
+  background-color: #2196F3; /* Синий фон */
+  color: white;
+  transition: background-color 0.3s;
+}
+
+#checkout:hover {
+  background-color: #1e87d1;
+}
+
+/* Адаптивность: уменьшение размера окна на маленьких экранах */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+}
 //news
 #news-accordion{
   padding-bottom: 100px;
@@ -1055,31 +1138,43 @@ width: 100%;
 
 
 //catalog
-.catalog {
-  .catalog-list {
+.catalog-avto{
+  padding-top: 42px;
+  .container{
+    text-align: center;
+    h2{
+      margin-bottom: 42px;
+      text-transform: uppercase;
+    }
+    .catalog {
+      .catalog-list {
+        width: 100%;
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
     li {
-      display: inline-flex;
-      gap: 30px;
-      margin-bottom: 10px;
-      transition: border 0.5s ease; 
-      position: relative; 
-  box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1); 
-      img {
-        width: 200px;
-        aspect-ratio: 1;
-        transition: transform 0.5s ease;
-      }
-
-      &:hover {
-
+    
+        transition: border 0.5s ease; 
         img {
-          transform: scale(1.1); 
-          border: 1px solid $color--porcelain;
+          width: 145px;
+          aspect-ratio: 1;
+          transition: transform 0.5s ease;
+        }
+        &:hover {
+          img {
+            transform: scale(1.1); 
+            border: 1px solid $color--porcelain;
+            z-index: 100;
+          }
         }
       }
+      }
     }
+    
   }
 }
+
 .product-list {
   padding-top: 100px;
   display: flex;
@@ -1219,25 +1314,34 @@ width: 100%;
   font-weight: 800;
   color: $ForestGreen;
 }
-
- .catalog{
-  text-align: center;
-  .product-list{
-    margin-bottom: 100px;
-  }
-  .load-more{
-    background-color: $ForestGreen;
-    padding: 16px 32px;
-    border-radius: 8px;
-    border: 1px solid $color--porcelain;
-    color: $color--porcelain;
-    text-transform: uppercase;
-    font-weight: 700;
-    &:hover{
-      color: $ForestGreen;
-      background-color: $color--porcelain;
-      border: 1px solid $ForestGreen;
+.hero-screan{
+  .container{
+    .catalog {
+      margin-bottom: 42px;
+      .catalog-list {
+        width: 100%;
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+    li {
+        transition: border 0.5s ease; 
+        img {
+          width: 145px;
+          aspect-ratio: 1;
+          transition: transform 0.5s ease;
+        }
+        &:hover {
+          img {
+            transform: scale(1.1); 
+            border: 1px solid $color--porcelain;
+            z-index: 100;
+          }
+        }
+      }
+      }
     }
+
   }
 }
 #first-section {
@@ -1760,6 +1864,32 @@ h3{
   width: 100%;
   height: auto;
   object-fit: contain;
+}
+//cars pages
+#tabs{
+  padding-bottom: 100px;
+  ul {
+    display: inline-flex;
+    li{
+      display: block;
+      border: 1px solid $color--gray;
+      padding: 16px 8px;
+      text-align: center;
+
+      a{
+        color: $ForestGreen;
+        margin: 0 auto;
+      }
+    }
+  }
+  #tab-titles li a.active {
+    font-weight: bold;
+    color: #000; /* например, выделенный цвет */
+  }
+  .tab-panel {
+    display: none; /* скрыть все вкладки по умолчанию */
+  }
+  
 }
 
 // rwd

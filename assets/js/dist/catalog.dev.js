@@ -23,7 +23,7 @@ function displayProducts() {
 
   var productsToDisplay = products.slice(currentProductIndex, currentProductIndex + productsPerPage);
   productsToDisplay.forEach(function (product) {
-    var productCard = "\n    <div class=\"product-card\">\n      <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\">\n      <h3>").concat(product.ID_EXT, "</h3>\n      <h3>").concat(product.zapchast, "</h3>\n      <p>").concat(product.zena, " ").concat(product.valyuta, "</p>\n      \n      <div class=\"btn-cart\"><button class=\"add-to-cart\"\n        data-id=\"").concat(product.ID_EXT, "\"\n        data-price=\"").concat(product.zena, "\"\n        data-tipe=\"").concat(product.zapchast, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n      <div class=\"product_btn\">\n        <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n      </div>\n    </div>\n  ");
+    var productCard = "\n    <div class=\"product-card\">\n      <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\">\n      <h3>").concat(product.ID_EXT, "</h3>\n      <h3>").concat(product.zapchast, "</h3>\n      <p>").concat(product.zena, " ").concat(product.valyuta, "</p>\n      \n      <div class=\"btn-cart\">\n<button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(product.zena, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n\n        </div>\n      <div class=\"product_btn\">\n        <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n      </div>\n    </div>\n  ");
     productContainer.insertAdjacentHTML('beforeend', productCard);
   });
   currentProductIndex += productsPerPage;
@@ -58,42 +58,8 @@ fetch('../data/data.json').then(function (response) {
   return console.error('Помилка завантаження каталогу:', error);
 });
 var urlParams = new URLSearchParams(window.location.search);
-var productId = urlParams.get('id');
-document.addEventListener('DOMContentLoaded', function () {
-  shoppingCart.initCart();
-  var openCartButton = document.getElementById('openCartBtn');
+var productId = urlParams.get('id'); //accordion
 
-  if (openCartButton) {
-    openCartButton.addEventListener('click', function () {
-      if (shoppingCart.cart.length === 0) {
-        toast.warning('Кошик порожній!');
-        console.log('Кошик порожній!');
-      } else {
-        showCartModal();
-        shoppingCart.updateCartDisplay();
-      }
-    });
-  }
-
-  document.addEventListener('click', function (event) {
-    if (event.target.classList.contains('add-to-cart')) {
-      event.preventDefault();
-      var button = event.target;
-      var item = {
-        id: button.getAttribute('data-id'),
-        price: Number(button.getAttribute('data-price')),
-        tipe: button.getAttribute('data-tipe'),
-        quantity: 1
-      };
-      shoppingCart.addItemToCart(item);
-      showCartModal();
-      console.log("Кнопка 'Добавить в корзину' нажата!");
-      console.log("ID товара:", button.getAttribute('data-id')); // Проверяем ID
-
-      console.log("Добавляем товар:", item); // Проверяем объект товара
-    }
-  });
-});
 fetch('../data/data.json').then(function (response) {
   return response.json();
 }).then(function (data) {
@@ -184,7 +150,11 @@ fetch('../data/data.json').then(function (response) {
     carDetails.appendChild(carMakeModel);
     var carYear = document.createElement('p');
     carYear.textContent = "\u0420\u0456\u043A: ".concat(car.god);
-    carDetails.appendChild(carYear);
+    carDetails.appendChild(carYear); // Обробник події для картки машини
+
+    carCard.addEventListener('click', function () {
+      window.location.href = "./car-page.html?make=".concat(car.markaavto, "&model=").concat(car.model, "&year=").concat(car.god);
+    });
     carCard.appendChild(carDetails);
     carsCatalog.appendChild(carCard);
   });
@@ -209,4 +179,78 @@ document.getElementById('hamb-btn').addEventListener('click', function () {
 });
 document.getElementById('hamb-btn-mobile').addEventListener('click', function () {
   document.body.classList.toggle('open-mobile-menu');
-});
+}); //cart
+
+document.addEventListener("DOMContentLoaded", function () {
+  var continueShoppingBtn = document.getElementById("continueShopping");
+  var addToCartBtns = document.querySelectorAll('.add-to-cart'); // Обработчик для кнопки "Продолжить покупки"
+
+  if (continueShoppingBtn) {
+    continueShoppingBtn.addEventListener("click", function () {
+      window.location.href = "catalog.html"; // Переход на страницу каталога товаров
+    });
+  } // Обработчик для кнопок добавления в корзину
+
+
+  addToCartBtns.forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var item = {
+        id: this.dataset.id,
+        name: this.dataset.name,
+        price: this.dataset.price,
+        quantity: 1 // Количество товара (можно сделать настраиваемым)
+
+      };
+      addToCart(item); // Добавление товара в корзину
+    });
+  });
+}); // Функция для отображения модального окна
+
+function showCartModal() {
+  var modal = document.getElementById("cartModal");
+  var overlay = document.querySelector(".page-overlay");
+
+  if (modal && overlay) {
+    modal.classList.remove("hidden"); // Показываем модальное окно
+
+    overlay.style.display = "block"; // Показываем затемняющий фон
+  }
+} // Функция для закрытия модального окна
+
+
+function closeCartModal() {
+  var modal = document.getElementById("cartModal");
+  var overlay = document.querySelector(".page-overlay");
+
+  if (modal && overlay) {
+    modal.classList.add("hidden"); // Скрываем модальное окно
+
+    overlay.style.display = "none"; // Скрываем затемняющий фон
+  }
+} // Функция для перехода к оформлению заказа
+
+
+function proceedToCheckout() {
+  closeCartModal();
+  window.location.href = "cart.html"; // Переход на страницу корзины для оформления заказа
+} // Функция для добавления товара в корзину
+
+
+function addToCart(item) {
+  var cart = JSON.parse(sessionStorage.getItem("cart")) || []; // Получаем корзину из sessionStorage
+  // Добавляем новый товар в корзину, если он еще не был добавлен
+
+  var existingItemIndex = cart.findIndex(function (cartItem) {
+    return cartItem.id === item.id;
+  });
+
+  if (existingItemIndex > -1) {
+    cart[existingItemIndex].quantity += 1; // Увеличиваем количество товара, если он уже есть
+  } else {
+    cart.push(item); // Иначе добавляем новый товар в корзину
+  }
+
+  sessionStorage.setItem("cart", JSON.stringify(cart)); // Сохраняем обновленную корзину
+
+  showCartModal(); // Показываем модальное окно с вариантами продолжить покупки или перейти в корзину
+}

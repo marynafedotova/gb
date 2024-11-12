@@ -107,3 +107,37 @@ document.getElementById('hamb-btn').addEventListener('click', function () {
 document.getElementById('hamb-btn-mobile').addEventListener('click', function () {
   document.body.classList.toggle('open-mobile-menu')
 })
+
+// Функция добавления товара в корзину
+function addToCart(product) {
+  // Получаем текущую корзину из Session Storage или создаем пустую корзину
+  const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+
+  // Проверка, есть ли товар уже в корзине
+  const existingProduct = cart.find(item => item.id === product.id);
+
+  if (existingProduct) {
+      // Если товар уже есть, увеличиваем его количество
+      existingProduct.quantity += 1;
+  } else {
+      // Если товара нет в корзине, добавляем его
+      cart.push({ ...product, quantity: 1 });
+  }
+
+  // Сохраняем корзину обратно в Session Storage
+  sessionStorage.setItem('cart', JSON.stringify(cart));
+}
+
+// Обработчик события на кнопке
+document.querySelectorAll('.add-to-cart').forEach(button => {
+  button.addEventListener('click', () => {
+      const product = {
+          id: button.getAttribute('data-id'),
+          price: button.getAttribute('data-price'),
+          tipe: button.getAttribute('data-tipe'),
+          name: button.closest('.product-item').querySelector('.product-name').textContent
+      };
+      addToCart(product);
+      alert('Товар добавлен в корзину!');
+  });
+});

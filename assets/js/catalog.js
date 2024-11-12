@@ -20,10 +20,9 @@ function displayProducts() {
       <h3>${product.zapchast}</h3>
       <p>${product.zena} ${product.valyuta}</p>
       
-      <div class="btn-cart"><button class="add-to-cart"
-        data-id="${product.ID_EXT}"
-        data-price="${product.zena}"
-        data-tipe="${product.zapchast}">Додати до кошика</button>
+      <div class="btn-cart">
+<button class="add-to-cart" data-id="${product.ID_EXT}" data-price="${product.zena}">Додати до кошика</button>
+
         </div>
       <div class="product_btn">
         <a href="product.html?id=${product.ID_EXT}">Детальніше</a>
@@ -66,43 +65,7 @@ fetch('../data/data.json')
 const urlParams = new URLSearchParams(window.location.search);
 const productId = urlParams.get('id');
 
-document.addEventListener('DOMContentLoaded', function() {
-  shoppingCart.initCart();
-
-  const openCartButton = document.getElementById('openCartBtn');
-  if (openCartButton) {
-    openCartButton.addEventListener('click', function() {
-      if (shoppingCart.cart.length === 0) {
-        toast.warning('Кошик порожній!');
-        console.log('Кошик порожній!');
-      } else {
-        showCartModal();
-        shoppingCart.updateCartDisplay();
-      }
-    });
-  }
-
-  document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('add-to-cart')) {
-      event.preventDefault();
-      const button = event.target;
-      const item = {
-        id: button.getAttribute('data-id'),
-        price: Number(button.getAttribute('data-price')), 
-        tipe: button.getAttribute('data-tipe'), 
-        quantity: 1
-        
-      };
-      shoppingCart.addItemToCart(item);
-      showCartModal();
-      console.log("Кнопка 'Добавить в корзину' нажата!");
-      console.log("ID товара:", button.getAttribute('data-id')); // Проверяем ID
-console.log("Добавляем товар:", item); // Проверяем объект товара
-    }
-  });
-  
-});
-
+//accordion
 fetch('../data/data.json')
     .then(response => response.json())
     .then(data => {
@@ -180,7 +143,7 @@ fetch('../data/data.json')
             carCard.classList.add('car-card');
 
             const carImage = document.createElement('img');
-            carImage.src = car.pictures; 
+            carImage.src = car.pictures;
             carImage.alt = `${car.markaavto} ${car.model}`;
             carCard.appendChild(carImage);
 
@@ -195,11 +158,17 @@ fetch('../data/data.json')
             carYear.textContent = `Рік: ${car.god}`;
             carDetails.appendChild(carYear);
 
+            // Обробник події для картки машини
+            carCard.addEventListener('click', () => {
+                window.location.href = `./car-page.html?make=${car.markaavto}&model=${car.model}&year=${car.god}`;
+            });
+
             carCard.appendChild(carDetails);
             carsCatalog.appendChild(carCard);
         });
     })
     .catch(error => console.error('Помилка завантаження даних:', error));
+
 
 //header
 const header = document.querySelector('header');
@@ -223,3 +192,74 @@ document.getElementById('hamb-btn').addEventListener('click', function () {
 document.getElementById('hamb-btn-mobile').addEventListener('click', function () {
   document.body.classList.toggle('open-mobile-menu')
 })
+
+//cart
+document.addEventListener("DOMContentLoaded", function () {
+  const continueShoppingBtn = document.getElementById("continueShopping");
+  const addToCartBtns = document.querySelectorAll('.add-to-cart');
+
+  // Обработчик для кнопки "Продолжить покупки"
+  if (continueShoppingBtn) {
+    continueShoppingBtn.addEventListener("click", () => {
+      window.location.href = "catalog.html"; // Переход на страницу каталога товаров
+    });
+  }
+
+  // Обработчик для кнопок добавления в корзину
+  addToCartBtns.forEach(btn => {
+    btn.addEventListener("click", function () {
+      const item = {
+        id: this.dataset.id,
+        name: this.dataset.name,
+        price: this.dataset.price,
+        quantity: 1 // Количество товара (можно сделать настраиваемым)
+      };
+      addToCart(item); // Добавление товара в корзину
+    });
+  });
+});
+
+// Функция для отображения модального окна
+function showCartModal() {
+  const modal = document.getElementById("cartModal");
+  const overlay = document.querySelector(".page-overlay");
+
+  if (modal && overlay) {
+    modal.classList.remove("hidden"); // Показываем модальное окно
+    overlay.style.display = "block"; // Показываем затемняющий фон
+  }
+}
+
+// Функция для закрытия модального окна
+function closeCartModal() {
+  const modal = document.getElementById("cartModal");
+  const overlay = document.querySelector(".page-overlay");
+
+  if (modal && overlay) {
+    modal.classList.add("hidden"); // Скрываем модальное окно
+    overlay.style.display = "none"; // Скрываем затемняющий фон
+  }
+}
+
+// Функция для перехода к оформлению заказа
+function proceedToCheckout() {
+  closeCartModal();
+  window.location.href = "cart.html"; // Переход на страницу корзины для оформления заказа
+}
+
+// Функция для добавления товара в корзину
+function addToCart(item) {
+  let cart = JSON.parse(sessionStorage.getItem("cart")) || []; // Получаем корзину из sessionStorage
+
+  // Добавляем новый товар в корзину, если он еще не был добавлен
+  const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
+  if (existingItemIndex > -1) {
+    cart[existingItemIndex].quantity += 1; // Увеличиваем количество товара, если он уже есть
+  } else {
+    cart.push(item); // Иначе добавляем новый товар в корзину
+  }
+
+  sessionStorage.setItem("cart", JSON.stringify(cart)); // Сохраняем обновленную корзину
+
+  showCartModal(); // Показываем модальное окно с вариантами продолжить покупки или перейти в корзину
+}

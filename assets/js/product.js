@@ -104,7 +104,6 @@ window.addEventListener('scroll', function() {
 function addToCart(product) {
   // Получаем текущую корзину из Session Storage или создаем пустую корзину
   const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
-
   // Проверка, есть ли товар уже в корзине
   const existingProduct = cart.find(item => item.id === product.id);
 

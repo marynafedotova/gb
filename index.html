@@ -140,8 +140,9 @@
               <div class="search-container">
                 <form id="search-form">
                   <input type="text" id="search-input" placeholder="Пошук..." name="search">
-                  <button id="search-btn" type="submit"><img src="assets/img/free-icon-research-8967556.png"
-                      alt=""></button>
+                  <button id="search-btn" type="submit">
+                    <img src="assets/img/free-icon-research-8967556.png" alt="">
+                  </button>
                 </form>
               </div>
             </li>
@@ -159,8 +160,33 @@
       </div>
     </header>
     <main>
+      <section id="search-res">
+        <div class="container">
+          <div class="search-results"></div> 
+          <div class="btn-res">
+            <a href="#" class="load-more-search" style="display: none;">Завантажити більше</a>
+          </div>
+        </div>
+      </section>
       <!-- hero-section -->
       <section id="first-section_index">
+        <div class="baner-slider wow animate__animated animate__fadeInRight">
+          <ul id="baner">
+            <li>
+              <img src="assets/img/баннер1.jpeg" />
+            </li>
+            <li>
+              <img src="assets/img/баннер2.jpeg" />
+            </li>
+            <li>
+              <img src="assets/img/баннер3.jpeg" />
+            </li>
+            <li>
+              <img src="assets/img/баннер4.jpeg" />
+            </li>
+          </ul>
+        </div>
+
         <div class="container">
           <h1 class="wow animate__animated animate__backInUp">Розбирання автомобілів з США "Gen Brothers". Низькі ціни.</h1>
           <div class="first_screan">
@@ -186,31 +212,11 @@
                   <option value="">--Запчастини--</option>
                 </select>
                 <select name="originalnumber" id="originalnumber">
-                  <option value="">--Оригінальний номер--</option>
+                  <option value="">--ОЕМ--</option>
                 </select>
+                <button id="search-sidebar"> Пошук</button>
               </form>
-              <button id="search-sidebar"> Пошук</button>
 
-            </div>
-            <div class="baner-slider wow animate__animated animate__fadeInRight">
-              <ul id="baner">
-                <li>
-                  <img src="assets/img/banner01.png" />
-                </li>
-                <li>
-                  <img src="assets/img/GB_banner_ua-01.jpg" />
-                </li>
-                <li>
-                  <img src="assets/img/GB_banner_ru-08.jpg" />
-                </li>
-                <li>
-                  <img src="assets/img/GB_banner_ru-07.jpg" />
-                </li>
-                
-                <li>
-                  <img src="assets/img/banner02.png" />
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -331,7 +337,8 @@
         </div>
 
       </div>
-      <span>© 2024</span>
+      <span id="copyright">© <span id="year"></span> My Web Genius</span>
+
     </div>
     <script src="assets/js/jquery/jquery-3.7.1.min.js"></script>
     <script src="assets/js/plagins/lightgallery.min.js"></script>
@@ -342,7 +349,7 @@
     <script src="assets/js/lazyload.min.js"></script>
     <script src="assets/js/toast.js"></script>
     <script src="assets/js/newsSLider.js"></script>
-    <script src="assets/js/helpers.js"></script>
+    <!-- <script src="assets/js/helpers.js"></script> -->
     <script src="assets/js/main.js"></script>
 
   </div>

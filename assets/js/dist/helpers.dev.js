@@ -21,8 +21,8 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 }); //lazy
 // var lazyLoadInstance = new LazyLoad({});
 // wow
-
-new WOW().init(); //scroll
+// new WOW().init();
+//scroll
 // document.getElementById('scrollButton').addEventListener('click', function(event) {
 //   event.preventDefault();
 //   const targetElement = document.getElementById('news');
@@ -126,4 +126,229 @@ document.addEventListener('DOMContentLoaded', function () {
 
     e.target.value = input.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
   });
-});
+}); //copiraite
+
+document.addEventListener("DOMContentLoaded", function () {
+  var currentYear = new Date().getFullYear();
+  document.getElementById("year").textContent = currentYear;
+}); //search
+
+var urlMonoBank = 'https://api.monobank.ua/bank/currency';
+var products = [];
+var usdToUahRate = 1; // Инициализация переменной для курса валют
+
+var currentPage = 1; // Текущая страница для пагинации
+
+var productsPerPage = 12; // Количество продуктов на странице
+// Функция для получения курса валют
+
+function fetchCurrencyRate() {
+  var cachedRate, cachedTime, now, response, data, usdToUah;
+  return regeneratorRuntime.async(function fetchCurrencyRate$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          _context.prev = 0;
+          cachedRate = localStorage.getItem('usdToUahRate');
+          cachedTime = localStorage.getItem('usdToUahRateTime');
+          now = Date.now(); // Если кэш действителен (меньше 5 минут)
+
+          if (!(cachedRate && cachedTime && now - cachedTime < 5 * 60 * 1000)) {
+            _context.next = 7;
+            break;
+          }
+
+          usdToUahRate = parseFloat(cachedRate);
+          return _context.abrupt("return");
+
+        case 7:
+          _context.next = 9;
+          return regeneratorRuntime.awrap(fetch(urlMonoBank));
+
+        case 9:
+          response = _context.sent;
+
+          if (response.ok) {
+            _context.next = 12;
+            break;
+          }
+
+          throw new Error('Не удалось получить курс валют');
+
+        case 12:
+          _context.next = 14;
+          return regeneratorRuntime.awrap(response.json());
+
+        case 14:
+          data = _context.sent;
+          usdToUah = data.find(function (item) {
+            return item.currencyCodeA === 840;
+          });
+
+          if (usdToUah && usdToUah.rateSell) {
+            usdToUahRate = usdToUah.rateSell; // Сохраняем курс в кэш
+
+            localStorage.setItem('usdToUahRate', usdToUahRate);
+            localStorage.setItem('usdToUahRateTime', now);
+          }
+
+          _context.next = 22;
+          break;
+
+        case 19:
+          _context.prev = 19;
+          _context.t0 = _context["catch"](0);
+          console.error('Ошибка при получении курса валют:', _context.t0);
+
+        case 22:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, null, null, [[0, 19]]);
+} // Функция для получения продуктов
+
+
+function fetchProducts() {
+  var response, data;
+  return regeneratorRuntime.async(function fetchProducts$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          _context2.prev = 0;
+          _context2.next = 3;
+          return regeneratorRuntime.awrap(fetch('../data/data.json'));
+
+        case 3:
+          response = _context2.sent;
+
+          if (response.ok) {
+            _context2.next = 6;
+            break;
+          }
+
+          throw new Error('Не удалось загрузить продукты');
+
+        case 6:
+          _context2.next = 8;
+          return regeneratorRuntime.awrap(response.json());
+
+        case 8:
+          data = _context2.sent;
+
+          if (!(!data.Sheet1 || !Array.isArray(data.Sheet1))) {
+            _context2.next = 11;
+            break;
+          }
+
+          throw new Error('Некорректный формат данных');
+
+        case 11:
+          products = data.Sheet1;
+          _context2.next = 17;
+          break;
+
+        case 14:
+          _context2.prev = 14;
+          _context2.t0 = _context2["catch"](0);
+          console.error('Ошибка при получении данных продуктов:', _context2.t0);
+
+        case 17:
+        case "end":
+          return _context2.stop();
+      }
+    }
+  }, null, null, [[0, 14]]);
+} // Функция для отображения продуктов
+
+
+function displayProducts(filteredProducts) {
+  var productContainer = document.querySelector('.search-results');
+
+  if (!productContainer) {
+    console.error('Контейнер для товаров не найден');
+    return;
+  } // Очищаем контейнер перед выводом новых результатов
+
+
+  productContainer.innerHTML = '';
+
+  if (filteredProducts.length === 0) {
+    productContainer.innerHTML = '<p>Ничего не найдено.</p>';
+    return;
+  } // Определяем, какие продукты показывать
+
+
+  var startIndex = (currentPage - 1) * productsPerPage;
+  var limitedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+  limitedProducts.forEach(function (product) {
+    var priceInUah = Math.ceil(product.zena * usdToUahRate);
+    var photoUrl = product.photo ? product.photo.split(',')[0].trim() : 'default-photo.jpg';
+    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(photoUrl, "\" alt=\"").concat(product.zapchast, "\">\n        <div>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</div>\n        <h3>").concat(product.zapchast, "</h3>\n        <p>\u0426\u0435\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
+    productContainer.insertAdjacentHTML('beforeend', productCard);
+  }); // Если продуктов еще много, добавляем кнопку для загрузки дополнительных
+
+  if (filteredProducts.length > currentPage * productsPerPage) {
+    productContainer.insertAdjacentHTML('beforeend', "<div class=\"btn-res\"\n      <a href=\"#\" class=\"load-more-search\">\u0417\u0430\u0432\u0430\u043D\u0442\u0430\u0436\u0438\u0442\u0438 \u0431\u0456\u043B\u044C\u0448\u0435</a>\n      </div>");
+    document.querySelector('.load-more-search').addEventListener('click', function () {
+      currentPage++;
+      displayProducts(filteredProducts); // Загружаем больше продуктов
+    });
+  }
+} // Обработчик формы поиска
+
+
+document.getElementById('search-form').addEventListener('submit', function _callee(event) {
+  var query, filteredProducts;
+  return regeneratorRuntime.async(function _callee$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          event.preventDefault();
+          _context3.next = 3;
+          return regeneratorRuntime.awrap(fetchCurrencyRate());
+
+        case 3:
+          // Получаем актуальный курс валют
+          query = document.getElementById('search-input').value.trim().toLowerCase();
+
+          if (query) {
+            filteredProducts = products.filter(function (product) {
+              return product.zapchast && product.zapchast.toLowerCase().includes(query) || product.markaavto && product.markaavto.toLowerCase().includes(query) || product.model && product.model.toLowerCase().includes(query);
+            });
+            displayProducts(filteredProducts);
+          }
+
+        case 5:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  });
+}); // Инициализация данных
+
+function initialize() {
+  return regeneratorRuntime.async(function initialize$(_context4) {
+    while (1) {
+      switch (_context4.prev = _context4.next) {
+        case 0:
+          _context4.next = 2;
+          return regeneratorRuntime.awrap(fetchCurrencyRate());
+
+        case 2:
+          _context4.next = 4;
+          return regeneratorRuntime.awrap(fetchProducts());
+
+        case 4:
+          displayProducts(products); // Отображаем все продукты при инициализации
+
+        case 5:
+        case "end":
+          return _context4.stop();
+      }
+    }
+  });
+} // Запуск
+
+
+initialize();

@@ -1,30 +1,79 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get('id');
 
+  // Функция для установки значения textContent с проверкой наличия элемента
+  function setElementTextContent(selector, content) {
+    const element = document.querySelector(selector);
+    if (element) {
+      element.textContent = content;
+    } else {
+      console.warn(`Элемент с селектором ${selector} не найден`);
+    }
+  }
+
+  // Функция для получения и кэширования курса USD к UAH
+  async function getCachedExchangeRate() {
+    const cachedRate = sessionStorage.getItem('usdToUahRate');
+    const cachedTime = sessionStorage.getItem('currencyUpdateTime');
+    const oneHour = 60 * 60 * 1000; // 1 час в миллисекундах
+
+    if (cachedRate && cachedTime && (Date.now() - cachedTime < oneHour)) {
+      return parseFloat(cachedRate);
+    } else {
+      try {
+        const response = await fetch('https://api.monobank.ua/bank/currency');
+        const data = await response.json();
+        const usdToUah = data.find(item => item.currencyCodeA === 840 && item.currencyCodeB === 980);
+        if (usdToUah && usdToUah.rateSell) {
+          const rate = usdToUah.rateSell;
+          // Сохраняем курс и время обновления в sessionStorage
+          sessionStorage.setItem('usdToUahRate', rate);
+          sessionStorage.setItem('currencyUpdateTime', Date.now());
+          return rate;
+        }
+      } catch (error) {
+        console.error('Ошибка при получении курса валют:', error);
+        return 1; // Возвращаем базовое значение, если запрос не удался
+      }
+    }
+  }
+
   if (productId) {
+    // Получаем курс валют с кэшированием
+    const usdToUahRate = await getCachedExchangeRate();
+
+    // Загружаем данные товара из JSON
     fetch('../data/data.json')
       .then(response => response.json())
       .then(data => {
         const product = data.Sheet1.find(item => item.ID_EXT === productId);
 
         if (product) {
+          // Конвертируем цену в гривны и округляем в большую сторону
+          const priceInUah = Math.ceil(product.zena * usdToUahRate);
 
-          document.querySelector('.product-name').textContent = product.zapchast;
-          document.querySelector('.product-markaavto').textContent = product.markaavto;
-          document.querySelector('.product-dop_category').textContent = product.dop_category;
-          document.querySelector('.product-pod_category').textContent = product.pod_category;
-          document.querySelector('.product-typ_kuzova').textContent = product.typ_kuzova;
-          document.querySelector('.product-price').textContent = product.zena + ' ' + product.valyuta;
-          document.querySelector('.product-description').textContent = product.opysanye;
-          document.querySelector('.product-model').textContent = product.model;
-          document.querySelector('.product-god').textContent = product.god;
-          document.querySelector('.product-category').textContent = product.category;
-          document.querySelector('.product-toplivo').textContent = product.toplivo;
-          document.querySelector('.product-originalnumber').textContent = product.originalnumber;
+          // Присваиваем значения элементам на странице
+          setElementTextContent('.product-id', product.ID_EXT);
+          setElementTextContent('.product-name', product.zapchast);
+          setElementTextContent('.product-markaavto', product.markaavto);
+          setElementTextContent('.product-dop_category', product.dop_category);
+          setElementTextContent('.product-pod_category', product.pod_category);
+          setElementTextContent('.product-typ_kuzova', product.typ_kuzova);
+          setElementTextContent('.product-price', `${product.zena} ${product.valyuta}`);
+          setElementTextContent('.product-price-uah', `${priceInUah} грн`);
+          setElementTextContent('.product-model', product.model);
+          setElementTextContent('.product-god', product.god);
+          setElementTextContent('.product-category', product.category);
+          setElementTextContent('.product-toplivo', product.toplivo);
+          setElementTextContent('.product-originalnumber', product.originalnumber);
 
+          // Добавление описания продукта в блок с подробной информацией
+          setElementTextContent('.opysanye', product.opysanye);
+
+          // Обработка галереи изображений
           const imageGallery = document.querySelector('#imageGallery');
-          if (product.photo && typeof product.photo === 'string') {
+          if (product.photo && typeof product.photo === 'string' && imageGallery) {
             product.photo.split(',').forEach((photoUrl) => {
               const listItem = `
                 <li data-thumb="${photoUrl.trim()}" data-src="${photoUrl.trim()}">
@@ -51,84 +100,76 @@ document.addEventListener("DOMContentLoaded", () => {
                 $('#imageGallery').removeClass('cS-hidden');
               }
             });
-            
           } else {
-            console.error('Поле photo не містить даних або не є рядком для товару з ID:', productId);
+            console.error('Поле photo не содержит данных или не является строкой для товара с ID:', productId);
           }
         } else {
-          console.error('Продукт з ID не знайдено:', productId);
+          console.error('Продукт с указанным ID не найден:', productId);
         }
       })
-      .catch(error => console.error('Помилка завантаження даних продукту:', error));
+      .catch(error => console.error('Ошибка загрузки данных продукта:', error));
   }
 });
 
+// Табы для переключения информации
 document.addEventListener("DOMContentLoaded", () => {
   const tabs = document.querySelectorAll(".info-tab");
   const contents = document.querySelectorAll(".info-content");
 
   tabs.forEach(tab => {
     tab.addEventListener("click", () => {
-      // Видалити активні класи з усіх табів і блоків
       tabs.forEach(item => item.classList.remove("active"));
       contents.forEach(content => content.classList.remove("active"));
 
-      // Додати активний клас для вибраного таба і відповідного контенту
       tab.classList.add("active");
       document.querySelector(`.${tab.id}-info`).classList.add("active");
     });
   });
-});
 
-
-
-
-//header
-const header = document.querySelector('header');
-
-window.addEventListener('scroll', function() {
-  const scrollDistance = window.scrollY;
-  const threshold = 30;
-
-  if (scrollDistance > threshold) {
-    header.classList.add('scrolled');
-  } else {
-    header.classList.remove('scrolled');
-  }
-});
-
-
-
-
-// Функция добавления товара в корзину
-function addToCart(product) {
-  // Получаем текущую корзину из Session Storage или создаем пустую корзину
-  const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
-  // Проверка, есть ли товар уже в корзине
-  const existingProduct = cart.find(item => item.id === product.id);
-
-  if (existingProduct) {
-      // Если товар уже есть, увеличиваем его количество
-      existingProduct.quantity += 1;
-  } else {
-      // Если товара нет в корзине, добавляем его
-      cart.push({ ...product, quantity: 1 });
-  }
-
-  // Сохраняем корзину обратно в Session Storage
-  sessionStorage.setItem('cart', JSON.stringify(cart));
-}
-
-// Обработчик события на кнопке
-document.querySelectorAll('.add-to-cart').forEach(button => {
-  button.addEventListener('click', () => {
+  // Добавление логики для кнопки добавления в корзину с модальным окном
+  document.querySelectorAll('.add-to-cart').forEach(button => {
+    button.addEventListener('click', () => {
       const product = {
-          id: button.getAttribute('data-id'),
-          price: button.getAttribute('data-price'),
-          tipe: button.getAttribute('data-tipe'),
-          name: button.closest('.product-item').querySelector('.product-name').textContent
+        id: button.getAttribute('data-id'),
+        price: button.getAttribute('data-price'),
+        tipe: button.getAttribute('data-tipe'),
+        name: button.closest('.product-item').querySelector('.product-name').textContent
       };
       addToCart(product);
-      alert('Товар добавлен в корзину!');
+
+      // Показать модальное окно вместо alert
+      const modal = document.createElement('div');
+      modal.classList.add('modal-overlay');
+      modal.innerHTML = `
+        <div class="modal-window">
+          <p>Товар добавлен в корзину!</p>
+          <button class="continue-shopping">Продолжить покупки</button>
+          <button class="go-to-cart">Перейти в корзину</button>
+        </div>
+      `;
+      document.body.appendChild(modal);
+
+      // Обработчики для кнопок модального окна
+      modal.querySelector('.continue-shopping').addEventListener('click', () => {
+        document.body.removeChild(modal);
+      });
+      modal.querySelector('.go-to-cart').addEventListener('click', () => {
+        window.location.href = 'cart.html'; // Переход на страницу корзины
+      });
+    });
   });
+
+  // Функция добавления товара в корзину
+  function addToCart(product) {
+    const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
+    const existingProduct = cart.find(item => item.id === product.id);
+
+    if (existingProduct) {
+      existingProduct.quantity += 1;
+    } else {
+      cart.push({ ...product, quantity: 1 });
+    }
+
+    sessionStorage.setItem('cart', JSON.stringify(cart));
+  }
 });

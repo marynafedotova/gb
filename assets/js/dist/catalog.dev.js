@@ -8,57 +8,262 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-// catalog products
+var urlMonoBank = 'https://api.monobank.ua/bank/currency';
+var usdToUahRate = 1; // Курс USD к UAH
+
 var currentProductIndex = 0;
 var productsPerPage = 12;
-var products = [];
+var products = []; // Все продукты
+
+var searchResults = []; // Результаты поиска
+
+var searchProductIndex = 0; // Индекс текущего отображаемого продукта в поиске
+
+var productsPerSearchPage = 12; // Количество продуктов на одной странице поиска
+// Функция для получения курса валют с кешированием
+
+function fetchCurrencyRate() {
+  var cachedRate, cachedTime, now, response, data, usdToUah;
+  return regeneratorRuntime.async(function fetchCurrencyRate$(_context) {
+    while (1) {
+      switch (_context.prev = _context.next) {
+        case 0:
+          cachedRate = localStorage.getItem('usdToUahRate');
+          cachedTime = localStorage.getItem('usdToUahRateTime');
+          now = Date.now();
+
+          if (!(cachedRate && cachedTime && now - cachedTime < 5 * 60 * 1000)) {
+            _context.next = 6;
+            break;
+          }
+
+          usdToUahRate = parseFloat(cachedRate);
+          return _context.abrupt("return");
+
+        case 6:
+          _context.prev = 6;
+          _context.next = 9;
+          return regeneratorRuntime.awrap(fetch(urlMonoBank));
+
+        case 9:
+          response = _context.sent;
+
+          if (response.ok) {
+            _context.next = 12;
+            break;
+          }
+
+          throw new Error('Ошибка загрузки курса валют');
+
+        case 12:
+          _context.next = 14;
+          return regeneratorRuntime.awrap(response.json());
+
+        case 14:
+          data = _context.sent;
+          usdToUah = data.find(function (item) {
+            return item.currencyCodeA === 840;
+          });
+
+          if (usdToUah && usdToUah.rateSell) {
+            usdToUahRate = usdToUah.rateSell;
+            localStorage.setItem('usdToUahRate', usdToUahRate);
+            localStorage.setItem('usdToUahRateTime', now);
+          }
+
+          _context.next = 22;
+          break;
+
+        case 19:
+          _context.prev = 19;
+          _context.t0 = _context["catch"](6);
+          console.error('Ошибка получения курса валют:', _context.t0);
+
+        case 22:
+        case "end":
+          return _context.stop();
+      }
+    }
+  }, null, null, [[6, 19]]);
+} // Функция для отображения товаров
+
 
 function displayProducts() {
-  var productContainer = document.querySelector('.product-list');
+  var filteredProducts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var isSearch = filteredProducts.length > 0;
+  var productContainer = document.querySelector(isSearch ? '.search-results' : '.product-list');
 
   if (!productContainer) {
-    console.error('Контейнер для товарів не знайдено.');
+    console.error('Контейнер для товаров не найден');
     return;
   }
 
-  var productsToDisplay = products.slice(currentProductIndex, currentProductIndex + productsPerPage);
+  if (isSearch) {
+    productContainer.innerHTML = ''; // Очистка результатов поиска
+  }
+
+  var productsToDisplay = isSearch ? filteredProducts : products.slice(currentProductIndex, currentProductIndex + productsPerPage);
   productsToDisplay.forEach(function (product) {
-    var productCard = "\n    <div class=\"product-card\">\n      <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\">\n      <h3>").concat(product.ID_EXT, "</h3>\n      <h3>").concat(product.zapchast, "</h3>\n      <p>").concat(product.zena, " ").concat(product.valyuta, "</p>\n      \n      <div class=\"btn-cart\">\n<button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(product.zena, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n\n        </div>\n      <div class=\"product_btn\">\n        <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n      </div>\n    </div>\n  ");
+    var priceInUah = Math.ceil(product.zena * usdToUahRate);
+    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\">\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
+    productContainer.insertAdjacentHTML('beforeend', productCard);
+  }); // Обновляем индекс для каталога
+
+  if (!isSearch) {
+    currentProductIndex += productsPerPage;
+
+    if (currentProductIndex >= products.length) {
+      document.querySelector('.load-more').style.display = 'none';
+    }
+  } else if (filteredProducts.length === 0) {
+    productContainer.innerHTML = '<p>Ничего не найдено.</p>';
+  }
+} // Функция для отображения результатов поиска
+
+
+function displaySearchResults() {
+  var filteredProducts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var productContainer = document.querySelector('.search-results');
+
+  if (!productContainer) {
+    console.error('Контейнер для результатов поиска не найден');
+    return;
+  }
+
+  productContainer.innerHTML = '';
+  var productsToDisplay = filteredProducts.slice(searchProductIndex, searchProductIndex + productsPerSearchPage);
+  productsToDisplay.forEach(function (product) {
+    var priceInUah = Math.ceil(product.zena * usdToUahRate);
+    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\">\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
     productContainer.insertAdjacentHTML('beforeend', productCard);
   });
-  currentProductIndex += productsPerPage;
+  searchProductIndex += productsPerSearchPage;
 
-  if (currentProductIndex >= products.length) {
-    document.querySelector('.load-more').style.display = 'none';
+  if (searchProductIndex < filteredProducts.length) {
+    var loadMoreButton = document.querySelector('.load-more-search');
+    loadMoreButton.style.display = 'block';
+  } else {
+    var _loadMoreButton = document.querySelector('.load-more-search');
+
+    _loadMoreButton.style.display = 'none';
   }
-}
+} // Модификация функции поиска товаров
 
-fetch('../data/data.json').then(function (response) {
-  if (!response.ok) {
-    throw new Error('Ошибка загрузки файла JSON');
+
+function searchProducts(query) {
+  var lowerCaseQuery = query.toLowerCase();
+  searchResults = products.filter(function (product) {
+    return product.zapchast && product.zapchast.toLowerCase().includes(lowerCaseQuery) || product.markaavto && product.markaavto.toLowerCase().includes(lowerCaseQuery) || product.model && product.model.toLowerCase().includes(lowerCaseQuery);
+  });
+  searchProductIndex = 0; // Сброс индекса поиска
+
+  displaySearchResults(searchResults); // Отображаем результаты поиска
+} // Обработчик для кнопки "Загрузить больше"
+
+
+document.querySelector('.load-more').addEventListener('click', function (event) {
+  event.preventDefault();
+  var query = document.getElementById('search-input').value.trim();
+
+  if (query) {
+    searchProducts(query);
+    this.style.display = 'none'; // Скрыть кнопку после загрузки
   }
+}); // Обработчик поиска
 
-  return response.json();
-}).then(function (data) {
-  if (!data || !data.Sheet1) {
-    throw new Error('Некорректный формат данных');
-  }
+document.getElementById('search-form').addEventListener('submit', function _callee(event) {
+  var query;
+  return regeneratorRuntime.async(function _callee$(_context2) {
+    while (1) {
+      switch (_context2.prev = _context2.next) {
+        case 0:
+          event.preventDefault();
+          _context2.next = 3;
+          return regeneratorRuntime.awrap(fetchCurrencyRate());
 
-  products = data.Sheet1;
-  displayProducts();
-  var loadMoreButton = document.querySelector('.load-more');
+        case 3:
+          // Актуализируем курс
+          query = document.getElementById('search-input').value.trim();
 
-  if (loadMoreButton) {
-    loadMoreButton.addEventListener('click', function (event) {
-      event.preventDefault();
-      displayProducts();
-    });
-  }
-})["catch"](function (error) {
-  return console.error('Помилка завантаження каталогу:', error);
-});
-var urlParams = new URLSearchParams(window.location.search);
-var productId = urlParams.get('id'); //accordion
+          if (query) {
+            searchProducts(query);
+            document.querySelector('.product-list').style.display = 'none'; // Скрываем каталог
+
+            document.querySelector('.search-results').style.display = 'flex'; // Показываем результаты
+          }
+
+        case 5:
+        case "end":
+          return _context2.stop();
+      }
+    }
+  });
+}); // Функция инициализации каталога
+
+function initializeCatalog() {
+  var response, data;
+  return regeneratorRuntime.async(function initializeCatalog$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          _context3.next = 2;
+          return regeneratorRuntime.awrap(fetchCurrencyRate());
+
+        case 2:
+          _context3.prev = 2;
+          _context3.next = 5;
+          return regeneratorRuntime.awrap(fetch('../data/data.json'));
+
+        case 5:
+          response = _context3.sent;
+
+          if (response.ok) {
+            _context3.next = 8;
+            break;
+          }
+
+          throw new Error('Ошибка загрузки JSON');
+
+        case 8:
+          _context3.next = 10;
+          return regeneratorRuntime.awrap(response.json());
+
+        case 10:
+          data = _context3.sent;
+
+          if (!(!data || !data.Sheet1)) {
+            _context3.next = 13;
+            break;
+          }
+
+          throw new Error('Некорректный формат данных');
+
+        case 13:
+          products = data.Sheet1;
+          displayProducts(); // Отображаем начальные продукты
+
+          document.querySelector('.load-more').addEventListener('click', function (event) {
+            event.preventDefault();
+            displayProducts();
+          });
+          _context3.next = 21;
+          break;
+
+        case 18:
+          _context3.prev = 18;
+          _context3.t0 = _context3["catch"](2);
+          console.error('Ошибка инициализации каталога:', _context3.t0);
+
+        case 21:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  }, null, null, [[2, 18]]);
+} // Инициализация
+
+
+initializeCatalog(); //accordion
 
 fetch('../data/data.json').then(function (response) {
   return response.json();
@@ -260,4 +465,37 @@ function addToCart(item) {
   sessionStorage.setItem("cart", JSON.stringify(cart)); // Сохраняем обновленную корзину
 
   showCartModal(); // Показываем модальное окно с вариантами продолжить покупки или перейти в корзину
-}
+} //header
+
+
+var header = document.querySelector('header');
+window.addEventListener('scroll', function () {
+  var scrollDistance = window.scrollY;
+  var threshold = 30;
+
+  if (scrollDistance > threshold) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+}); //hamburger-menu
+
+document.getElementById('hamb-btn').addEventListener('click', function () {
+  document.body.classList.toggle('open-mobile-menu');
+});
+document.getElementById('hamb-btn-mobile').addEventListener('click', function () {
+  document.body.classList.toggle('open-mobile-menu');
+}); //lazy
+// var lazyLoadInstance = new LazyLoad({});
+// wow
+// new WOW().init();
+//scroll
+// document.getElementById('scrollButton').addEventListener('click', function(event) {
+//   event.preventDefault();
+//   const targetElement = document.getElementById('news');
+//   const targetPosition = targetElement.getBoundingClientRect().top + window.scrollY;
+//   window.scrollTo({
+//     top: targetPosition,
+//     behavior: 'smooth'
+//   });
+// });

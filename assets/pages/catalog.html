@@ -97,7 +97,7 @@
         <div class="language">
           <ul>
              <li><img src="../img/russia.svg" alt="ru lamguage"></li>
-<li><img src="../img/ukraine.svg" alt="ua language"></li>          </ul>
+            <li><img src="../img/ukraine.svg" alt="ua language"></li>          </ul>
         </div>
       </div>
       <div class="nav-container">
@@ -154,6 +154,15 @@
       </div>
     </header>
     <main>
+      <section id="search-res">
+        <div class="container">
+          <div class="search-results"></div> 
+          <div class="btn-res">
+            <a href="#" class="load-more-search" style="display: none;">Завантажити більше</a>
+          </div>
+        </div>
+      </section>
+      
       <!-- hero-section -->
       <section id="first-section">
         <h1>Розбирання автомобілів з США "Gen Brothers". Низькі ціни.</h1>
@@ -179,7 +188,7 @@
                   <option value="">--Запчастини--</option>
                 </select>
                 <select name="originalnumber" id="originalnumber">
-                  <option value="">--Оригінальний номер--</option>
+                  <option value="">--ОЕМ--</option>
                 </select>
                 <button id="search-sidebar-catalog"> Пошук</button>
 
@@ -189,17 +198,17 @@
           </div>
         </div>
       </section>
-      <section>
-        <div class="container catalog">
+      <section class="catalog_zapchast">
+        <div class="container">
           <h2>Каталог товарів</h2>
           <div class="product-list"></div>
           <button class="load-more">Завантажити більше</button>
         </div>
       </section>
-      <section>
+      <section class="catalog_mark_avto">
         <div class="hero-screan">
           <div class="container">
-            <h1 class="wow animate__animated wow animate__animated animate__backInUp">Каталог запчастин</h1>
+            <h2 class="wow animate__animated wow animate__animated animate__backInUp">Каталог запчастин</h2>
             <div class="catalog">
               <ul class="catalog-list wow animate__animated animate__backInUp">
                 <li><a href="../pages/cars-catalog/acura.html"><img src="../img/acura.svg" alt="Acura"></a></li>
@@ -310,10 +319,11 @@
         <script src="../js/toast.js"></script>
         <!-- <script src="../js/cart.js"></script> -->
         <script src="../js/catalog.js"></script>
-        <script src="../js/helpers.js"></script>
+        <!-- <script src="../js/helpers.js"></script> -->
 
       </div>
-      <span>© 2024</span>
+      <span id="copyright">© <span id="year"></span> My Web Genius</span>
+
     </div>
   </div>
 </body>

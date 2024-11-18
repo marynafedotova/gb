@@ -377,67 +377,77 @@ h1{
   padding: 30px 0px 0px;
 
 }
-#first-section_index .container {
-  display: flex;
-  flex-direction: column;
-  .first_screan{
-    padding-top: 100px;
-    display: flex;
-    .sidebar_filter{
-      top: 10%;
-      width: 35%;
-      padding: 30px;
-      display: flex;
-      flex-direction: column;
-      border: 1px solid #579816;
-      h2{
-        text-align: center;
-        padding-bottom: 10px;
-      }
-      form{
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 20px;
-  
-        select{
-          height: 40px;
-          cursor: pointer;
-          border: 1px solid $ForestGreen;
-          font-size: 1rem;
-          font-weight: 600;
-          color: $color--mine-shaft;
-          &:hover{
-            border: 1px solid $color--porcelain;
-          }
-          &:focus{
-            background-color: $ForestGreen;
-          }
-        }
-      }
-      #search-sidebar{
-        background-color: $ForestGreen;
-        padding: 10px;
-        border: 1px solid $ForestGreen;
-        border-radius: 10px;
-        color: $color--porcelain;
-        text-transform: uppercase;
-        font-weight: 600;
-        letter-spacing: 0.2rem;
-        &:hover{
-          background-color: $color--porcelain;
-          color: $ForestGreen;
-          
-          transform: scale(1.1);
-        }
-      }
-    }
-    .baner-slider{
-      width: 60%;
-      .lSSlideOuter .lSPager.lSpg{
-        display: none;
-      }
+#first-section_index {
+  .baner-slider{
+     margin-top: -20px;
+    width: 100%;
+    .lSSlideOuter .lSPager.lSpg{
+      display: none;
     }
   }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    .first_screan{
+      padding-top: 100px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap-reverse;
+      .sidebar_filter{
+        top: 10%;
+        width: 100%;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #579816;
+        h2{
+          text-align: center;
+          padding-bottom: 10px;
+        }
+        form{
+          display: flex;
+          flex-direction: row;
+          margin-bottom: 20px;
+    justify-content: space-between;
+          select{
+            width: 100%;
+            height: 40px;
+            cursor: pointer;
+            border: 1px solid $ForestGreen;
+            font-size: 1rem;
+            font-weight: 600;
+            color: $color--mine-shaft;
+            &:hover{
+              border: 1px solid $color--porcelain;
+            }
+            &:focus{
+              background-color: $ForestGreen;
+            }
+          }
+        }
+        #search-sidebar{
+          margin-left: 16px;
+          background-color: $ForestGreen;
+          padding: 10px;
+          border: 1px solid $ForestGreen;
+          border-radius: 10px;
+          color: $color--porcelain;
+          text-transform: uppercase;
+          font-weight: 600;
+          letter-spacing: 0.2rem;
+          &:hover{
+            background-color: $color--porcelain;
+            color: $ForestGreen;
+            
+            transform: scale(1.1);
+          }
+        }
+      }
+      
+    }
+  }
+  
 }
 
 //advantages section
@@ -473,6 +483,7 @@ h1{
             flex-direction: column;
             justify-content: center;
             color: $color--porcelain;
+            height: inherit;
           }
           
           img{
@@ -717,6 +728,83 @@ li {
   border-left: none;
   border-right: none;
 }
+}
+
+#search-res{
+  text-align: center;
+
+  .container{
+    .btn-res{
+      padding: 24px 40%;
+      .load-more-search{
+        background-color: $ForestGreen;
+        color: $color--porcelain;
+        font-size: 1.125rem;
+        padding: 16px 24px;
+        border: 1px solid $color--gray;
+        border-radius: 8px;
+      }
+  
+    }
+    .search-results{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      .product-card{
+        border: 1px solid $ForestGreen; 
+        border-radius: 8px; 
+        padding: 15px; 
+        box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1); 
+        transition: transform 0.3s;
+          display: flex;
+          flex-direction: column;
+        img {
+          max-width: 100%; 
+          height: auto; 
+          border-radius: 4px; 
+          margin-bottom: 16px;
+        }
+      
+        h3 {
+          margin: 10px 0;
+          font-size: 1rem;
+          flex-grow: 1; 
+        }
+      
+        p {
+          margin: 10px 0;
+          font-size: 1rem;
+          color: $background-icon; 
+        }
+        .product_btn, .btn-cart{
+        text-align: center;
+          a {
+            display: inline-block; 
+            padding: 16px 47px;
+            background-color: $color--porcelain; 
+            color: $ForestGreen; 
+            text-align: center; 
+            border-radius: 8px; 
+            text-decoration: none; 
+            text-transform: uppercase;
+            font-weight: 600;
+        &:hover {
+          background-color: $background-icon;
+          color: $color--porcelain; 
+        }
+        
+      }
+        }
+        &:hover {
+          transform: translateY(-5px); 
+          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+        }}
+      }
+    
+  }
+  
 }
 //contacta page
 .contacts-block{
@@ -1137,9 +1225,10 @@ width: 100%;
 }
 
 
-//catalog
+//catalog pages
 .catalog-avto{
-  padding-top: 42px;
+  padding: 42px 0px;
+  margin-bottom: 42px;
   .container{
     text-align: center;
     h2{
@@ -1174,9 +1263,27 @@ width: 100%;
     
   }
 }
-
+.catalog_zapchast{
+  .container{
+    text-align: center;
+    .load-more{
+        padding: 8px 16px;
+        border: 2px solid $ForestGreen;
+        border-radius: 8px;
+        text-transform: uppercase;
+        font-size: 1.125rem;
+        color: $color--mine-shaft;
+        transition: all .4s ease;
+        &:hover{
+          color: $color--porcelain;
+          background-color: $background-icon;
+        }
+    }
+  }
+}
 .product-list {
   padding-top: 100px;
+  padding-bottom: 42px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -1254,7 +1361,7 @@ width: 100%;
     }
   }
 }
-//product-section
+//product-section product page
 .product-section{
   .container{
     .delivery {
@@ -1298,6 +1405,9 @@ width: 100%;
       }
     }
   }
+  .deteils-info, .analog-info {
+    padding: 16px;
+  }
   .guarantees-info{
     padding-top: 32px;
   }
@@ -1314,6 +1424,45 @@ width: 100%;
   font-weight: 800;
   color: $ForestGreen;
 }
+.catalog_mark_avto{
+  .hero-screan{
+    padding-top: 42px;
+    .container{
+      h2{
+        padding-bottom: 42px;
+      }
+      .catalog {
+        margin-bottom: 42px;
+        .catalog-list {
+          width: 100%;
+          display: inline-flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 8px;
+      li {
+          transition: border 0.5s ease; 
+          img {
+            width: 145px;
+            aspect-ratio: 1;
+            transition: transform 0.5s ease;
+          }
+          &:hover {
+            img {
+              transform: scale(1.1); 
+              border: 1px solid $color--porcelain;
+              z-index: 100;
+            }
+          }
+        }
+        }
+      }
+  
+    }
+  }
+  
+}
+
+
 .hero-screan{
   .container{
     .catalog {
@@ -1345,6 +1494,7 @@ width: 100%;
   }
 }
 #first-section {
+  padding-bottom: 64px;
   h1 {
     text-align: center;
     margin-bottom: 20px;
@@ -1817,10 +1967,11 @@ h3{
     color: $ForestGreen;
     font-weight: 600;
     padding-bottom: 8px;
-    .product-price, .product-description,.product-model, .product-god, .product-category,
+    .product-id, .product-price, .product-description,.product-model, .product-god, .product-category,
     .product-toplivo, .product-originalnumber,
     .product-markaavto,.product-dop_category,
-    .product-pod_category, .product-typ_kuzova
+    .product-pod_category, .product-typ_kuzova,
+    .product-price-uah
     {
       color: $color--porcelain;
     }
@@ -1834,11 +1985,25 @@ h3{
     color: $color--porcelain;
     font-size: 1.1rem;
     transition: all .4s ease;
+    margin-right: 24px;
     &:hover{
       transform: scale(1.2);
       background-color: $color--porcelain;
       border: 1px solid $ForestGreen;
       color: $ForestGreen;
+    }
+  }
+  .buy-now{
+    padding: 16px 24px;
+    color: $ForestGreen;
+    font-size: 1.125rem;
+    border: 1px solid $ForestGreen;
+    border-radius: 8px;
+    &:hover{
+      transform: scale(1.2);
+      background-color: $ForestGreen;
+      color: $color--porcelain;
+      border: 1px solid $gray-color;
     }
   }
 }
@@ -1883,6 +2048,59 @@ h3{
   height: auto;
   object-fit: contain;
 }
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-window {
+  background: $color--oslo-gray;
+  padding: 100px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  p{
+    padding: 16px;
+    color: $color--porcelain;
+    font-size: 1.1rem;
+  }
+  .continue-shopping, .go-to-cart{
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    transition: all .5s ease;
+  }
+  .continue-shopping{
+    background-color: $color--porcelain;
+    border: 2px solid $color--mine-shaft;
+    color: $ForestGreen;
+    &:hover{
+      background-color: $background-icon;
+      color: $color--porcelain;
+      border: 1px solid $color--porcelain;
+    }
+  }
+  .go-to-cart{
+    background-color: $ForestGreen;
+    color: $color--porcelain;   
+     &:hover{
+      background-color: $color--porcelain;
+      color: $ForestGreen;
+      border: 1px solid $color--mine-shaft;
+    }
+  }
+}
+
 //cars pages
 #tabs{
   padding-bottom: 100px;

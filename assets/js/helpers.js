@@ -36,7 +36,15 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 //     behavior: 'smooth'
 //   });
 // });
-
+// Код для обработки кликов по ссылкам
+document.querySelectorAll('.submenu a').forEach(link => {
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+    const brand = this.querySelector('img').alt.toLowerCase();
+    const pageUrl = `catalog-template.html?brand=${brand}`;
+    window.location.href = pageUrl;
+  });
+});
 // form
 document.addEventListener('DOMContentLoaded', function () {
   const form = document.getElementById('feedback_form');

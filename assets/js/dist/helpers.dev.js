@@ -32,7 +32,16 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 //     behavior: 'smooth'
 //   });
 // });
-// form
+// Код для обработки кликов по ссылкам
+
+document.querySelectorAll('.submenu a').forEach(function (link) {
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+    var brand = this.querySelector('img').alt.toLowerCase();
+    var pageUrl = "catalog-template.html?brand=".concat(brand);
+    window.location.href = pageUrl;
+  });
+}); // form
 
 document.addEventListener('DOMContentLoaded', function () {
   var form = document.getElementById('feedback_form');

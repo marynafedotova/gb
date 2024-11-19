@@ -104,24 +104,21 @@
           <ul>
             <li><a href="catalog.html" target="_parent">Каталог запчастин</a>
               <ul class="submenu">
-                <li><a href="../pages/cars-catalog/acura.html"><img src="../img/acura.svg" alt="Acura"></a></li>
-                <li><a href="../pages/cars-catalog/audi.html"><img src="../img/audi.svg" alt="audi"></a></li>
-                <li><a href="../pages/cars-catalog/bmw.html"><img src="../img/bmw.svg" alt="bmw"></a></li>
-                <li><a href="../pages/cars-catalog/crysler.html"><img src="../img/crysler.svg" alt="crysler"></a></li>
-                <li><a href="../pages/cars-catalog/dodge.html"><img src="../img/dodge.svg" alt="dodge"></a></li>
-                <li><a href="../pages/cars-catalog/honda.html"><img src="../img/honda.svg" alt="honda"></a></li>
-                <li><a href="../pages/cars-catalog/hynday.html"><img src="../img/hynday.svg" alt="hynday"></a></li>
-                <li><a href="../pages/cars-catalog/infiniti.html"><img src="../img/infiniti.svg" alt="infiniti"></a>
-                </li>
-                <li><a href="../pages/cars-catalog/jaguar.html"><img src="../img/jaguar.svg" alt="jaguar"></a></li>
-                <li><a href="../pages/cars-catalog/jeep.html"><img src="../img/jeep.svg" alt="jeep"></a></li>
-                <li><a href="../pages/cars-catalog/linkoln.html"><img src="../img/linkoln.svg" alt="linkoln"></a></li>
-                <li><a href="../pages/cars-catalog/kia.html"><img src="../img/kia.svg" alt="kia"></a></li>
-                <li><a href="../pages/cars-catalog/land_rover.html"><img src="../img/land_rover.svg"
-                      alt="landrover"></a></li>
-                <li><a href="../pages/cars-catalog/nissan.html"><img src="../img/nissan.svg" alt="nissan"></a></li>
-                <li><a href="../pages/cars-catalog/volkswagen.html"><img src="../img/volkswagen.svg"
-                      alt="volkswagen"></a></li>
+                <li><a href="#"><img src="../img/acura.svg" alt="acura"></a></li>
+                <li><a href="#"><img src="../img/audi.svg" alt="audi"></a></li>
+                <li><a href="#"><img src="../img/bmw.svg" alt="bmw"></a></li>
+                <li><a href="#"><img src="../img/crysler.svg" alt="crysler"></a></li>
+                <li><a href="#"><img src="../img/dodge.svg" alt="dodge"></a></li>
+                <li><a href="#"><img src="../img/honda.svg" alt="honda"></a></li>
+                <li><a href="#"><img src="../img/hynday.svg" alt="hynday"></a></li>
+                <li><a href="#"><img src="../img/infiniti.svg" alt="infiniti"></a></li>
+                <li><a href="#"><img src="../img/jaguar.svg" alt="jaguar"></a></li>
+                <li><a href="#"><img src="../img/jeep.svg" alt="jeep"></a></li>
+                <li><a href="#"><img src="../img/linkoln.svg" alt="linkoln"></a></li>
+                <li><a href="#"><img src="../img/kia.svg" alt="kia"></a></li>
+                <li><a href="#"><img src="../img/land_rover.svg" alt="landrover"></a></li>
+                <li><a href="#"><img src="../img/nissan.svg" alt="nissan"></a></li>
+                <li><a href="#"><img src="../img/volkswagen.svg" alt="volkswagen"></a></li>
               </ul>
             </li>
             <li><a href="pre-order.html" target="_parent">Авто в дорозі</a></li>
@@ -245,150 +242,6 @@
   </div>
 </body>
 <script>
-  // Код для отображения данных о бренде
-  document.addEventListener('DOMContentLoaded', function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    const brand = urlParams.get('brand');
-
-    const brandData = {
-  acura: { 
-    title: 'Acura Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки Acura.' 
-  },
-  audi: { 
-    title: 'Audi Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки Audi.' 
-  },
-  bmw: { 
-    title: 'BMW Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки BMW.' 
-  },
-  crysler: { 
-    title: 'Chrysler Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки Chrysler.' 
-  },
-  dodge: { 
-    title: 'Dodge Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки Dodge.' 
-  },
-  honda: { 
-    title: 'Honda Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки Honda.' 
-  },
-  hyundai: { 
-    title: 'Hyundai Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки Hyundai.' 
-  },
-  infiniti: { 
-    title: 'Infiniti Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки Infiniti.' 
-  },
-  jaguar: { 
-    title: 'Jaguar Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки Jaguar.' 
-  },
-  jeep: { 
-    title: 'Jeep Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки Jeep.' 
-  },
-  lincoln: { 
-    title: 'Lincoln Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів маркиLincoln.' 
-  },
-  kia: { 
-    title: 'Kia Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки Kia.' 
-  },
-  land_rover: { 
-    title: 'Land Rover Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів маркиLand Rover.' 
-  },
-  nissan: { 
-    title: 'Nissan Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки Nissan.' 
-  },
-  volkswagen: { 
-    title: 'Volkswagen Catalog', 
-    description: 'Ласкаво просимо до каталогу запчастин до автомобілів марки Volkswagen.' 
-  },
-};
-
-
-    if (brand && brandData[brand]) {
-      document.getElementById('brand-title').textContent = brandData[brand].title;
-      document.getElementById('brand-description').textContent = brandData[brand].description;
-    } else {
-      const contentElement = document.getElementById('content');
-      if (contentElement) {
-        contentElement.innerHTML = '<p>Бренд не найден.</p>';
-      } else {
-        console.error('Элемент с id="content" не найден.');
-      }
-    }
-  });
-
-// Функция для загрузки данных из JSON
-async function loadData() {
-  try {
-    const response = await fetch('..data/data.json');
-    const data = await response.json();
-    return data.Sheet1; // Путь к данным в JSON
-  } catch (error) {
-    console.error('Ошибка загрузки данных:', error);
-    return [];
-  }
-}
-
-// Функция для фильтрации данных по марке и году
-function filterCars(cars, brand, minYear = 2000) {
-  return cars.filter(car => car.markaavto.toLowerCase() === brand.toLowerCase() && car.god >= minYear);
-}
-
-// Функция для создания карточек автомобилей
-function createCarCards(brand, minYear = 2000) {
-  loadData().then(cars => {
-    // Фильтруем автомобили по марке и году
-    const filteredCars = filterCars(cars, brand, minYear);
-
-    // Получаем элемент для вставки карточек
-    const contentElement = document.getElementById('content');
-    if (!contentElement) return;
-
-    // Очищаем контент
-    contentElement.innerHTML = '';
-
-    // Если нет автомобилей, показываем сообщение
-    if (filteredCars.length === 0) {
-      contentElement.innerHTML = '<p>Нет автомобилей для отображения по выбранному фильтру.</p>';
-      return;
-    }
-
-    // Создаем карточки для каждого автомобиля
-    filteredCars.forEach(car => {
-      const card = document.createElement('div');
-      card.classList.add('car-card'); // Класс для стилей карточки
-
-      // Создаем HTML для карточки
-      card.innerHTML = `
-        <div class="car-image">
-          <img src="${car.photo.split(',')[0]}" alt="${car.model}" />
-        </div>
-        <div class="car-details">
-          <h3>${car.markaavto} ${car.model} (${car.god})</h3>
-          <p><strong>Описание:</strong> ${car.description}</p>
-          <p><strong>Цена:</strong> ${car.price} ${car.currency}</p>
-          <p><a href="${car.link}" target="_blank">Подробнее</a></p>
-        </div>
-      `;
-
-      // Добавляем карточку на страницу
-      contentElement.appendChild(card);
-    });
-  });
-}
-
-// Вызов функции для создания карточек для определенной марки (например, Jaguar)
-createCarCards('Jaguar', 2012);
 
 </script>
 </body>

@@ -197,6 +197,19 @@
           <span class="guarantees-weight  wow animate__animated animate__heartBeat">Повернення грошових коштів відбувається тільки після отримання та перевірки запчастини (до 14 днів).</span>
         </div>
       </div>
+            <!-- Модальное окно -->
+            <div class="page-overlay" style="display: none;"></div> <!-- Затемняющий фон -->
+            <div id="cartModal" class="modal hidden">
+              <div class="modal-content">
+                <h3>Товар доданий у кошик!</h3>
+                <p>Ви бажаєте продовжити покупки або оформити замовлення.</p>
+                <div class="modal-buttons">
+                  <button onclick="closeCartModal()">Продовжити покупки</button>
+                  <button onclick="proceedToCheckout()">Оформити замовлення</button>
+                </div>
+              </div>
+            </div>
+      
     </main>
     <footer>
       <div class="container">

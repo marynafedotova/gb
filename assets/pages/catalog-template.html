@@ -159,10 +159,25 @@
         </div>
       </section>
       <section>
-        <h1 id="brand-title">Заголовок бренда</h1>
-        <p id="brand-description">Описание бренда</p>
-        <div id="content"></div>
+        <div class="container">
+          <h1 id="brand-title">Заголовок бренда</h1>
+          <p id="brand-description">Описание бренда</p>
+          <div id="content"></div>
+        </div>
       </section>
+            <!-- Модальное окно -->
+            <div class="page-overlay" style="display: none;"></div> <!-- Затемняющий фон -->
+            <div id="cartModal" class="modal hidden">
+              <div class="modal-content">
+                <h3>Товар доданий у кошик!</h3>
+                <p>Ви бажаєте продовжити покупки або оформити замовлення.</p>
+                <div class="modal-buttons">
+                  <button onclick="closeCartModal()">Продовжити покупки</button>
+                  <button onclick="proceedToCheckout()">Оформити замовлення</button>
+                </div>
+              </div>
+            </div>
+      
     </main>
     <footer>
       <div class="container">
@@ -233,17 +248,13 @@
         <script src="../js/jquery/jquery-3.7.1.min.js"></script>
         <script src="../js/wow.min.js"></script>
         <script src="../js/toast.js"></script>
-        <!-- <script src="../js/helpers.js"></script> -->
-
+        <script src="../js/catalog_template.js"></script>
       </div>
       <span id="copyright">© <span id="year"></span> My Web Genius</span>
-
     </div>
   </div>
 </body>
-<script>
 
-</script>
 </body>
 
 </html>

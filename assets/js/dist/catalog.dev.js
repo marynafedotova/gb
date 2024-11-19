@@ -130,22 +130,20 @@ function displaySearchResults() {
     return;
   }
 
-  productContainer.innerHTML = '';
   var productsToDisplay = filteredProducts.slice(searchProductIndex, searchProductIndex + productsPerSearchPage);
   productsToDisplay.forEach(function (product) {
     var priceInUah = Math.ceil(product.zena * usdToUahRate);
     var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\">\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
     productContainer.insertAdjacentHTML('beforeend', productCard);
   });
-  searchProductIndex += productsPerSearchPage;
+  searchProductIndex += productsPerSearchPage; // Управление кнопкой "Загрузить больше"
+
+  var loadMoreButton = document.querySelector('.load-more-search');
 
   if (searchProductIndex < filteredProducts.length) {
-    var loadMoreButton = document.querySelector('.load-more-search');
     loadMoreButton.style.display = 'block';
   } else {
-    var _loadMoreButton = document.querySelector('.load-more-search');
-
-    _loadMoreButton.style.display = 'none';
+    loadMoreButton.style.display = 'none';
   }
 } // Модификация функции поиска товаров
 
@@ -169,10 +167,10 @@ document.querySelector('.load-more').addEventListener('click', function (event) 
     searchProducts(query);
     this.style.display = 'none'; // Скрыть кнопку после загрузки
   }
-}); // Обработчик поиска
+}); // Обработчик формы поиска
 
 document.getElementById('search-form').addEventListener('submit', function _callee(event) {
-  var query;
+  var query, resultsContainer;
   return regeneratorRuntime.async(function _callee$(_context2) {
     while (1) {
       switch (_context2.prev = _context2.next) {
@@ -182,22 +180,48 @@ document.getElementById('search-form').addEventListener('submit', function _call
           return regeneratorRuntime.awrap(fetchCurrencyRate());
 
         case 3:
-          // Актуализируем курс
-          query = document.getElementById('search-input').value.trim();
+          // Получаем актуальный курс валют
+          query = document.getElementById('search-input').value.trim().toLowerCase();
 
           if (query) {
-            searchProducts(query);
-            document.querySelector('.product-list').style.display = 'none'; // Скрываем каталог
+            searchResults = products.filter(function (product) {
+              return product.zapchast && product.zapchast.toLowerCase().includes(query) || product.markaavto && product.markaavto.toLowerCase().includes(query) || product.model && product.model.toLowerCase().includes(query);
+            });
+            searchProductIndex = 0; // Сбрасываем индекс
 
-            document.querySelector('.search-results').style.display = 'flex'; // Показываем результаты
+            document.querySelector('.search-results').innerHTML = ''; // Очищаем предыдущие результаты
+
+            displaySearchResults(searchResults); // Отображаем первую страницу результатов
+          } else {
+            // Если поле пустое, очищаем результаты поиска
+            searchResults = [];
+            document.querySelector('.search-results').innerHTML = '<p>Ничего не найдено.</p>';
+          } // Прокрутка к результатам поиска
+
+
+          resultsContainer = document.querySelector('.search-results');
+
+          if (resultsContainer) {
+            resultsContainer.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
           }
 
-        case 5:
+        case 7:
         case "end":
           return _context2.stop();
       }
     }
   });
+});
+document.querySelector('.load-more-search').addEventListener('click', function (event) {
+  event.preventDefault();
+  displaySearchResults(searchResults); // Загружаем следующую порцию результатов
+});
+document.querySelector('.load-more').addEventListener('click', function (event) {
+  event.preventDefault();
+  displayProducts(); // Загружаем следующую порцию товаров для каталога
 }); // Функция инициализации каталога
 
 function initializeCatalog() {
@@ -499,3 +523,20 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 //     behavior: 'smooth'
 //   });
 // });
+
+document.querySelectorAll('.catalog-list a').forEach(function (link) {
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+    var brand = this.querySelector('img').alt.toLowerCase();
+    var pageUrl = "catalog-template.html?brand=".concat(brand);
+    window.location.href = pageUrl;
+  });
+});
+document.querySelectorAll('.submenu a').forEach(function (link) {
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+    var brand = this.querySelector('img').alt.toLowerCase();
+    var pageUrl = "catalog-template.html?brand=".concat(brand);
+    window.location.href = pageUrl;
+  });
+});

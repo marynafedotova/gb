@@ -178,6 +178,9 @@ function createAdvantagesSlider(elementId, jsonData) {
 const urlMonoBank = 'https://api.monobank.ua/bank/currency';
 let products = [];
 let usdToUahRate = 1;
+let displayedProductCount = 0; // Счётчик отображённых товаров
+const PRODUCTS_PER_PAGE = 12; // Количество товаров на одну "страницу"
+
 // Функция для получения курса валют
 async function fetchCurrencyRate() {
   try {
@@ -223,46 +226,67 @@ async function fetchProducts() {
 // Функция для отображения продуктов
 function displayProducts(filteredProducts) {
   const productContainer = document.querySelector('.search-results');
-  if (!productContainer) {
-    console.error('Контейнер для товаров не найден');
+  const loadMoreButton = document.querySelector('.load-more-search');
+
+  if (!productContainer || !loadMoreButton) {
+    console.error('Контейнер для товаров или кнопка "Загрузить ещё" не найдены');
     return;
   }
 
-  // Очищаем контейнер перед выводом новых результатов
-  productContainer.innerHTML = '';
+  // Если это первый запуск, очищаем контейнер
+  if (displayedProductCount === 0) {
+    productContainer.innerHTML = '';
+  }
 
+  // Если нет товаров
   if (filteredProducts.length === 0) {
     productContainer.innerHTML = '<p>Ничего не найдено.</p>';
     return;
   }
-  const limitedProducts = filteredProducts.slice(0, 12);
-  limitedProducts.forEach(product => {
+
+  // Отображаем товары постранично
+  const nextProducts = filteredProducts.slice(displayedProductCount, displayedProductCount + PRODUCTS_PER_PAGE);
+
+  nextProducts.forEach(product => {
     const priceInUah = Math.ceil(product.zena * usdToUahRate);
     const photoUrl = product.photo ? product.photo.split(',')[0].trim() : 'default-photo.jpg';
     const productCard = `
-<div class="product-card">
+      <div class="product-card">
         <img src="${photoUrl}" alt="${product.zapchast}">
         <div>Артикул: ${product.ID_EXT}</div>
         <h3>${product.zapchast}</h3>
         <p>Цена: ${product.zena} ${product.valyuta} / ${priceInUah} грн</p>
-       <div class="btn-cart">
+        <div class="btn-cart">
           <button class="add-to-cart" data-id="${product.ID_EXT}" data-price="${priceInUah}">Додати до кошика</button>
         </div>
         <div class="product_btn">
           <a href="assets/pages/product.html?id=${product.ID_EXT}">Детальніше</a>
         </div>
-              </div>`;
+      </div>`;
     productContainer.insertAdjacentHTML('beforeend', productCard);
   });
 
-  // Если продуктов больше 12, добавляем сообщение о сокращении списка
-  if (filteredProducts.length > 12) {
-    productContainer.insertAdjacentHTML(
-      'beforeend',
-      `<p class="info-message">Показаны первые 12 результатов. Уточните запрос для более точного поиска.</p>`
-    );
+  // Обновляем счётчик отображённых товаров
+  displayedProductCount += nextProducts.length;
+
+  // Показываем кнопку, если есть ещё товары
+  if (displayedProductCount < filteredProducts.length) {
+    loadMoreButton.style.display = 'block';
+  } else {
+    loadMoreButton.style.display = 'none';
   }
 }
+
+// Обработчик кнопки "Загрузить ещё"
+document.querySelector('.load-more-search').addEventListener('click', function () {
+  const query = document.getElementById('search-input').value.trim().toLowerCase();
+  const filteredProducts = products.filter(product =>
+    (product.zapchast && product.zapchast.toLowerCase().includes(query)) ||
+    (product.markaavto && product.markaavto.toLowerCase().includes(query)) ||
+    (product.model && product.model.toLowerCase().includes(query))
+  );
+  displayProducts(filteredProducts);
+});
 
 // Обработчик формы поиска
 document.getElementById('search-form').addEventListener('submit', async function(event) {
@@ -277,11 +301,23 @@ document.getElementById('search-form').addEventListener('submit', async function
       (product.model && product.model.toLowerCase().includes(query))
     );
 
+    displayedProductCount = 0; // Сбрасываем счётчик отображённых товаров
     displayProducts(filteredProducts);
+  } else {
+    // Если поле пустое, очищаем результаты
+    displayedProductCount = 0;
+    displayProducts([]);
+  }
+
+  // Прокрутка к результатам поиска
+  const resultsContainer = document.querySelector('.search-results');
+  if (resultsContainer) {
+    resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 });
 
-// Инициализация данных
+
+// Инициализация
 async function initialize() {
   await fetchCurrencyRate();
   await fetchProducts();
@@ -291,3 +327,21 @@ async function initialize() {
 initialize();
 
 
+
+// Код для обработки кликов по ссылкам
+document.querySelectorAll('.submenu a').forEach(link => {
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+    const brand = this.querySelector('img').alt.toLowerCase();
+    const pageUrl = `assets/pages/catalog-template.html?brand=${brand}`;
+    window.location.href = pageUrl;
+  });
+});
+document.querySelectorAll('.catalog-list a').forEach(link => {
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+    const brand = this.querySelector('img').alt.toLowerCase();
+    const pageUrl = `assets/pages/catalog-template.html?brand=${brand}`;
+    window.location.href = pageUrl;
+  });
+});

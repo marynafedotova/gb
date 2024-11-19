@@ -148,9 +148,9 @@ document.addEventListener("DOMContentLoaded", function() {
 //search
 const urlMonoBank = 'https://api.monobank.ua/bank/currency';
 let products = [];
-let usdToUahRate = 1;  // Инициализация переменной для курса валют
-let currentPage = 1;  // Текущая страница для пагинации
-const productsPerPage = 12;  // Количество продуктов на странице
+let usdToUahRate = 1;
+let displayedProductCount = 0; // Счётчик отображённых товаров
+const PRODUCTS_PER_PAGE = 12; // Количество товаров на одну "страницу"
 
 // Функция для получения курса валют
 async function fetchCurrencyRate() {
@@ -197,24 +197,28 @@ async function fetchProducts() {
 // Функция для отображения продуктов
 function displayProducts(filteredProducts) {
   const productContainer = document.querySelector('.search-results');
-  if (!productContainer) {
-    console.error('Контейнер для товаров не найден');
+  const loadMoreButton = document.querySelector('.load-more-search');
+
+  if (!productContainer || !loadMoreButton) {
+    console.error('Контейнер для товаров или кнопка "Загрузить ещё" не найдены');
     return;
   }
 
-  // Очищаем контейнер перед выводом новых результатов
-  productContainer.innerHTML = '';
+  // Если это первый запуск, очищаем контейнер
+  if (displayedProductCount === 0) {
+    productContainer.innerHTML = '';
+  }
 
+  // Если нет товаров
   if (filteredProducts.length === 0) {
     productContainer.innerHTML = '<p>Ничего не найдено.</p>';
     return;
   }
 
-  // Определяем, какие продукты показывать
-  const startIndex = (currentPage - 1) * productsPerPage;
-  const limitedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+  // Отображаем товары постранично
+  const nextProducts = filteredProducts.slice(displayedProductCount, displayedProductCount + PRODUCTS_PER_PAGE);
 
-  limitedProducts.forEach(product => {
+  nextProducts.forEach(product => {
     const priceInUah = Math.ceil(product.zena * usdToUahRate);
     const photoUrl = product.photo ? product.photo.split(',')[0].trim() : 'default-photo.jpg';
     const productCard = `
@@ -227,26 +231,33 @@ function displayProducts(filteredProducts) {
           <button class="add-to-cart" data-id="${product.ID_EXT}" data-price="${priceInUah}">Додати до кошика</button>
         </div>
         <div class="product_btn">
-          <a href="product.html?id=${product.ID_EXT}">Детальніше</a>
+          <a href="assets/pages/product.html?id=${product.ID_EXT}">Детальніше</a>
         </div>
       </div>`;
     productContainer.insertAdjacentHTML('beforeend', productCard);
   });
 
-  // Если продуктов еще много, добавляем кнопку для загрузки дополнительных
-  if (filteredProducts.length > currentPage * productsPerPage) {
-    productContainer.insertAdjacentHTML(
-      'beforeend',
-      `<div class="btn-res"
-      <a href="#" class="load-more-search">Завантажити більше</a>
-      </div>`
-    );
-    document.querySelector('.load-more-search').addEventListener('click', function() {
-      currentPage++;
-      displayProducts(filteredProducts); // Загружаем больше продуктов
-    });
+  // Обновляем счётчик отображённых товаров
+  displayedProductCount += nextProducts.length;
+
+  // Показываем кнопку, если есть ещё товары
+  if (displayedProductCount < filteredProducts.length) {
+    loadMoreButton.style.display = 'block';
+  } else {
+    loadMoreButton.style.display = 'none';
   }
 }
+
+// Обработчик кнопки "Загрузить ещё"
+document.querySelector('.load-more-search').addEventListener('click', function () {
+  const query = document.getElementById('search-input').value.trim().toLowerCase();
+  const filteredProducts = products.filter(product =>
+    (product.zapchast && product.zapchast.toLowerCase().includes(query)) ||
+    (product.markaavto && product.markaavto.toLowerCase().includes(query)) ||
+    (product.model && product.model.toLowerCase().includes(query))
+  );
+  displayProducts(filteredProducts);
+});
 
 // Обработчик формы поиска
 document.getElementById('search-form').addEventListener('submit', async function(event) {
@@ -261,16 +272,27 @@ document.getElementById('search-form').addEventListener('submit', async function
       (product.model && product.model.toLowerCase().includes(query))
     );
 
+    displayedProductCount = 0; // Сбрасываем счётчик отображённых товаров
     displayProducts(filteredProducts);
+  } else {
+    // Если поле пустое, очищаем результаты
+    displayedProductCount = 0;
+    displayProducts([]);
+  }
+
+  // Прокрутка к результатам поиска
+  const resultsContainer = document.querySelector('.search-results');
+  if (resultsContainer) {
+    resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 });
 
-// Инициализация данных
+// Инициализация
 async function initialize() {
   await fetchCurrencyRate();
   await fetchProducts();
-  displayProducts(products); // Отображаем все продукты при инициализации
 }
 
 // Запуск
 initialize();
+

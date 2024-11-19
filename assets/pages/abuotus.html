@@ -212,6 +212,19 @@
         <p>Наша команда готова допомогти з вибором запчастин для ремонту, модернізації або тюнінгу. Gen Brothers гарантує високу якість, конкурентні ціни та індивідуальний підхід до кожного клієнта.</p>
       </div>
     </section>
+          <!-- Модальное окно -->
+          <div class="page-overlay" style="display: none;"></div> <!-- Затемняющий фон -->
+          <div id="cartModal" class="modal hidden">
+            <div class="modal-content">
+              <h3>Товар доданий у кошик!</h3>
+              <p>Ви бажаєте продовжити покупки або оформити замовлення.</p>
+              <div class="modal-buttons">
+                <button onclick="closeCartModal()">Продовжити покупки</button>
+                <button onclick="proceedToCheckout()">Оформити замовлення</button>
+              </div>
+            </div>
+          </div>
+    
     </main>
     <footer>
       <div class="container">
@@ -286,7 +299,6 @@
     <script src="../js/jquery/jquery-3.7.1.min.js"></script>
     <script src="../js/wow.min.js"></script>
     <script src="../js/toast.js"></script>
-    <script src="../js/main_standart.js"></script>
     <script src="../js/helpers.js"></script>
   </div>
 </body>

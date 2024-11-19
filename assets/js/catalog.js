@@ -81,15 +81,15 @@ function displayProducts(filteredProducts = []) {
 // Функция для отображения результатов поиска
 function displaySearchResults(filteredProducts = []) {
   const productContainer = document.querySelector('.search-results');
-  
   if (!productContainer) {
     console.error('Контейнер для результатов поиска не найден');
     return;
   }
 
-  productContainer.innerHTML = ''; 
-
-  const productsToDisplay = filteredProducts.slice(searchProductIndex, searchProductIndex + productsPerSearchPage);
+  const productsToDisplay = filteredProducts.slice(
+    searchProductIndex,
+    searchProductIndex + productsPerSearchPage
+  );
 
   productsToDisplay.forEach(product => {
     const priceInUah = Math.ceil(product.zena * usdToUahRate);
@@ -111,14 +111,15 @@ function displaySearchResults(filteredProducts = []) {
 
   searchProductIndex += productsPerSearchPage;
 
+  // Управление кнопкой "Загрузить больше"
+  const loadMoreButton = document.querySelector('.load-more-search');
   if (searchProductIndex < filteredProducts.length) {
-    const loadMoreButton = document.querySelector('.load-more-search');
-    loadMoreButton.style.display = 'block'; 
+    loadMoreButton.style.display = 'block';
   } else {
-    const loadMoreButton = document.querySelector('.load-more-search');
-    loadMoreButton.style.display = 'none'; 
+    loadMoreButton.style.display = 'none';
   }
 }
+
 
 // Модификация функции поиска товаров
 function searchProducts(query) {
@@ -142,17 +143,43 @@ document.querySelector('.load-more').addEventListener('click', function(event) {
   }
 });
 
-// Обработчик поиска
+// Обработчик формы поиска
 document.getElementById('search-form').addEventListener('submit', async function(event) {
   event.preventDefault();
-  await fetchCurrencyRate(); // Актуализируем курс
-  const query = document.getElementById('search-input').value.trim();
+  await fetchCurrencyRate(); // Получаем актуальный курс валют
+
+  const query = document.getElementById('search-input').value.trim().toLowerCase();
   if (query) {
-    searchProducts(query);
-    document.querySelector('.product-list').style.display = 'none'; // Скрываем каталог
-    document.querySelector('.search-results').style.display = 'flex'; // Показываем результаты
+    searchResults = products.filter(product => 
+      (product.zapchast && product.zapchast.toLowerCase().includes(query)) ||
+      (product.markaavto && product.markaavto.toLowerCase().includes(query)) ||
+      (product.model && product.model.toLowerCase().includes(query))
+    );
+
+    searchProductIndex = 0; // Сбрасываем индекс
+    document.querySelector('.search-results').innerHTML = ''; // Очищаем предыдущие результаты
+    displaySearchResults(searchResults); // Отображаем первую страницу результатов
+  } else {
+    // Если поле пустое, очищаем результаты поиска
+    searchResults = [];
+    document.querySelector('.search-results').innerHTML = '<p>Ничего не найдено.</p>';
   }
+    // Прокрутка к результатам поиска
+    const resultsContainer = document.querySelector('.search-results');
+    if (resultsContainer) {
+      resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 });
+document.querySelector('.load-more-search').addEventListener('click', function(event) {
+  event.preventDefault();
+  displaySearchResults(searchResults); // Загружаем следующую порцию результатов
+});
+
+document.querySelector('.load-more').addEventListener('click', function(event) {
+  event.preventDefault();
+  displayProducts(); // Загружаем следующую порцию товаров для каталога
+});
+
 
 
 // Функция инициализации каталога
@@ -412,3 +439,20 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 //     behavior: 'smooth'
 //   });
 // });
+document.querySelectorAll('.catalog-list a').forEach(link => {
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+    const brand = this.querySelector('img').alt.toLowerCase();
+    const pageUrl = `catalog-template.html?brand=${brand}`;
+    window.location.href = pageUrl;
+  });
+});
+
+document.querySelectorAll('.submenu a').forEach(link => {
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+    const brand = this.querySelector('img').alt.toLowerCase();
+    const pageUrl = `catalog-template.html?brand=${brand}`;
+    window.location.href = pageUrl;
+  });
+});

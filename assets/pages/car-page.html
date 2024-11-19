@@ -195,7 +195,19 @@
             <div id="tire" class="tab-panel" style="display: none;"></div>
           </div>
         </div>
-        
+              <!-- Модальное окно -->
+      <div class="page-overlay" style="display: none;"></div> <!-- Затемняющий фон -->
+      <div id="cartModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>Товар доданий у кошик!</h3>
+          <p>Ви бажаєте продовжити покупки або оформити замовлення.</p>
+          <div class="modal-buttons">
+            <button onclick="closeCartModal()">Продовжити покупки</button>
+            <button onclick="proceedToCheckout()">Оформити замовлення</button>
+          </div>
+        </div>
+      </div>
+
     </main>
     <footer>
       <div class="container">

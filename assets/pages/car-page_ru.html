@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html lang="uk">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="robots" content="all">
-  <meta name="revisit-after" content="1 day">
-  <meta property="og:locale" content="uk">
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="../style/lightslider.css">
-  <link rel="stylesheet" href="../style/leaflet.css">
-  <link rel="stylesheet" href="../style/animate.min.css">
-  <link rel="stylesheet" href="../style/style.min.css">
-  <!-- Icons -->
-  <link rel="apple-touch-icon" sizes="180x180" href="../img/favicon.ico">
-  <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
-  <!-- Manifest and Theme Color -->
-  <link rel="manifest" href="../img/site.webmanifest">
-  <!-- <link rel="mask-icon" href="assets/img/safari-pinned-tab.svg" color="#5bbad5">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="all">
+<meta name="revisit-after" content="1 day">
+<meta property="og:locale" content="uk">
+<!-- Stylesheets -->
+<link rel="stylesheet" href="../style/lightslider.css">
+<link rel="stylesheet" href="../style/leaflet.css">
+<link rel="stylesheet" href="../style/animate.min.css">
+<link rel="stylesheet" href="../style/style.min.css">
+<!-- Icons -->
+<link rel="apple-touch-icon" sizes="180x180" href="../img/favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="../img/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="../img/favicon-16x16.png">
+<!-- Manifest and Theme Color -->
+<link rel="manifest" href="../img/site.webmanifest">
+<!-- <link rel="mask-icon" href="assets/img/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff"> -->
-  <title>Розбирання авто | Авторозбiрка АвтоПМР | Автозапчастини б/у</title>
-  <meta name="description"
-    content="Підбір запчастин. Доставка автозапчастин здійснюється по всій Україні (Одеса, Київ, Харків, Львів, Дніпро, Запоріжжя, Чернігів)">
+<title>Розбирання авто | Авторозбiрка АвтоПМР | Автозапчастини б/у</title>
+<meta name="description"
+  content="Підбір запчастин. Доставка автозапчастин здійснюється по всій Україні (Одеса, Київ, Харків, Львів, Дніпро, Запоріжжя, Чернігів)">
 
 </head>
 
@@ -63,6 +61,7 @@
                 alt=""></button>
             </form>
           </div>
+
         </li>
       </ul>
     </nav>
@@ -98,8 +97,8 @@
         </div>
         <div class="language">
           <ul>
-             <li><a href="catalog_ru.html"><img src="../img/russia.svg" alt="ru lamguage"></a></li>
-            <li><a href="catalog.html"><img src="../img/ukraine.svg" alt="ua language"></a></li>          </ul>
+             <li><img src="../img/russia.svg" alt="ru lamguage"></li>
+<li><img src="../img/ukraine.svg" alt="ua language"></li>          </ul>
         </div>
       </div>
       <div class="nav-container">
@@ -161,76 +160,46 @@
           </div>
         </div>
       </section>
-      
-      <!-- hero-section -->
-      <section id="first-section">
-        <h1>Розбирання автомобілів з США "Gen Brothers". Низькі ціни.</h1>
-        <div class="container ">
-          <div id="carAccordion"></div>
-          <div class="first_screan_catalog">
-            <div class="sidebar wow animate__animated animate__fadeInLeft">
-              <h2>Пошук запчастин</h2>
-              <form action="#" id="search-product">
-                <select name="markaavto" id="markaavto">
-                  <option value="">--Марка авто--</option>
-                </select>
-                <select name="model" id="model">
-                  <option value="">--Модель--</option>
-                </select>
-                <select name="rozdil" id="rozdil">
-                  <option value="">--Розділ--</option>
-                </select>
-                <select name="pidrozdil" id="pidrozdil">
-                  <option value="">--Підрозділ--</option>
-                </select>
-                <select name="zapchast" id="zapchast">
-                  <option value="">--Запчастини--</option>
-                </select>
-                <select name="originalnumber" id="originalnumber">
-                  <option value="">--ОЕМ--</option>
-                </select>
-                <button id="search-sidebar-catalog"> Пошук</button>
+      <div class="container">
+        <h1>Деталі автомобіля</h1>
+        <div id="car-info"></div> <!-- Здесь будет отображена информация об автомобиле -->
 
-              </form>
-            </div>
-            <div id="cars-catalog"></div>
+        <div id="tabs">
+          <!-- Заголовки вкладок -->
+          <ul id="tab-titles">
+            <li><a href="#interior">Інтер'єр / салон</a></li>
+            <li><a href="#engine">Двигун</a></li>
+            <li><a href="#body">Кузов</a></li>
+            <li><a href="#electronics">Електрика</a></li>
+            <li><a href="#parts">Запчастини ІНШІ</a></li>
+            <li><a href="#brake-system">Гальмівна система</a></li>
+            <li><a href="#suspension">Підвіска та рульове</a></li>
+            <li><a href="#doors">Двері</a></li>
+            <li><a href="#fasteners">Кріплення</a></li>
+            <li><a href="#transmission">Трансмісія</a></li>
+            <li><a href="#wheels">Колеса</a></li>
+            <li><a href="#trunk-lock">Замок багажника</a></li>
+            <li><a href="#tire">ГУМА</a></li>
+          </ul>
+        
+          <!-- Контент вкладок -->
+          <div id="tab-content">
+            <div id="interior" class="tab-panel" style="display: none;"></div>
+            <div id="engine" class="tab-panel" style="display: none;"></div>
+            <div id="body" class="tab-panel" style="display: none;"></div>
+            <div id="electronics" class="tab-panel" style="display: none;"></div>
+            <div id="parts" class="tab-panel" style="display: none;"></div>
+            <div id="brake-system" class="tab-panel" style="display: none;"></div>
+            <div id="suspension" class="tab-panel" style="display: none;"></div>
+            <div id="doors" class="tab-panel" style="display: none;"></div>
+            <div id="fasteners" class="tab-panel" style="display: none;"></div>
+            <div id="transmission" class="tab-panel" style="display: none;"></div>
+            <div id="wheels" class="tab-panel" style="display: none;"></div>
+            <div id="trunk-lock" class="tab-panel" style="display: none;"></div>
+            <div id="tire" class="tab-panel" style="display: none;"></div>
           </div>
         </div>
-      </section>
-      <section class="catalog_zapchast">
-        <div class="container">
-          <h2>Каталог товарів</h2>
-          <div class="product-list"></div>
-          <button class="load-more">Завантажити більше</button>
-        </div>
-      </section>
-      <section class="catalog_mark_avto">
-        <div class="hero-screan">
-          <div class="container">
-            <h2 class="wow animate__animated wow animate__animated animate__backInUp">Каталог запчастин</h2>
-            <div class="catalog">
-              <ul class="catalog-list wow animate__animated animate__backInUp">
-                <li><a href="#"><img src="../img/acura.svg" alt="acura"></a></li>
-                <li><a href="#"><img src="../img/audi.svg" alt="audi"></a></li>
-                <li><a href="#"><img src="../img/bmw.svg" alt="bmw"></a></li>
-                <li><a href="#"><img src="../img/crysler.svg" alt="crysler"></a></li>
-                <li><a href="#"><img src="../img/dodge.svg" alt="dodge"></a></li>
-                <li><a href="#"><img src="../img/honda.svg" alt="honda"></a></li>
-                <li><a href="#"><img src="../img/hynday.svg" alt="hynday"></a></li>
-                <li><a href="#"><img src="../img/infiniti.svg" alt="infiniti"></a></li>
-                <li><a href="#"><img src="../img/jaguar.svg" alt="jaguar"></a></li>
-                <li><a href="#"><img src="../img/jeep.svg" alt="jeep"></a></li>
-                <li><a href="#"><img src="../img/linkoln.svg" alt="linkoln"></a></li>
-                <li><a href="#"><img src="../img/kia.svg" alt="kia"></a></li>
-                <li><a href="#"><img src="../img/land_rover.svg" alt="landrover"></a></li>
-                <li><a href="#"><img src="../img/nissan.svg" alt="nissan"></a></li>
-                <li><a href="#"><img src="../img/volkswagen.svg" alt="volkswagen"></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>  
-      </section>
-      <!-- Модальное окно -->
+              <!-- Модальное окно -->
       <div class="page-overlay" style="display: none;"></div> <!-- Затемняющий фон -->
       <div id="cartModal" class="modal hidden">
         <div class="modal-content">
@@ -242,7 +211,8 @@
           </div>
         </div>
       </div>
-      </main>
+
+    </main>
     <footer>
       <div class="container">
         <div class="schedule">
@@ -312,8 +282,8 @@
         <script src="../js/wow.min.js"></script>
         <script src="../js/toast.js"></script>
         <!-- <script src="../js/cart.js"></script> -->
-        <script src="../js/catalog.js"></script>
-        <!-- <script src="../js/helpers.js"></script> -->
+        <script src="../js/car-pages.js"></script>
+        <script src="../js/helpers.js"></script>
 
       </div>
       <span id="copyright">© <span id="year"></span> My Web Genius</span>

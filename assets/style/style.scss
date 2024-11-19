@@ -336,7 +336,8 @@ main {
     width: 100%;
     display: inline-block;
     font-size: 1.2rem;
-    margin: 30px;
+    margin-left: 30px;
+    margin-bottom: 16px;
     color: $gray-color;
     text-decoration: none;
     font-family: 'Montserrat Regular';
@@ -344,6 +345,32 @@ main {
     font-weight: 400;
     line-height: 1.5rem;
     letter-spacing: 0.07rem;
+  }
+  .account{
+    margin-left: 30px;
+
+   ul{
+    display: flex;
+    li{
+      display: flex;
+      img{
+        width: 40px;
+        height: 40px;
+      }
+    }
+   }
+  }
+  .search-container{
+    margin-left: 30px;
+    #search-btn-m{
+      img{
+        width: 20px;
+        aspect-ratio: 1;
+      }
+    }
+    #search-input-m{
+      padding: 8px;
+    }
   }
 }
 
@@ -2141,7 +2168,9 @@ h3{
   }
 
   .menu-panel {
-    width: 50%;
+    width: 60%;
+    height: 100%;
+
   }
   header .header-container .logo img {
     display: none;

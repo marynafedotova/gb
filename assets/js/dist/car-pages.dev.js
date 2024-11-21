@@ -12,7 +12,7 @@ window.onload = function () {
     return;
   }
 
-  fetch('../data/data.json').then(function (response) {
+  fetch('../data/data_ukr.json').then(function (response) {
     return response.json();
   }).then(function (data) {
     var carsArray = data.Sheet1;

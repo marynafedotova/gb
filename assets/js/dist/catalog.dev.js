@@ -236,7 +236,7 @@ function initializeCatalog() {
         case 2:
           _context3.prev = 2;
           _context3.next = 5;
-          return regeneratorRuntime.awrap(fetch('../data/data.json'));
+          return regeneratorRuntime.awrap(fetch('../data/data_ukr.json'));
 
         case 5:
           response = _context3.sent;
@@ -289,7 +289,7 @@ function initializeCatalog() {
 
 initializeCatalog(); //accordion
 
-fetch('../data/data.json').then(function (response) {
+fetch('../data/data_ukr.json').then(function (response) {
   return response.json();
 }).then(function (data) {
   var cars = data.Sheet1.filter(function (item) {
@@ -363,7 +363,7 @@ fetch('../data/data.json').then(function (response) {
   return console.error('Помилка завантаження даних:', error);
 }); //cars
 
-fetch('../data/data.json').then(function (response) {
+fetch('../data/data_ukr.json').then(function (response) {
   return response.json();
 }).then(function (data) {
   var carsCatalog = document.getElementById('cars-catalog');

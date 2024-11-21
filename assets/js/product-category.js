@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   console.log("Отримані параметри:", { category, markaavto, model, year });
 
-  fetch('../data/data.json')
+  fetch('../data/data_ukr.json')
     .then(response => response.json())
     .then(data => {
       const carsArray = data.Sheet1.map(car => ({

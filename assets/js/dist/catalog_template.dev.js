@@ -98,7 +98,7 @@ function loadData() {
         case 0:
           _context.prev = 0;
           _context.next = 3;
-          return regeneratorRuntime.awrap(fetch('..data/data.json'));
+          return regeneratorRuntime.awrap(fetch('..data/data_ukr.json'));
 
         case 3:
           response = _context.sent;

@@ -187,7 +187,7 @@ async function initializeCatalog() {
   await fetchCurrencyRate();
 
   try {
-    const response = await fetch('../data/data.json');
+    const response = await fetch('../data/data_ukr.json');
     if (!response.ok) throw new Error('Ошибка загрузки JSON');
     const data = await response.json();
     if (!data || !data.Sheet1) throw new Error('Некорректный формат данных');
@@ -209,7 +209,7 @@ initializeCatalog();
 
 
 //accordion
-fetch('../data/data.json')
+fetch('../data/data_ukr.json')
     .then(response => response.json())
     .then(data => {
         const cars = data.Sheet1
@@ -265,7 +265,7 @@ fetch('../data/data.json')
     .catch(error => console.error('Помилка завантаження даних:', error));
 
 //cars
-fetch('../data/data.json')
+fetch('../data/data_ukr.json')
     .then(response => response.json())
     .then(data => {
         const carsCatalog = document.getElementById('cars-catalog');

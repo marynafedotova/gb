@@ -169,9 +169,8 @@
             </div>
             <div class="product-item">
               <h1 class="product-name">Назва продукту</h1>
-              <div class="product-title-item">Артікул: <span class="product-id"></span></div>
-              <div class="product-title-item">Ціна: <span class="product-price"></span></div>
-              <div class="product-title-item">Ціна в грн: <span class="product-price-uah"></span></div>
+              <div class="product-title-item">Артикул: <span class="product-id"></span></div>
+              <div class="product-title-item">Ціна: <span class="product-price"></span>/<span class="product-price-uah"></span></div>
               <div class="product-title-item">Марка авто: <span class="product-markaavto"></span></div>
               <div class="product-title-item">Модель: <span class="product-model"></span></div>
               <div class="product-title-item">Рік випуску: <span class="product-god"></span></div>
@@ -182,28 +181,22 @@
               <div class="product-title-item">Паливо: <span class="product-toplivo"></span></div>
               <div class="product-title-item">Тип кузова: <span class="product-typ_kuzova"></span></div>
               <button class="add-to-cart" data-id="${product.ID_EXT}" data-price="${product.zena}" data-tipe="${product.zapchast}">Додати до кошика</button>
-              <button class="buy-now" data-id="${product.ID_EXT}" data-price="${product.zena}" data-tipe="${product.zapchast}">Купити в 1 клік</button>            
+              <button class="buy-now" data-id="${product.ID_EXT}" data-price="${product.zena}" data-tipe="${product.zapchast}">Купити в 1 клік</button>
             </div>
           </div>
         </div>
         <div class="container">
         <div class="delivery">
           <div class="delivery-name">Доставка</div>
-          <ul>
+          <ul class="delivery-title">
             <li>
-              <div class="delivery-title">Київ, пров. Квітневий, буд. 1</div>
-              <div class="delivery-time"></div>
-              <div class="delivety-pay">Безкоштовно</div>
+              Всі замовлення котрі були офорлені з ПН по ПТ та по ним внесена предоплата до 17:00, відправка а день замовлення.
             </li>
             <li>
-              <div class="delivery-title">Одеса, вул. Картамишівська, 9</div>
-              <div class="delivery-time"></div>
-              <div class="delivety-pay">Безкоштовно</div>
+              Замовлення оформлені після 17:00 відправлення на наступний день
             </li>
             <li>
-              <div class="delivery-title">Нова пошта(до відділення)</div>
-              <div class="delivery-time"></div>
-              <div class="delivety-pay">За тарифами НП</div>
+              Замовлення оформлені в СБ до 14:00 відправка в день замовлення, замовлення оформлені після 14:00 та в неділю відправка відбувається в понеділок
             </li>
           </ul>
         </div>

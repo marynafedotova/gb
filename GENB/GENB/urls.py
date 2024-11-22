@@ -14,9 +14,17 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import django
+from django.conf.urls import include
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls.i18n import set_language
+from MAIN import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', views.index, name='index'),
+    path('i18n/set_language/', set_language, name='set_language'),
+
+    
 ]

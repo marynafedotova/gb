@@ -1,0 +1,189 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-11-22 18:19+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: .\GENB\settings.py:119
+msgid "Українська"
+msgstr ""
+
+#: .\GENB\settings.py:120
+msgid "Русский"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:30
+msgid ""
+"Genbrothers | Авторозбірка | Автозапчастини б/у | Авто на запчастини | "
+"Доставка авто з США"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:33
+msgid ""
+"Розбирання автомобілів з США 2010-2020 років випуску на запчастини. Доставка "
+"запчастин по Україні(Київ,Харків,Львів,Дніпро,Запоріжжя,Чернігів,Одеса)"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:51 .\MAIN\templates\main\index.html:115
+#: .\MAIN\templates\main\index.html:229
+msgid "Каталог запчастин"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:53
+msgid "Авто в дорозі передзамовлення"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:55 .\MAIN\templates\main\index.html:329
+msgid "Гарантія та повернення"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:56 .\MAIN\templates\main\index.html:137
+#: .\MAIN\templates\main\index.html:330
+msgid "Доставка і оплата"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:57 .\MAIN\templates\main\index.html:138
+msgid "Контакти"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:58 .\MAIN\templates\main\index.html:140
+#: .\MAIN\templates\main\index.html:332
+msgid "Про нас"
+msgstr "О нас"
+
+#: .\MAIN\templates\main\index.html:59 .\MAIN\templates\main\index.html:141
+#: .\MAIN\templates\main\index.html:327
+msgid "Статті та новини"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:104
+msgid "Russian language"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:107
+msgid "Ukrainian language"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:134
+msgid "Авто в дорозі"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:170
+msgid "Завантажити більше"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:194
+msgid "Розбирання автомобілів з США \"Gen Brothers\". Низькі ціни."
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:197
+msgid "Пошук запчастин"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:200
+msgid "Артикул"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:203
+msgid "Марка авто"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:206
+msgid "Модель"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:209
+msgid "Розділ"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:212
+msgid "Підрозділ"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:215
+msgid "Запчастини"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:220
+msgid "Пошук"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:255
+msgid "Наші переваги"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:262
+msgid "Новини та поради"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:265
+msgid " Перейти до новин"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:275
+msgid "Графік роботи Call-центру"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:277
+msgid "Без вихідних: з 09:00 до 20:00"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:281
+msgid "Графік роботи пункту видачі:"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:283
+msgid "Пн-Пт: з 09:00 до 18:00"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:284
+msgid "Сб: з 10:00 до 16:00"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:285
+msgid "Нд: вихідний"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:291
+msgid "Приймаємо до оплати:"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:295
+msgid "Адреса:"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:299
+msgid "Київ, вул. Проектна 7"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:314
+msgid "Відправити"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:326
+msgid "PDF каталоги"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:331
+msgid "Відгуки"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:333
+msgid "Вакансії"
+msgstr ""

@@ -1,11 +1,11 @@
 const urlMonoBank = 'https://api.monobank.ua/bank/currency';
-let usdToUahRate = 1; // Курс USD к UAH
+let usdToUahRate = 37;  
 let currentProductIndex = 0;
 const productsPerPage = 12;
 let products = []; // Все продукты
 let searchResults = []; // Результаты поиска
 let searchProductIndex = 0; // Индекс текущего отображаемого продукта в поиске
-const productsPerSearchPage = 12; // Количество продуктов на одной странице поиска
+const productsPerSearchPage = 12; 
 // Функция для получения курса валют с кешированием
 async function fetchCurrencyRate() {
   const cachedRate = localStorage.getItem('usdToUahRate');

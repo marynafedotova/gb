@@ -9,8 +9,7 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var urlMonoBank = 'https://api.monobank.ua/bank/currency';
-var usdToUahRate = 1; // Курс USD к UAH
-
+var usdToUahRate = 37;
 var currentProductIndex = 0;
 var productsPerPage = 12;
 var products = []; // Все продукты
@@ -19,8 +18,7 @@ var searchResults = []; // Результаты поиска
 
 var searchProductIndex = 0; // Индекс текущего отображаемого продукта в поиске
 
-var productsPerSearchPage = 12; // Количество продуктов на одной странице поиска
-// Функция для получения курса валют с кешированием
+var productsPerSearchPage = 12; // Функция для получения курса валют с кешированием
 
 function fetchCurrencyRate() {
   var cachedRate, cachedTime, now, response, data, usdToUah;

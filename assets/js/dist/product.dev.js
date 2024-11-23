@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function _callee() {
         case 7:
           usdToUahRate = _context2.sent;
           // Загружаем данные товара из JSON
-          fetch('../data/data.json').then(function (response) {
+          fetch('../data/data_ukr.json').then(function (response) {
             return response.json();
           }).then(function (data) {
             var product = data.Sheet1.find(function (item) {

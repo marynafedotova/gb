@@ -11,7 +11,7 @@ window.onload = () => {
     return;
   }
 
-  fetch('../data/data.json')
+  fetch(dataJsonUrl)
     .then(response => response.json())
     .then(data => {
       const carsArray = data.Sheet1;

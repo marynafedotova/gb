@@ -1,0 +1,266 @@
+{% load i18n %} 
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="all">
+  <meta name="revisit-after" content="1 day">
+  <meta property="og:locale" content="uk">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="{% static 'assets/style/lightslider.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/style/lg-thumbnail.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/style/lg-zoom.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/style/lightgallery.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/style/lightgallery-bundle.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/style/animate.min.css' %}">
+  <link rel="stylesheet" href="{% static 'assets/style/style.min.css' %}">
+  <!-- Icons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="{% static 'assets/img/favicon.ico' %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% static 'assets/img/favicon-32x32.png' %}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{% static 'assets/img/favicon-16x16.png' %}">
+  <!-- Manifest and Theme Color -->
+  <link rel="manifest" href="{% static 'assets/img/site.webmanifest' %}">
+  <!-- <link rel="mask-icon" href="assets/img/safari-pinned-tab.svg" color="#5bbad5">
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff"> -->
+  {% block title_meta %}
+  {% endblock title_meta %}
+  </head>
+
+<body>
+  <div class="page-overlay"></div>
+  <div class="menu-panel">
+    <div class="panel-top">
+      <div class="logo"><a href=" {% url "index" %} "><img src="{% static 'assets/img/logo.svg' %}" alt="logo"></a></div>
+      <div class="hamburger-wrap">
+        <button id="hamb-btn-mobile" class="hamburger hamburger--squeeze is-active" type="button">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <nav>
+      <ul class="mobile-menu">
+        <li><a href="{% static 'assets/pages/catalog.html' %}" target="_parent" rel="noopener">{% trans "Каталог запчастин" %}</a>
+        </li>
+        <li><a href="{% static 'assets/pages/pre-order.html' %}" target="_parent" rel="noopener">{% trans "Авто в дорозі передзамовлення" %}</a>
+        </li>
+        <li><a href="{% static 'assets/pages/warrantyreturns.html' %}" target="_parent" rel="noopener">{% trans "Гарантія та повернення" %}</a></li>
+        <li><a href="{% static 'assets/pages/deliverypayment.html' %}" target="_parent" rel="noopener">{% trans "Доставка і оплата" %}</a></li>
+        <li><a href="{% static 'assets/pages/contacts.html' %}" target="_parent" rel="noopener">{% trans "Контакти" %}</a></li>
+        <li><a href=" {% url "about_us" %} " target="_parent" rel="noopener">{% trans "Про нас" %}</a></li>
+        <li><a href="{% static 'assets/pages/pagesnews.html' %}" target="_parent" rel="noopener">{% trans "Статті та новини" %}</a></li>
+        <li>
+          <div class="search-container">
+            <form id="search-form-m">
+              <input type="text" id="search-input-m" placeholder="Пошук..." name="search">
+              <button type="submit">Search</button>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+  <div class="page-wrapper">
+    <header>
+      <div class="header-container">
+        <div class="logo"><a href=" {% url "index" %} "><img src="{% static 'assets/img/logo.svg' %}" alt="logo"></a>
+
+        </div>
+        <div class="tel">
+          <ul>
+            <li><a href="+380689255252">+380689255252</a></li>
+            <li><a href="+380509255252">+380509255252</a></li>
+            <li><a href="+380739255252">+380739255252</a></li>
+          </ul>
+        </div>
+        <div class="social-link">
+          <ul>
+            <li><a href="https://www.facebook.com/?locale=uk_UA" target="_blank" rel="nofollow"><img
+                  src="{% static 'assets/img/facebook-176-svgrepo-com.svg' %}" alt="link facebook"></a></li>
+            <li><a href="https://www.instagram.com/" target="_blank" rel="nofollow"><img
+                  src="{% static 'assets/img//instagram-167-svgrepo-com.svg' %}" alt="link instagram"></a></li>
+            <li><a href="https://www.tiktok.com/uk-UA/" target="_blank" rel="nofollow"><img
+                  src="{% static 'assets/img/tiktok-fill-svgrepo-com.svg' %}" alt="link tik-tok"></a></li>
+          </ul>
+        </div>
+        <div class="account">
+          <ul>
+            <li><img src="{% static 'assets/img/person-circle-fill-svgrepo-com.svg' %}" alt=""></li>
+            <li><a href="{% static 'assets/pages/cart.html' %}" target="_parent" rel="noopener noreferrer"><img src="{% static 'assets/img/cart-large-svgrepo-com.svg' %}" alt="cart"></a></li>
+          </ul>
+        </div>
+        <div class="language">
+          <ul>
+            <li>
+              <a href="{% url 'set_language' %}?language=ru&next={{ request.path }}">
+                <img src="{% static 'assets/img/russia.svg' %}" alt="{% trans 'Russian language' %}"></a></li>
+            <li>
+              <a href="{% url 'set_language' %}?language=uk&next={{ request.path }}">
+                <img src="{% static 'assets/img/ukraine.svg' %}" alt="{% trans 'Ukrainian language' %}"></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="nav-container">
+        <nav>
+          <ul>
+            <li>
+              <a href="{% static 'assets/pages/catalog.html' %}" target="_parent" rel="noopener">{% trans "Каталог запчастин" %}</a>
+              <ul class="submenu">
+                <li><a href="#"><img src="{% static 'assets/img/acura.svg' %}" alt="acura"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/audi.svg' %}" alt="audi"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/bmw.svg' %}" alt="bmw"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/crysler.svg' %}" alt="crysler"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/dodge.svg' %}" alt="dodge"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/honda.svg' %}" alt="honda"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/hynday.svg' %}" alt="hynday"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/infiniti.svg' %}" alt="infiniti"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/jaguar.svg' %}" alt="jaguar"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/jeep.svg' %}" alt="jeep"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/linkoln.svg' %}" alt="linkoln"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/kia.svg' %}" alt="kia"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/land_rover.svg' %}" alt="landrover"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/nissan.svg' %}" alt="nissan"></a></li>
+                <li><a href="#"><img src="{% static 'assets/img/volkswagen.svg' %}" alt="volkswagen"></a></li>
+              </ul>
+            </li>            
+            <li><a href="{% static 'assets/pages/pre-order.html' %}" target="_parent" rel="noopener">{% trans "Авто в дорозі" %}</a>
+            </li>
+           </li>
+            <li><a href="{% static 'assets/pages/deliverypayment.html' %}" target="_parent" rel="noopener">{% trans "Доставка і оплата" %}</a></li>
+            <li><a href="{% static 'assets/pages/contacts.html' %}" target="_parent" rel="noopener">{% trans "Контакти" %}</a></li>
+
+            <li><a href=" {% url "about_us" %} " target="_parent" rel="noopener">{% trans "Про нас" %}</a></li>
+        <li><a href="{% static 'assets/pages/news.html' %}" target="_parent" rel="noopener">{% trans "Статті та новини" %}</a></li> 
+            <li>
+              <div class="search-container">
+                <form id="search-form">
+                  <input type="text" id="search-input" placeholder="Пошук..." name="search">
+                  <button id="search-btn" type="submit">
+                    <img src="{% static 'assets/img/free-icon-research-8967556.png' %}" alt="">
+                  </button>
+                </form>
+              </div>
+            </li>
+          </ul>
+        </nav>
+
+        <div class="hamburger-wrap">
+          <button id="hamb-btn" class="hamburger hamburger--squeeze" type="button">
+            <span class="hamburger-box">
+              <span class="hamburger-inner"></span>
+            </span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+    <main>
+      <section id="search-res">
+        <div class="container">
+          <div class="search-results"></div> 
+          <div class="btn-res">
+            <a href="#" class="load-more-search" style="display: none;">{% trans "Завантажити більше" %}</a>
+          </div>
+        </div>
+      </section>
+
+      {% block hero-section %}
+      {% endblock hero-section %}
+
+      <footer>
+        <div class="container">
+          <div class="schedule">
+            <div class="work-time">
+              <div class="work-time-title wow animate__animated animate__fadeInLeft">
+                {% trans "Графік роботи Call-центру" %}
+              </div>
+              <div class="time"><img src="{% static 'assets/img/tasks.svg' %}" alt="time work">{% trans "Без вихідних: з 09:00 до 20:00" %}</div>
+            </div>
+            <div class="work-time">
+              <div class="work-time-title wow animate__animated animate__fadeInLeft">
+                {% trans "Графік роботи пункту видачі:" %}
+              </div>
+              <div class="time"><img src="{% static 'assets/img/tasks.svg' %}" alt="time work">{% trans "Пн-Пт: з 09:00 до 18:00" %}</div>
+              <div class="time"><img src="{% static 'assets/img/tasks.svg' %}" alt="time work">{% trans "Сб: з 10:00 до 16:00" %}</div>
+              <div class="time"><img src="{% static 'assets/img/tasks.svg' %}" alt="time work">{% trans "Нд: вихідний" %}</div>
+            </div>
+          </div>
+          <div class="pay-location">
+            <div class="pay">
+              <div class="pay-title wow animate__animated animate__fadeInLeft">
+                {% trans "Приймаємо до оплати:" %}</div>
+              <div class="pay-text">Mastercard, Visa</div>
+            </div>
+            <div class="location">
+              <div class="location-title">{% trans "Адреса:" %}</div>
+              <img src="{% static 'assets/img/карта.svg' %}" alt="location icon">
+              <a
+                href="https://www.google.com/maps/place/%D0%B2%D1%83%D0%BB%D0%B8%D1%86%D1%8F+%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D0%B0,+7,+%D0%9A%D0%B8%D1%97%D0%B2,+02000/@50.4037161,30.4228657,17z/data=!3m1!4b1!4m6!3m5!1s0x40d4c95d4e90ec2b:0xed8222f75e2efae!8m2!3d50.4037161!4d30.4228657!16s%2Fg%2F11vlsc6cyt?entry=ttu&g_ep=EgoyMDI0MDgyMy4wIKXMDSoASAFQAw%3D%3D">м.
+                {% trans "Київ, вул. Проектна 7" %}</a>
+            </div>
+  
+          </div>
+          <div class="form-footer">
+            <div class="text-form wow animate__animated animate__fadeInRight">{% trans "Якщо у Вас виникла складність із замовленням
+              або з якістю обслуговування – заповніть просту форму. Ми вирішуватимемо Ваше питання." %}</div>
+            <form id="feedback_form"  method="post">
+              <div class="name">
+                <input type="text" id="exampleInputName" name="name" placeholder="Ім'я">
+              </div>
+              <div class="telefon">
+                <input type="text" name="tel" id="exampleInputTel" placeholder="Телефон ">
+              </div>
+  
+              <button type="submit" class="btn-primary">{% trans "Відправити" %}</button>
+            </form>
+          </div>
+        </div>
+      </footer>
+      <div class="footer-menu">
+        <div class="container">
+          <div class="footer-links">
+            <div class="f-link"><a
+                href="https://docs.google.com/document/d/12RRHKT9s_c_SQxfQrxV2p-_1SnwbsVVU8oOIIhv8MzQ/edit#heading=h.k3lgmxj1tfcj" target="_parent" rel="noopener">{% trans "Договір
+                публічної оферти" %}</a></div>
+            <!-- <div class="f-link"><a href="#">Співпраця</a></div> -->
+            <div class="f-link"><a href="{% static 'assets/pages/pdf-catalogy.html' %}" target="_parent" rel="noopener">{% trans "PDF каталоги" %}</a></div>
+            <div class="f-link"><a href="{% static 'assets/pages/news.html' %}" target="_parent" rel="noopener">{% trans "Статті та новини" %}</a></div>
+            <!-- <div class="f-link"><a href="#">Спеціальні рішення</a></div> -->
+            <div class="f-link"><a href="{% static 'assets/pages/warrantyreturns.html' %}" target="_parent" rel="noopener">{% trans "Гарантія та повернення" %}</a></div>
+            <div class="f-link"><a href="{% static 'assets/pages/deliverypayment.html' %}"target="_parent" rel="noopener">{% trans "Доставка і оплата" %}</a></div>
+            <div class="f-link"><a href="#" target="_parent" rel="noopener">{% trans "Відгуки" %}</a></div>
+            <div class="f-link"><a href=" {% url "about_us" %} " target="_parent" rel="noopener">{% trans "Про нас" %}</a></div>
+            <div class="f-link"><a href="https://www.work.ua/jobs/by-company/2506907/"  target="_blank" rel="nofollow">{% trans "Вакансії" %}</a></div>
+          </div>
+  
+        </div>
+        <span id="copyright">© <span id="year"></span> My Web Genius</span>
+  
+      </div>
+      
+      <script>
+        var dataJsonUrl = "{% static 'assets/data/data.json' %}";
+      </script>
+
+
+      <script src="{% static 'assets/js/jquery/jquery-3.7.1.min.js' %}"></script>
+      <script src="{% static 'assets/js/plagins/lightgallery.min.js' %}"></script>
+      <script src="{% static 'assets/js/plagins/lg-thumbnail.min.js' %}"></script>
+      <script src="{% static 'assets/js/plagins/lg-zoom.min.js' %}"></script>
+      <script src="{% static 'assets/js/plagins/lightslider.min.js' %}"></script>
+      <script src="{% static 'assets/js/wow.min.js' %}"></script>
+      <script src="{% static 'assets/js/lazyload.min.js' %}"></script>
+      <script src="{% static 'assets/js/toast.js' %}"></script>
+      <script src="{% static 'assets/js/newsSLider.js' %}"></script>
+      <script src="{% static 'assets/js/main.js' %}"></script>
+  
+    </div>
+  </body>
+  
+  </html>

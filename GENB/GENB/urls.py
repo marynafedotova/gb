@@ -24,6 +24,7 @@ from MAIN import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
+    path('about/', views.about, name='about_us'),
     path('i18n/set_language/', set_language, name='set_language'),
 
     

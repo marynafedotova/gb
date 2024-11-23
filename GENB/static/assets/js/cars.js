@@ -1,4 +1,4 @@
-fetch('../data/cars.json')
+fetch(dataJsonUrl)
   .then(response => response.json())
   .then(data => {
     createTable(data.cars_in_transit);

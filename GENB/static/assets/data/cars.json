@@ -19,10 +19,10 @@
       "transmission": "Automatic",
       "drive": "Front-wheel Drive",
       "images": [
-        "../img/cars/DodgeJourneycr2017CROSSROADWHITE2.4_1.png",
-        "../img/cars/DodgeJourneycr2017CROSSROADWHITE2.4_2.png",
-        "../img/cars/DodgeJourneycr2017CROSSROADWHITE2.4_3.png",
-        "../img/cars/DodgeJourneycr2017CROSSROADWHITE2.4_4.png"
+        "{% static 'assets/img/cars/DodgeJourneycr2017CROSSROADWHITE2.4_1.png' %}",
+        "{% static 'assets/img/cars/DodgeJourneycr2017CROSSROADWHITE2.4_2.png' %}",
+        "{% static 'assets/img/cars/DodgeJourneycr2017CROSSROADWHITE2.4_3.png' %}",
+        "{% static 'assets/img/cars/DodgeJourneycr2017CROSSROADWHITE2.4_4.png' %}"
       ]
     },
     {
@@ -44,11 +44,11 @@
       "transmission": "Automatic",
       "drive": "Front-wheel Drive",
       "images": [
-       "../img/cars/VOLKSWAGENPASSAT1.8TWOLFSBURGEDITION2014Black_1.png",
-       "../img/cars/VOLKSWAGENPASSAT1.8TWOLFSBURGEDITION2014Black_2.png",
-       "../img/cars/VOLKSWAGENPASSAT1.8TWOLFSBURGEDITION2014Black_3.png",
-       "../img/cars/VOLKSWAGENPASSAT1.8TWOLFSBURGEDITION2014Black_4.png",
-       "../img/cars/VOLKSWAGENPASSAT1.8TWOLFSBURGEDITION2014Black_5.png"
+       "{% static 'assets/img/cars/VOLKSWAGENPASSAT1.8TWOLFSBURGEDITION2014Black_1.png' %}",
+       "{% static 'assets/img/cars/VOLKSWAGENPASSAT1.8TWOLFSBURGEDITION2014Black_2.png' %}",
+       "{% static 'assets/img/cars/VOLKSWAGENPASSAT1.8TWOLFSBURGEDITION2014Black_3.png' %}",
+       "{% static 'assets/img/cars/VOLKSWAGENPASSAT1.8TWOLFSBURGEDITION2014Black_4.png' %}",
+       "{% static 'assets/img/cars/VOLKSWAGENPASSAT1.8TWOLFSBURGEDITION2014Black_5.png' %}"
       ]
     },
     {
@@ -70,12 +70,12 @@
       "transmission": "Automatic",
       "drive": "AWD/All-Wheel Drive",
       "images": [
-        "../img/cars/JAGUARXFPRESTIG2016BLUE_1.png",
-        "../img/cars/JAGUARXFPRESTIG2016BLUE_2.png",
-        "../img/cars/JAGUARXFPRESTIG2016BLUE_3.png",
-        "../img/cars/JAGUARXFPRESTIG2016BLUE_4.png",
-        "../img/cars/JAGUARXFPRESTIG2016BLUE_5.png",
-        "../img/cars/JAGUARXFPRESTIG2016BLUE_6.png"
+        "{% static 'assets/img/cars/JAGUARXFPRESTIG2016BLUE_1.png",
+        "{% static 'assets/img/cars/JAGUARXFPRESTIG2016BLUE_2.png",
+        "{% static 'assets/img/cars/JAGUARXFPRESTIG2016BLUE_3.png",
+        "{% static 'assets/img/cars/JAGUARXFPRESTIG2016BLUE_4.png",
+        "{% static 'assets/img/cars/JAGUARXFPRESTIG2016BLUE_5.png",
+        "{% static 'assets/img/cars/JAGUARXFPRESTIG2016BLUE_6.png"
       ]
     }
   ]

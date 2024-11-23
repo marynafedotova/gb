@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-22 18:19+0200\n"
+"POT-Creation-Date: 2024-11-23 18:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,162 +28,341 @@ msgstr ""
 msgid "Русский"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:30
+#: .\MAIN\templates\main\abuotus.html:7
+msgid "Доставка і оплата запчастин на авто з США. Розбирання Авто"
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:8
+msgid ""
+"Замовити запчастини на автомобілі з США з доставкою по Україні  ✔️ Висока "
+"якість ✔️ Гарантії ✔️ Низькі ціни ☎️ 38 (068) 925-52-52 38 | (050) 925-52-52"
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:14
+msgid ""
+"Gen Brothers – Ваш Надійний Партнер у Сфері Автозапчастин з Америки, Європи "
+"та Азії"
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:15
+msgid ""
+"Компанія Gen Brothers, заснована в 2016 році, є провідним гравцем на ринку "
+"автозапчастин в Україні, спеціалізуючись на імпорті автомобілів з Америки, "
+"Європи та Азії та їх розборці на деталі. Ми пропонуємо широкий асортимент "
+"запчастин для відомих брендів, таких як <strong>Nissan, Acura, Dodge, AUDI, "
+"Land Rover, Jaguar, BMW, Jeep, KIA, Hyundai, Volkswagen, INFINITI</strong> "
+"та інші, забезпечуючи якісні автозапчастини за доступними цінами."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:16
+msgid "Наша Спеціалізація"
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:17
+msgid ""
+"Компанія Gen Brothers розбирає автомобілі найпопулярніших брендів, які "
+"відповідають високим стандартам якості та слугують джерелом надійних деталей."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:20
+msgid " – позашляховики преміум-класу для справжніх поціновувачів."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:21
+msgid " – розкішні автомобілі з бездоганною динамікою."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:22
+msgid "– потужні авто, відомі своїми інноваціями."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:23
+msgid " – легендарні позашляховики для активного відпочинку."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:24
+msgid " та "
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:24
+msgid " – надійні авто з оптимальним співвідношенням ціни та якості."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:26
+msgid " – популярні моделі з широким вибором варіантів."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:27
+msgid " – преміум-якість з японською надійністю."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:28
+msgid " – збалансовані технології та доступність."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:29
+msgid " – міцні американські позашляховики."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:30
+msgid " – технологічні авто для любителів інновацій."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:37
+msgid "Переваги Співпраці з Gen Brothers"
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:39
+msgid ""
+"Широкий вибір запчастин з трьох континентів</div> –  поставки з США, Європи "
+"та Азії для всіх популярних моделей."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:40
+msgid ""
+"Прямі поставки без посередників</div> – конкурентоспроможні ціни завдяки "
+"закупівлі авто на аукціонах."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:41
+msgid ""
+"Якість та надійність</div> – ретельний контроль якості для кожної деталі."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:42
+msgid ""
+"Оригінальна якість</div> – тільки оригінальні запчастини високих стандартів."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:43
+msgid ""
+"Професійна команда</div> – досвідчені фахівці гарантують належний стан "
+"кожної деталі."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:44
+msgid ""
+"Швидка доставка</div> – оперативне виконання замовлень для мінімального часу "
+"очікування."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:45
+msgid ""
+"Індивідуальний підхід</div> – консультаційна підтримка та допомога з вибором."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:53
+msgid "Як ми Працюємо</h2>"
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:55
+msgid ""
+"Закупівля автомобілів на аукціонах та через партнерів</div>– вибираємо авто "
+"з мінімальними пошкодженнями або невеликим пробігом для високої якості "
+"запчастин."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:56
+msgid ""
+"Доставка та митне оформлення</div> – швидке та безпечне транспортування "
+"автомобілів в Україну."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:57
+msgid ""
+"Процес розборки та перевірка</div>– кваліфіковані фахівці розбирають авто та "
+"перевіряють кожну деталь."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:58
+msgid ""
+"Реалізація запчастин </div>– широкий асортимент деталей на складі для "
+"продажу приватним клієнтам та автомайстерням."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:65
+msgid "Звертайтеся до Gen Brothers – Вашого Експерта з Автозапчастин!"
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:66
+msgid ""
+"Наша команда готова допомогти з вибором запчастин для ремонту, модернізації "
+"або тюнінгу. Gen Brothers гарантує високу якість, конкурентні ціни та "
+"індивідуальний підхід до кожного клієнта."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:73
+msgid "Товар доданий у кошик!"
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:74
+msgid "Ви бажаєте продовжити покупки або оформити замовлення."
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:76
+msgid "Продовжити покупки"
+msgstr ""
+
+#: .\MAIN\templates\main\abuotus.html:77
+msgid "Оформити замовлення"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:49 .\MAIN\templates\main\base.html:113
+#: .\MAIN\templates\main\index.html:68
+msgid "Каталог запчастин"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:51
+msgid "Авто в дорозі передзамовлення"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:53 .\MAIN\templates\main\base.html:235
+msgid "Гарантія та повернення"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:54 .\MAIN\templates\main\base.html:135
+#: .\MAIN\templates\main\base.html:236
+msgid "Доставка і оплата"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:55 .\MAIN\templates\main\base.html:136
+msgid "Контакти"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:56 .\MAIN\templates\main\base.html:138
+#: .\MAIN\templates\main\base.html:238
+msgid "Про нас"
+msgstr "О нас"
+
+#: .\MAIN\templates\main\base.html:57 .\MAIN\templates\main\base.html:139
+#: .\MAIN\templates\main\base.html:233
+msgid "Статті та новини"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:102
+msgid "Russian language"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:105
+msgid "Ukrainian language"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:132
+msgid "Авто в дорозі"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:168
+msgid "Завантажити більше"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:181
+msgid "Графік роботи Call-центру"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:183
+msgid "Без вихідних: з 09:00 до 20:00"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:187
+msgid "Графік роботи пункту видачі:"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:189
+msgid "Пн-Пт: з 09:00 до 18:00"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:190
+msgid "Сб: з 10:00 до 16:00"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:191
+msgid "Нд: вихідний"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:197
+msgid "Приймаємо до оплати:"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:201
+msgid "Адреса:"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:205
+msgid "Київ, вул. Проектна 7"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:220
+msgid "Відправити"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:232
+msgid "PDF каталоги"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:237
+msgid "Відгуки"
+msgstr ""
+
+#: .\MAIN\templates\main\base.html:239
+msgid "Вакансії"
+msgstr ""
+
+#: .\MAIN\templates\main\index.html:7
 msgid ""
 "Genbrothers | Авторозбірка | Автозапчастини б/у | Авто на запчастини | "
 "Доставка авто з США"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:33
+#: .\MAIN\templates\main\index.html:9
 msgid ""
 "Розбирання автомобілів з США 2010-2020 років випуску на запчастини. Доставка "
 "запчастин по Україні(Київ,Харків,Львів,Дніпро,Запоріжжя,Чернігів,Одеса)"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:51 .\MAIN\templates\main\index.html:115
-#: .\MAIN\templates\main\index.html:229
-msgid "Каталог запчастин"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:53
-msgid "Авто в дорозі передзамовлення"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:55 .\MAIN\templates\main\index.html:329
-msgid "Гарантія та повернення"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:56 .\MAIN\templates\main\index.html:137
-#: .\MAIN\templates\main\index.html:330
-msgid "Доставка і оплата"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:57 .\MAIN\templates\main\index.html:138
-msgid "Контакти"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:58 .\MAIN\templates\main\index.html:140
-#: .\MAIN\templates\main\index.html:332
-msgid "Про нас"
-msgstr "О нас"
-
-#: .\MAIN\templates\main\index.html:59 .\MAIN\templates\main\index.html:141
-#: .\MAIN\templates\main\index.html:327
-msgid "Статті та новини"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:104
-msgid "Russian language"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:107
-msgid "Ukrainian language"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:134
-msgid "Авто в дорозі"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:170
-msgid "Завантажити більше"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:194
+#: .\MAIN\templates\main\index.html:33
 msgid "Розбирання автомобілів з США \"Gen Brothers\". Низькі ціни."
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:197
+#: .\MAIN\templates\main\index.html:36
 msgid "Пошук запчастин"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:200
+#: .\MAIN\templates\main\index.html:39
 msgid "Артикул"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:203
+#: .\MAIN\templates\main\index.html:42
 msgid "Марка авто"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:206
+#: .\MAIN\templates\main\index.html:45
 msgid "Модель"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:209
+#: .\MAIN\templates\main\index.html:48
 msgid "Розділ"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:212
+#: .\MAIN\templates\main\index.html:51
 msgid "Підрозділ"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:215
+#: .\MAIN\templates\main\index.html:54
 msgid "Запчастини"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:220
+#: .\MAIN\templates\main\index.html:59
 msgid "Пошук"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:255
+#: .\MAIN\templates\main\index.html:94
 msgid "Наші переваги"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:262
+#: .\MAIN\templates\main\index.html:101
 msgid "Новини та поради"
 msgstr ""
 
-#: .\MAIN\templates\main\index.html:265
+#: .\MAIN\templates\main\index.html:104
 msgid " Перейти до новин"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:275
-msgid "Графік роботи Call-центру"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:277
-msgid "Без вихідних: з 09:00 до 20:00"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:281
-msgid "Графік роботи пункту видачі:"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:283
-msgid "Пн-Пт: з 09:00 до 18:00"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:284
-msgid "Сб: з 10:00 до 16:00"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:285
-msgid "Нд: вихідний"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:291
-msgid "Приймаємо до оплати:"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:295
-msgid "Адреса:"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:299
-msgid "Київ, вул. Проектна 7"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:314
-msgid "Відправити"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:326
-msgid "PDF каталоги"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:331
-msgid "Відгуки"
-msgstr ""
-
-#: .\MAIN\templates\main\index.html:333
-msgid "Вакансії"
 msgstr ""

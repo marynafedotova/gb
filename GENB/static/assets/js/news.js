@@ -1,4 +1,4 @@
-fetch('../data/news.json')
+fetch(dataJsonUrl)
   .then(response => response.json())
   .then(newsData => {
     createAccordion(newsData);

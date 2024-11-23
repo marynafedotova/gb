@@ -1,7 +1,7 @@
 //news
 
 document.addEventListener('DOMContentLoaded', function () {
-  fetch('assets/data/news_slider.json')
+  fetch(dataJsonUrl)
     .then(response => response.json())
     .then(data => {
       createNewsSlider('news_slider', data); 

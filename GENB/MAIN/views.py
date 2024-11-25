@@ -9,3 +9,7 @@ def index(request):
 def about(request):
     return render(request, 'main/abuotus.html')
 
+
+def contact(request):
+    return render(request, 'main/contacts.html')
+

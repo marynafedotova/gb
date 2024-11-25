@@ -1,0 +1,65 @@
+
+{% extends "main/base.html" %}
+{% load static %}
+{% load i18n %} 
+
+{% block title_meta %}
+  <title>{% trans "Контакти|Авторозбiрка|Автозапчастини б/у" %}</title>
+  <meta name="description" content={% trans "Пункт видачі замовлень Gen Brothers⭐ Час роботи офісу з продажу ✔️Номера телефоу для зв'язку з менеджером +38 (068) 925-52-52 | +38 (050) 925-52-52 38" %}>
+{% endblock title_meta %}
+
+
+ 
+{% block hero-section %}
+           <!-- hero-section -->
+      <div class="hero-screan">
+        <div class="container wow animate__animated animate__backInUp">
+          <h1>{% trans "Контакти" %}</h1>
+          <div class="contacts-block">
+           <div class="contcts-item  wow animate__animated animate__fadeInLeft">
+                <div class="contacts-title">{% trans "Графік роботи Call-центру:" %}
+              </div>
+              <div class="contacts-text">
+                {% trans "Без вихідних: з 09:00 до 20:00" %}
+              </div>
+            </div>
+            <div class="contcts-item  wow animate__animated animate__fadeInRight">
+              <div class="contacts-title">
+                {% trans "Графік роботи пункту видачі:" %}
+              </div>
+              <div class="contacts-text">
+                <ul>
+                  <li>{% trans "Пн-Пт: з 09:00 до 18:00" %}</li>
+                <li>{% trans "Сб: з 10:00 до 16:00" %}</li>
+                <li>{% trans "Нд: вихідний" %}</li>
+              </ul>
+              </div>
+            </div>
+            <div class="contcts-item  wow animate__animated animate__fadeInLeft">
+              <div class="contacts-title">
+                {% trans "Адреса:" %}
+              </div>
+              <div class="contacts-text">
+                {% trans "м. Київ, вул. Проектна 7" %}
+              </div>
+            </div>
+          </div>
+          <div id="maps">
+            <div id="map">
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2943.6622836829797!2d30.42029077676661!3d50.40371949072716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4c95d4e90ec2b%3A0xed8222f75e2efae!2z0LLRg9C70LjRhtGPINCf0YDQvtC10LrRgtC90LAsIDcsINCa0LjRl9CyLCAwMjAwMA!5e1!3m2!1suk!2sua!4v1725991159034!5m2!1suk!2sua" width="1250" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>          </div>
+        </div>
+      <!-- Модальное окно -->
+      <div class="page-overlay" style="display: none;"></div> <!-- Затемняющий фон -->
+      <div id="cartModal" class="modal hidden">
+        <div class="modal-content">
+          <h3>{% trans "Товар доданий у кошик!" %}</h3>
+          <p>{% trans "Ви бажаєте продовжити покупки або оформити замовлення." %}</p>
+          <div class="modal-buttons">
+            <button onclick="closeCartModal()">{% trans "Продовжити покупки" %}</button>
+            <button onclick="proceedToCheckout()">{% trans "Оформити замовлення" %}</button>
+          </div>
+        </div>
+      </div>
+    </main>  
+  {% endblock hero-section %}
+    

@@ -35,7 +35,7 @@
   <div class="page-overlay"></div>
   <div class="menu-panel">
     <div class="panel-top">
-      <div class="logo"><a href=" {% url "index" %} "><img src="{% static 'assets/img/logo.svg' %}" alt="logo"></a></div>
+      <div class="logo"><a href=" {% url "main:index" %} "><img src="{% static 'assets/img/logo.svg' %}" alt="logo"></a></div>
       <div class="hamburger-wrap">
         <button id="hamb-btn-mobile" class="hamburger hamburger--squeeze is-active" type="button">
           <span class="hamburger-box">
@@ -52,8 +52,8 @@
         </li>
         <li><a href="{% static 'assets/pages/warrantyreturns.html' %}" target="_parent" rel="noopener">{% trans "Гарантія та повернення" %}</a></li>
         <li><a href="{% static 'assets/pages/deliverypayment.html' %}" target="_parent" rel="noopener">{% trans "Доставка і оплата" %}</a></li>
-        <li><a href="{% static 'assets/pages/contacts.html' %}" target="_parent" rel="noopener">{% trans "Контакти" %}</a></li>
-        <li><a href=" {% url "about_us" %} " target="_parent" rel="noopener">{% trans "Про нас" %}</a></li>
+        <li><a href=" {% url "main:contacts" %}" target="_parent" rel="noopener">{% trans "Контакти" %}</a></li>
+        <li><a href=" {% url "main:about_us" %} " target="_parent" rel="noopener">{% trans "Про нас" %}</a></li>
         <li><a href="{% static 'assets/pages/pagesnews.html' %}" target="_parent" rel="noopener">{% trans "Статті та новини" %}</a></li>
         <li>
           <div class="search-container">
@@ -69,7 +69,7 @@
   <div class="page-wrapper">
     <header>
       <div class="header-container">
-        <div class="logo"><a href=" {% url "index" %} "><img src="{% static 'assets/img/logo.svg' %}" alt="logo"></a>
+        <div class="logo"><a href=" {% url "main:index" %} "><img src="{% static 'assets/img/logo.svg' %}" alt="logo"></a>
 
         </div>
         <div class="tel">
@@ -98,10 +98,10 @@
         <div class="language">
           <ul>
             <li>
-              <a href="{% url 'set_language' %}?language=ru&next={{ request.path }}">
+              <a href="{% url 'main:set_language' %}?language=ru&next={{ request.path }}">
                 <img src="{% static 'assets/img/russia.svg' %}" alt="{% trans 'Russian language' %}"></a></li>
             <li>
-              <a href="{% url 'set_language' %}?language=uk&next={{ request.path }}">
+              <a href="{% url 'main:set_language' %}?language=uk&next={{ request.path }}">
                 <img src="{% static 'assets/img/ukraine.svg' %}" alt="{% trans 'Ukrainian language' %}"></a></li>
           </ul>
         </div>
@@ -135,7 +135,7 @@
             <li><a href="{% static 'assets/pages/deliverypayment.html' %}" target="_parent" rel="noopener">{% trans "Доставка і оплата" %}</a></li>
             <li><a href="{% static 'assets/pages/contacts.html' %}" target="_parent" rel="noopener">{% trans "Контакти" %}</a></li>
 
-            <li><a href=" {% url "about_us" %} " target="_parent" rel="noopener">{% trans "Про нас" %}</a></li>
+            <li><a href=" {% url "main:about_us" %} " target="_parent" rel="noopener">{% trans "Про нас" %}</a></li>
         <li><a href="{% static 'assets/pages/news.html' %}" target="_parent" rel="noopener">{% trans "Статті та новини" %}</a></li> 
             <li>
               <div class="search-container">
@@ -235,7 +235,7 @@
             <div class="f-link"><a href="{% static 'assets/pages/warrantyreturns.html' %}" target="_parent" rel="noopener">{% trans "Гарантія та повернення" %}</a></div>
             <div class="f-link"><a href="{% static 'assets/pages/deliverypayment.html' %}"target="_parent" rel="noopener">{% trans "Доставка і оплата" %}</a></div>
             <div class="f-link"><a href="#" target="_parent" rel="noopener">{% trans "Відгуки" %}</a></div>
-            <div class="f-link"><a href=" {% url "about_us" %} " target="_parent" rel="noopener">{% trans "Про нас" %}</a></div>
+            <div class="f-link"><a href=" {% url "main:about_us" %} " target="_parent" rel="noopener">{% trans "Про нас" %}</a></div>
             <div class="f-link"><a href="https://www.work.ua/jobs/by-company/2506907/"  target="_blank" rel="nofollow">{% trans "Вакансії" %}</a></div>
           </div>
   

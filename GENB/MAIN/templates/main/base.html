@@ -46,7 +46,7 @@
     </div>
     <nav>
       <ul class="mobile-menu">
-        <li><a href="{% static 'assets/pages/catalog.html' %}" target="_parent" rel="noopener">{% trans "Каталог запчастин" %}</a>
+        <li><a href="{% url "goods:catalog" %}" target="_parent" rel="noopener">{% trans "Каталог запчастин" %}</a>
         </li>
         <li><a href="{% static 'assets/pages/pre-order.html' %}" target="_parent" rel="noopener">{% trans "Авто в дорозі передзамовлення" %}</a>
         </li>
@@ -110,7 +110,7 @@
         <nav>
           <ul>
             <li>
-              <a href="{% static 'assets/pages/catalog.html' %}" target="_parent" rel="noopener">{% trans "Каталог запчастин" %}</a>
+              <a href="{% url "goods:catalog" %}" target="_parent" rel="noopener">{% trans "Каталог запчастин" %}</a>
               <ul class="submenu">
                 <li><a href="#"><img src="{% static 'assets/img/acura.svg' %}" alt="acura"></a></li>
                 <li><a href="#"><img src="{% static 'assets/img/audi.svg' %}" alt="audi"></a></li>

@@ -23,14 +23,12 @@ window.onload = () => {
       if (carData.length > 0) {
         const car = carData[0];
         
-        // Отображаем основную информацию об автомобиле
         const carInfoElement = document.getElementById('car-info');
         carInfoElement.innerHTML = `
           <h2>${car.markaavto} ${car.model} ${car.god}</h2>
           <img src="${car.pictures.split(',')[0].trim()}" alt="${car.markaavto} ${car.model}" width="200px" />
         `;
 
-        // Определяем соответствие категорий данных и вкладок
         const categoryMap = {
           "Інтер'єр / салон": 'interior',
           "Двигун": 'engine',
@@ -47,7 +45,6 @@ window.onload = () => {
           "ГУМА": 'tire'
         };
 
-        // Функция для отображения содержимого вкладки
         function showTabContent(categoryId, partsByCategory) {
           document.querySelectorAll('.tab-panel').forEach(tab => tab.style.display = 'none');
           const tabContentElement = document.getElementById(categoryId);
@@ -56,16 +53,14 @@ window.onload = () => {
           if (partsByCategory.length > 0) {
             let partsList = `<ul>`;
             partsByCategory.forEach(part => {
-              // Добавляем ссылку на product.html с параметром id
               partsList += `<li><a href="product.html?id=${part.ID_EXT}">${part.zapchast}</a></li>`;
             });
             partsList += `</ul>`;
             tabContentElement.innerHTML = partsList;
           } else {
-            tabContentElement.innerHTML = "<p>Запчасти для этой категории не найдены.</p>";
+            tabContentElement.innerHTML = "<p>Запчастини для цієї категорії не знайдено.</p>";
           }
         }        
-        // Устанавливаем обработчики событий для заголовков вкладок
         Object.keys(categoryMap).forEach(categoryName => {
           const categoryId = categoryMap[categoryName];
           const tabTitleElement = document.querySelector(`#tab-titles li a[href="#${categoryId}"]`);
@@ -73,18 +68,17 @@ window.onload = () => {
           tabTitleElement.addEventListener('click', (event) => {
             event.preventDefault();
             
-            // Перенаправляємо на нову сторінку з параметрами URL для фільтрації
             const newUrl = `product-category.html?category=${encodeURIComponent(categoryName)}&make=${encodeURIComponent(markaavto)}&model=${encodeURIComponent(model)}`;
             window.location.href = newUrl;
           });
         });
         
       } else {
-        document.getElementById('car-info').innerHTML = "<p>Этот автомобиль не найден.</p>";
+        document.getElementById('car-info').innerHTML = "<p>Цей автомобіль не знайдено.</p>";
       }
     })
     .catch(error => {
       console.error('Ошибка при загрузке данных:', error);
-      document.getElementById('car-info').innerHTML = "<p>Произошла ошибка при загрузке данных.</p>";
+      document.getElementById('car-info').innerHTML = "<p>Сталася помилка під час завантаження даних.</p>";
     });
 }

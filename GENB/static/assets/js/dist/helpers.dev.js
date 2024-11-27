@@ -225,7 +225,8 @@ function fetchProducts() {
         case 0:
           _context2.prev = 0;
           _context2.next = 3;
-          return regeneratorRuntime.awrap(fetch('../data/data.json'));
+          return regeneratorRuntime.awrap(fetch('../data/data_ukr.json
+'));
 
         case 3:
           response = _context2.sent;

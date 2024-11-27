@@ -213,7 +213,8 @@ async function fetchCurrencyRate() {
 // Функция для получения продуктов
 async function fetchProducts() {
   try {
-    const response = await fetch('assets/data/data.json');
+    const response = await fetch('assets/data/data_ukr.json
+');
     if (!response.ok) throw new Error('Не удалось загрузить продукты');
     const data = await response.json();
     if (!data.Sheet1 || !Array.isArray(data.Sheet1)) throw new Error('Некорректный формат данных');

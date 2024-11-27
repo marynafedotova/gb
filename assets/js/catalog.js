@@ -54,7 +54,7 @@ function displayProducts(filteredProducts = []) {
     const priceInUah = Math.ceil(product.zena * usdToUahRate);
     const productCard = `
       <div class="product-card">
-        <img src="${product.photo.split(',')[0].trim()}" alt="${product.zapchast}">
+        <img src="${product.photo.split(',')[0].trim()}" alt="${product.zapchast}" class="lazy" >
         <h3>Артикул: ${product.ID_EXT}</h3>
         <h3>Назва: ${product.zapchast}</h3>
         <p>Ціна: ${product.zena} ${product.valyuta} / ${priceInUah} грн</p>
@@ -78,6 +78,10 @@ function displayProducts(filteredProducts = []) {
     productContainer.innerHTML = '<p>Ничего не найдено.</p>';
   }
 }
+//lazy
+
+var lazyLoadInstance = new LazyLoad({});
+
 // Функция для отображения результатов поиска
 function displaySearchResults(filteredProducts = []) {
   const productContainer = document.querySelector('.search-results');
@@ -95,7 +99,7 @@ function displaySearchResults(filteredProducts = []) {
     const priceInUah = Math.ceil(product.zena * usdToUahRate);
     const productCard = `
       <div class="product-card">
-        <img src="${product.photo.split(',')[0].trim()}" alt="${product.zapchast}">
+        <img src="${product.photo.split(',')[0].trim()}" alt="${product.zapchast}" class="lazy" >
         <h3>Артикул: ${product.ID_EXT}</h3>
         <h3>Назва: ${product.zapchast}</h3>
         <p>Ціна: ${product.zena} ${product.valyuta} / ${priceInUah} грн</p>
@@ -111,7 +115,6 @@ function displaySearchResults(filteredProducts = []) {
 
   searchProductIndex += productsPerSearchPage;
 
-  // Управление кнопкой "Загрузить больше"
   const loadMoreButton = document.querySelector('.load-more-search');
   if (searchProductIndex < filteredProducts.length) {
     loadMoreButton.style.display = 'block';
@@ -302,6 +305,7 @@ fetch('../data/data_ukr.json')
             carCard.classList.add('car-card');
 
             const carImage = document.createElement('img');
+            carImage.classList.add('lazy');
             carImage.src = car.pictures;
             carImage.alt = `${car.markaavto} ${car.model}`;
             carCard.appendChild(carImage);

@@ -103,7 +103,7 @@ function displayProducts() {
   var productsToDisplay = isSearch ? filteredProducts : products.slice(currentProductIndex, currentProductIndex + productsPerPage);
   productsToDisplay.forEach(function (product) {
     var priceInUah = Math.ceil(product.zena * usdToUahRate);
-    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\">\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
+    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\" class=\"lazy\" >\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
     productContainer.insertAdjacentHTML('beforeend', productCard);
   }); // Обновляем индекс для каталога
 
@@ -116,8 +116,10 @@ function displayProducts() {
   } else if (filteredProducts.length === 0) {
     productContainer.innerHTML = '<p>Ничего не найдено.</p>';
   }
-} // Функция для отображения результатов поиска
+} //lazy
 
+
+var lazyLoadInstance = new LazyLoad({}); // Функция для отображения результатов поиска
 
 function displaySearchResults() {
   var filteredProducts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -131,11 +133,10 @@ function displaySearchResults() {
   var productsToDisplay = filteredProducts.slice(searchProductIndex, searchProductIndex + productsPerSearchPage);
   productsToDisplay.forEach(function (product) {
     var priceInUah = Math.ceil(product.zena * usdToUahRate);
-    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\">\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
+    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\" class=\"lazy\" >\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
     productContainer.insertAdjacentHTML('beforeend', productCard);
   });
-  searchProductIndex += productsPerSearchPage; // Управление кнопкой "Загрузить больше"
-
+  searchProductIndex += productsPerSearchPage;
   var loadMoreButton = document.querySelector('.load-more-search');
 
   if (searchProductIndex < filteredProducts.length) {
@@ -393,6 +394,7 @@ fetch('../data/data_ukr.json').then(function (response) {
     var carCard = document.createElement('div');
     carCard.classList.add('car-card');
     var carImage = document.createElement('img');
+    carImage.classList.add('lazy');
     carImage.src = car.pictures;
     carImage.alt = "".concat(car.markaavto, " ").concat(car.model);
     carCard.appendChild(carImage);

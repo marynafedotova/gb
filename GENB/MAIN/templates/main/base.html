@@ -59,7 +59,8 @@
           <div class="search-container">
             <form id="search-form-m">
               <input type="text" id="search-input-m" placeholder="Пошук..." name="search">
-              <button type="submit">Search</button>
+              <button type="submit"><img src="{% static 'assets/img/search.svg' %}" alt="search button">
+              </button>
             </form>
           </div>
         </li>
@@ -142,7 +143,7 @@
                 <form id="search-form">
                   <input type="text" id="search-input" placeholder="Пошук..." name="search">
                   <button id="search-btn" type="submit">
-                    <img src="{% static 'assets/img/free-icon-research-8967556.png' %}" alt="">
+                    <img src="{% static 'assets/img/search.svg' %}" alt="search button">
                   </button>
                 </form>
               </div>
@@ -245,8 +246,8 @@
       </div>
       
       <script>
-        var dataJsonUrl = "{% static 'assets/data/data_ukr.json
-' %}";
+        var dataJsonUrl = "{% static 'assets/data/data_ukr.json' %}";
+        var dataJsonNews = "{% static 'assets/data/news_slider.json' %}";
       </script>
 
 

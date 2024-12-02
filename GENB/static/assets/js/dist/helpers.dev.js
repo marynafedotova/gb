@@ -20,9 +20,9 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
   document.body.classList.toggle('open-mobile-menu');
 }); //lazy
 // var lazyLoadInstance = new LazyLoad({});
-// wow
-// new WOW().init();
-//scroll
+//  wow
+
+new WOW().init(); //scroll
 // document.getElementById('scrollButton').addEventListener('click', function(event) {
 //   event.preventDefault();
 //   const targetElement = document.getElementById('news');
@@ -35,6 +35,14 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 // Код для обработки кликов по ссылкам
 
 document.querySelectorAll('.submenu a').forEach(function (link) {
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+    var brand = this.querySelector('img').alt.toLowerCase();
+    var pageUrl = "catalog-template.html?brand=".concat(brand);
+    window.location.href = pageUrl;
+  });
+});
+document.querySelectorAll('.catalog-list a').forEach(function (link) {
   link.addEventListener('click', function (event) {
     event.preventDefault();
     var brand = this.querySelector('img').alt.toLowerCase();
@@ -71,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (tel === '' || tel.length < 17) {
-      // Длина номера должна быть 17 символов
       errors.push('Введіть, будь ласка, правильний номер телефону');
       telFld.classList.add('is-invalid');
     }
@@ -79,10 +86,9 @@ document.addEventListener('DOMContentLoaded', function () {
     if (errors.length > 0) {
       toast.error(errors.join('. '));
       return;
-    } // Отправка данных в Telegram
+    }
 
-
-    var CHAT_ID = '836622266';
+    var CHAT_ID = '-1002278785620';
     var BOT_TOKEN = '8046931960:AAHhJdRaBEv_3zyB9evNFxZQlEdiz8FyWL8';
     var message = "<b>\u0406\u043C'\u044F: </b> ".concat(name, "\r\n<b>\u0422\u0435\u043B\u0435\u0444\u043E\u043D: </b>").concat(tel);
     var url = "https://api.telegram.org/bot".concat(BOT_TOKEN, "/sendMessage?chat_id=").concat(CHAT_ID, "&text=").concat(encodeURIComponent(message), "&parse_mode=HTML");
@@ -103,8 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
   telFld.addEventListener('input', function (e) {
-    var input = e.target.value.replace(/\D/g, ''); // Удаляем все, кроме цифр
-
+    var input = e.target.value.replace(/\D/g, '');
     var formattedInput = '';
 
     if (input.length > 0) {
@@ -128,11 +133,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     e.target.value = formattedInput;
-  }); // Запрещаем ввод чисел в поле имени
-
+  });
   nameFld.addEventListener('input', function (e) {
-    var input = e.target.value; // Оставляем только буквы и специальные символы для имени
-
+    var input = e.target.value;
     e.target.value = input.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
   });
 }); //copiraite
@@ -225,8 +228,7 @@ function fetchProducts() {
         case 0:
           _context2.prev = 0;
           _context2.next = 3;
-          return regeneratorRuntime.awrap(fetch('../data/data_ukr.json
-'));
+          return regeneratorRuntime.awrap(fetch('../data/data_ukr.json'));
 
         case 3:
           response = _context2.sent;

@@ -104,91 +104,18 @@ function createAdvantagesSlider(elementId, jsonData) {
 }
 
 
-// document.addEventListener('DOMContentLoaded', function () {
-//   fetch('assets/data/news.json')
-//     .then(response => response.json())
-//     .then(data => {
-//       createSlider('slider2', data);
-//     })
-//     .catch(error => console.error('Error fetching data:', error));
-// });
-
-// function createSlider(elementId, jsonData) {
-//   const sliderContainer = $("#" + elementId);
-//   const customPrevHtml = '<span class="custom-prev-html">Previous</span>';
-//   const customNextHtml = '<span class="custom-next-html">Next</span>';
-//   const ulElement = $("<ul></ul>");
-//   jsonData.forEach(item => {
-//     const slideElement = $(`
-//       <li>
-//         <div class="slide-top">
-//           <img src="${item.image}" alt="${item.title}">
-//         </div>
-//         <div class="title">${item.title}</div>
-//         <div class="news-text">${item.newsText}</div>
-//         <div class="author">
-//           <div class="avatar">
-//             <img src="${item.author.avatar}" alt="${item.author.name}">
-//           </div>
-//           <div class="author-data">
-//           <div class="name-author">${item.author.name}</div>
-//           <div class="news-date">${item.author.date}</div>
-//           </div>
-//           </div>
-//       </li>
-//     `);
-//     ulElement.append(slideElement);
-//   });
-//   sliderContainer.append(ulElement);
-//   ulElement.lightSlider({
-//     item: 3,
-//     controls: false,
-//     loop: true,
-//     auto: true,
-//     slideMove: 1,
-//     slideMargin: 30,
-//     pager:true,
-//     vertical:false,
-//     prevHtml: customPrevHtml,
-//     nextHtml: customNextHtml,
-//     responsive: [
-//       {
-//         breakpoint: 1200,
-//         settings: {
-//           item: 2,
-//           slideMove: 1,
-//         }
-//       },
-//       {
-//         breakpoint: 900, 
-//         settings: {
-//           item: 1,
-//           slideMove: 1,
-//         }
-//       }
-//     ]
-//   });
-// }
-
-// lightGallery(document.getElementById('animated-thumbnails'), {
-//     allowMediaOverlap: true,
-//     toggleThumb: true
-// });
-
 const urlMonoBank = 'https://api.monobank.ua/bank/currency';
 let products = [];
-let usdToUahRate = 1;
-let displayedProductCount = 0; // Счётчик отображённых товаров
-const PRODUCTS_PER_PAGE = 12; // Количество товаров на одну "страницу"
+let usdToUahRate = 37;
+let displayedProductCount = 0; 
+const PRODUCTS_PER_PAGE = 12; 
 
-// Функция для получения курса валют
 async function fetchCurrencyRate() {
   try {
     const cachedRate = localStorage.getItem('usdToUahRate');
     const cachedTime = localStorage.getItem('usdToUahRateTime');
     const now = Date.now();
 
-    // Если кэш действителен (меньше 5 минут)
     if (cachedRate && cachedTime && now - cachedTime < 5 * 60 * 1000) {
       usdToUahRate = parseFloat(cachedRate);
       return;
@@ -201,7 +128,6 @@ async function fetchCurrencyRate() {
     if (usdToUah && usdToUah.rateSell) {
       usdToUahRate = usdToUah.rateSell;
 
-      // Сохраняем курс в кэш
       localStorage.setItem('usdToUahRate', usdToUahRate);
       localStorage.setItem('usdToUahRateTime', now);
     }
@@ -291,7 +217,7 @@ document.querySelector('.load-more-search').addEventListener('click', function (
 // Обработчик формы поиска
 document.getElementById('search-form').addEventListener('submit', async function(event) {
   event.preventDefault();
-  await fetchCurrencyRate(); // Получаем актуальный курс валют
+  await fetchCurrencyRate();
 
   const query = document.getElementById('search-input').value.trim().toLowerCase();
   if (query) {
@@ -301,15 +227,14 @@ document.getElementById('search-form').addEventListener('submit', async function
       (product.model && product.model.toLowerCase().includes(query))
     );
 
-    displayedProductCount = 0; // Сбрасываем счётчик отображённых товаров
+    displayedProductCount = 0; 
     displayProducts(filteredProducts);
   } else {
-    // Если поле пустое, очищаем результаты
+
     displayedProductCount = 0;
     displayProducts([]);
   }
 
-  // Прокрутка к результатам поиска
   const resultsContainer = document.querySelector('.search-results');
   if (resultsContainer) {
     resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -344,4 +269,101 @@ document.querySelectorAll('.catalog-list a').forEach(link => {
     const pageUrl = `assets/pages/catalog-template.html?brand=${brand}`;
     window.location.href = pageUrl;
   });
+});
+
+// form
+document.addEventListener('DOMContentLoaded', function () {
+  const form = document.getElementById('feedback_form');
+  const nameFld = document.getElementById('exampleInputName');
+  const telFld = document.getElementById('exampleInputTel');
+
+  if (!form || !nameFld || !telFld) {
+    console.error('Form or fields not found!');
+    return;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const name = nameFld.value ? nameFld.value.trim() : ''; 
+    const tel = telFld.value ? telFld.value.trim() : '';
+
+    const errors = [];
+
+    // Очистка классов ошибок
+    nameFld.classList.remove('is-invalid');
+    telFld.classList.remove('is-invalid');
+
+    if (name === '') {
+      errors.push("Введіть, будь ласка, Ваше ім'я");
+      nameFld.classList.add('is-invalid');
+    } else if (name.length < 2) {
+      errors.push('Ваше ім\'я занадто коротке');
+      nameFld.classList.add('is-invalid');
+    }
+
+    if (tel === '' || tel.length < 17) { 
+      errors.push('Введіть, будь ласка, правильний номер телефону');
+      telFld.classList.add('is-invalid');
+    }
+
+    if (errors.length > 0) {
+      toast.error(errors.join('. '));
+      return;
+    }
+
+    const CHAT_ID = '-1002278785620';
+    const BOT_TOKEN = '8046931960:AAHhJdRaBEv_3zyB9evNFxZQlEdiz8FyWL8';
+    const message = `<b>Ім'я: </b> ${name}\r\n<b>Телефон: </b>${tel}`;
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=HTML`;
+
+    fetch(url, {
+      method: 'POST',
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.ok) {
+        nameFld.value = '';
+        telFld.value = '';
+        toast.success('Ваше повідомлення успішно надіслано.');
+      } else {
+        toast.error('Сталася помилка.');
+      }
+    })
+    .catch(error => {
+      toast.error('Помилка: ' + error.message);
+    });
+  });
+
+  telFld.addEventListener('input', function (e) {
+    let input = e.target.value.replace(/\D/g, '');
+    let formattedInput = '';
+
+    if (input.length > 0) {
+      formattedInput += '+38 (';
+    }
+    if (input.length >= 1) {
+      formattedInput += input.substring(0, 3);
+    }
+    if (input.length >= 4) {
+      formattedInput += ') ' + input.substring(3, 6);
+    }
+    if (input.length >= 7) {
+      formattedInput += '-' + input.substring(6, 8);
+    }
+    if (input.length >= 9) {
+      formattedInput += '-' + input.substring(8, 10);
+    }
+
+    e.target.value = formattedInput;
+  });
+  nameFld.addEventListener('input', function (e) {
+  let input = e.target.value;
+   e.target.value = input.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
+});
+});
+//copiraite
+document.addEventListener("DOMContentLoaded", function() {
+  const currentYear = new Date().getFullYear();
+  document.getElementById("year").textContent = currentYear;
 });

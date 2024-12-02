@@ -24,8 +24,9 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 
 // var lazyLoadInstance = new LazyLoad({});
 
-// wow
-// new WOW().init();
+//  wow
+new WOW().init();
+
 //scroll
 // document.getElementById('scrollButton').addEventListener('click', function(event) {
 //   event.preventDefault();
@@ -36,8 +37,17 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 //     behavior: 'smooth'
 //   });
 // });
+
 // Код для обработки кликов по ссылкам
 document.querySelectorAll('.submenu a').forEach(link => {
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+    const brand = this.querySelector('img').alt.toLowerCase();
+    const pageUrl = `catalog-template.html?brand=${brand}`;
+    window.location.href = pageUrl;
+  });
+});
+document.querySelectorAll('.catalog-list a').forEach(link => {
   link.addEventListener('click', function (event) {
     event.preventDefault();
     const brand = this.querySelector('img').alt.toLowerCase();
@@ -76,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function () {
       nameFld.classList.add('is-invalid');
     }
 
-    if (tel === '' || tel.length < 17) {  // Длина номера должна быть 17 символов
+    if (tel === '' || tel.length < 17) { 
       errors.push('Введіть, будь ласка, правильний номер телефону');
       telFld.classList.add('is-invalid');
     }
@@ -86,8 +96,7 @@ document.addEventListener('DOMContentLoaded', function () {
       return;
     }
 
-    // Отправка данных в Telegram
-    const CHAT_ID = '836622266';
+    const CHAT_ID = '-1002278785620';
     const BOT_TOKEN = '8046931960:AAHhJdRaBEv_3zyB9evNFxZQlEdiz8FyWL8';
     const message = `<b>Ім'я: </b> ${name}\r\n<b>Телефон: </b>${tel}`;
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=HTML`;
@@ -111,7 +120,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   telFld.addEventListener('input', function (e) {
-    let input = e.target.value.replace(/\D/g, ''); // Удаляем все, кроме цифр
+    let input = e.target.value.replace(/\D/g, '');
     let formattedInput = '';
 
     if (input.length > 0) {
@@ -132,11 +141,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
     e.target.value = formattedInput;
   });
- // Запрещаем ввод чисел в поле имени
- nameFld.addEventListener('input', function (e) {
+  nameFld.addEventListener('input', function (e) {
   let input = e.target.value;
-  // Оставляем только буквы и специальные символы для имени
-  e.target.value = input.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
+   e.target.value = input.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
 });
 });
 //copiraite
@@ -184,8 +191,7 @@ async function fetchCurrencyRate() {
 // Функция для получения продуктов
 async function fetchProducts() {
   try {
-    const response = await fetch('../data/data_ukr.json
-');
+    const response = await fetch('../data/data_ukr.json');
     if (!response.ok) throw new Error('Не удалось загрузить продукты');
     const data = await response.json();
     if (!data.Sheet1 || !Array.isArray(data.Sheet1)) throw new Error('Некорректный формат данных');

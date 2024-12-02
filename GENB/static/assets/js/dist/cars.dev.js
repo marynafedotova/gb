@@ -1,6 +1,6 @@
 "use strict";
 
-fetch('../data/cars.json').then(function (response) {
+fetch(dataJsonUrl).then(function (response) {
   return response.json();
 }).then(function (data) {
   createTable(data.cars_in_transit);
@@ -210,7 +210,7 @@ document.getElementById('feedback-form_cars').addEventListener('submit', functio
   } // Отправка данных в Telegram
 
 
-  var CHAT_ID = '836622266';
+  var CHAT_ID = '-1002485030400';
   var BOT_TOKEN = '7527794477:AAFxOk9l6CH8EccTk9at2uVM3OSyEZbrUCw';
   var message = "\n\uD83D\uDE97 <b>\u041D\u043E\u0432\u0435 \u0431\u0440\u043E\u043D\u044E\u0432\u0430\u043D\u043D\u044F \u0430\u0432\u0442\u043E</b> \uD83D\uDE97\n\n    \u0406\u043C'\u044F: ".concat(name, "\n\n    \u0422\u0435\u043B\u0435\u0444\u043E\u043D: ").concat(phone, "\n\n    Email: ").concat(email, "\n\n    \u0420\u043E\u0437\u0434\u0456\u043B \u0437\u0430\u043F\u0447\u0430\u0441\u0442\u0438\u043D: ").concat(rozdi, "\n\n    \u041F\u0456\u0434\u0440\u043E\u0437\u0434\u0456\u043B \u0437\u0430\u043F\u0447\u0430\u0441\u0442\u0438\u043D: ").concat(pidrozdi, "\n\n    \u0417\u0430\u043F\u0447\u0430\u0441\u0442\u0438\u043D\u0438: ").concat(zapchast, "\n\n    \u041A\u043E\u043C\u0435\u043D\u0442\u0430\u0440\u0456: ").concat(comments || 'Без коментарів', "\n  ");
   var url = "https://api.telegram.org/bot".concat(BOT_TOKEN, "/sendMessage?chat_id=").concat(CHAT_ID, "&text=").concat(encodeURIComponent(message), "&parse_mode=HTML");

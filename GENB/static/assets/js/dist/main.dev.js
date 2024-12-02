@@ -87,83 +87,13 @@ function createAdvantagesSlider(elementId, jsonData) {
       }
     }]
   });
-} // document.addEventListener('DOMContentLoaded', function () {
-//   fetch('assets/data/news.json')
-//     .then(response => response.json())
-//     .then(data => {
-//       createSlider('slider2', data);
-//     })
-//     .catch(error => console.error('Error fetching data:', error));
-// });
-// function createSlider(elementId, jsonData) {
-//   const sliderContainer = $("#" + elementId);
-//   const customPrevHtml = '<span class="custom-prev-html">Previous</span>';
-//   const customNextHtml = '<span class="custom-next-html">Next</span>';
-//   const ulElement = $("<ul></ul>");
-//   jsonData.forEach(item => {
-//     const slideElement = $(`
-//       <li>
-//         <div class="slide-top">
-//           <img src="${item.image}" alt="${item.title}">
-//         </div>
-//         <div class="title">${item.title}</div>
-//         <div class="news-text">${item.newsText}</div>
-//         <div class="author">
-//           <div class="avatar">
-//             <img src="${item.author.avatar}" alt="${item.author.name}">
-//           </div>
-//           <div class="author-data">
-//           <div class="name-author">${item.author.name}</div>
-//           <div class="news-date">${item.author.date}</div>
-//           </div>
-//           </div>
-//       </li>
-//     `);
-//     ulElement.append(slideElement);
-//   });
-//   sliderContainer.append(ulElement);
-//   ulElement.lightSlider({
-//     item: 3,
-//     controls: false,
-//     loop: true,
-//     auto: true,
-//     slideMove: 1,
-//     slideMargin: 30,
-//     pager:true,
-//     vertical:false,
-//     prevHtml: customPrevHtml,
-//     nextHtml: customNextHtml,
-//     responsive: [
-//       {
-//         breakpoint: 1200,
-//         settings: {
-//           item: 2,
-//           slideMove: 1,
-//         }
-//       },
-//       {
-//         breakpoint: 900, 
-//         settings: {
-//           item: 1,
-//           slideMove: 1,
-//         }
-//       }
-//     ]
-//   });
-// }
-// lightGallery(document.getElementById('animated-thumbnails'), {
-//     allowMediaOverlap: true,
-//     toggleThumb: true
-// });
-
+}
 
 var urlMonoBank = 'https://api.monobank.ua/bank/currency';
 var products = [];
-var usdToUahRate = 1;
-var displayedProductCount = 0; // Счётчик отображённых товаров
-
-var PRODUCTS_PER_PAGE = 12; // Количество товаров на одну "страницу"
-// Функция для получения курса валют
+var usdToUahRate = 37;
+var displayedProductCount = 0;
+var PRODUCTS_PER_PAGE = 12;
 
 function fetchCurrencyRate() {
   var cachedRate, cachedTime, now, response, data, usdToUah;
@@ -174,7 +104,7 @@ function fetchCurrencyRate() {
           _context.prev = 0;
           cachedRate = localStorage.getItem('usdToUahRate');
           cachedTime = localStorage.getItem('usdToUahRateTime');
-          now = Date.now(); // Если кэш действителен (меньше 5 минут)
+          now = Date.now();
 
           if (!(cachedRate && cachedTime && now - cachedTime < 5 * 60 * 1000)) {
             _context.next = 7;
@@ -209,8 +139,7 @@ function fetchCurrencyRate() {
           });
 
           if (usdToUah && usdToUah.rateSell) {
-            usdToUahRate = usdToUah.rateSell; // Сохраняем курс в кэш
-
+            usdToUahRate = usdToUah.rateSell;
             localStorage.setItem('usdToUahRate', usdToUahRate);
             localStorage.setItem('usdToUahRateTime', now);
           }
@@ -343,22 +272,18 @@ document.getElementById('search-form').addEventListener('submit', function _call
           return regeneratorRuntime.awrap(fetchCurrencyRate());
 
         case 3:
-          // Получаем актуальный курс валют
           query = document.getElementById('search-input').value.trim().toLowerCase();
 
           if (query) {
             filteredProducts = products.filter(function (product) {
               return product.zapchast && product.zapchast.toLowerCase().includes(query) || product.markaavto && product.markaavto.toLowerCase().includes(query) || product.model && product.model.toLowerCase().includes(query);
             });
-            displayedProductCount = 0; // Сбрасываем счётчик отображённых товаров
-
+            displayedProductCount = 0;
             displayProducts(filteredProducts);
           } else {
-            // Если поле пустое, очищаем результаты
             displayedProductCount = 0;
             displayProducts([]);
-          } // Прокрутка к результатам поиска
-
+          }
 
           resultsContainer = document.querySelector('.search-results');
 
@@ -415,4 +340,98 @@ document.querySelectorAll('.catalog-list a').forEach(function (link) {
     var pageUrl = "assets/pages/catalog-template.html?brand=".concat(brand);
     window.location.href = pageUrl;
   });
+}); // form
+
+document.addEventListener('DOMContentLoaded', function () {
+  var form = document.getElementById('feedback_form');
+  var nameFld = document.getElementById('exampleInputName');
+  var telFld = document.getElementById('exampleInputTel');
+
+  if (!form || !nameFld || !telFld) {
+    console.error('Form or fields not found!');
+    return;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = nameFld.value ? nameFld.value.trim() : '';
+    var tel = telFld.value ? telFld.value.trim() : '';
+    var errors = []; // Очистка классов ошибок
+
+    nameFld.classList.remove('is-invalid');
+    telFld.classList.remove('is-invalid');
+
+    if (name === '') {
+      errors.push("Введіть, будь ласка, Ваше ім'я");
+      nameFld.classList.add('is-invalid');
+    } else if (name.length < 2) {
+      errors.push('Ваше ім\'я занадто коротке');
+      nameFld.classList.add('is-invalid');
+    }
+
+    if (tel === '' || tel.length < 17) {
+      errors.push('Введіть, будь ласка, правильний номер телефону');
+      telFld.classList.add('is-invalid');
+    }
+
+    if (errors.length > 0) {
+      toast.error(errors.join('. '));
+      return;
+    }
+
+    var CHAT_ID = '-1002278785620';
+    var BOT_TOKEN = '8046931960:AAHhJdRaBEv_3zyB9evNFxZQlEdiz8FyWL8';
+    var message = "<b>\u0406\u043C'\u044F: </b> ".concat(name, "\r\n<b>\u0422\u0435\u043B\u0435\u0444\u043E\u043D: </b>").concat(tel);
+    var url = "https://api.telegram.org/bot".concat(BOT_TOKEN, "/sendMessage?chat_id=").concat(CHAT_ID, "&text=").concat(encodeURIComponent(message), "&parse_mode=HTML");
+    fetch(url, {
+      method: 'POST'
+    }).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      if (data.ok) {
+        nameFld.value = '';
+        telFld.value = '';
+        toast.success('Ваше повідомлення успішно надіслано.');
+      } else {
+        toast.error('Сталася помилка.');
+      }
+    })["catch"](function (error) {
+      toast.error('Помилка: ' + error.message);
+    });
+  });
+  telFld.addEventListener('input', function (e) {
+    var input = e.target.value.replace(/\D/g, '');
+    var formattedInput = '';
+
+    if (input.length > 0) {
+      formattedInput += '+38 (';
+    }
+
+    if (input.length >= 1) {
+      formattedInput += input.substring(0, 3);
+    }
+
+    if (input.length >= 4) {
+      formattedInput += ') ' + input.substring(3, 6);
+    }
+
+    if (input.length >= 7) {
+      formattedInput += '-' + input.substring(6, 8);
+    }
+
+    if (input.length >= 9) {
+      formattedInput += '-' + input.substring(8, 10);
+    }
+
+    e.target.value = formattedInput;
+  });
+  nameFld.addEventListener('input', function (e) {
+    var input = e.target.value;
+    e.target.value = input.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
+  });
+}); //copiraite
+
+document.addEventListener("DOMContentLoaded", function () {
+  var currentYear = new Date().getFullYear();
+  document.getElementById("year").textContent = currentYear;
 });

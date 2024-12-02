@@ -47,7 +47,7 @@ $(document).ready(function() {
     slideMove: 1,
     verticalHeight:500,
     slideMargin: 0,
-    speed:700
+    speed:900
         });
 });
 

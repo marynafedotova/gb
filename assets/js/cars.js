@@ -253,7 +253,7 @@ if (nameFld.classList.contains('is-invalid') || telFld.classList.contains('is-in
   return;
 }
   // Отправка данных в Telegram
-  const CHAT_ID = '836622266';
+  const CHAT_ID = '-1002485030400';
   const BOT_TOKEN = '7527794477:AAFxOk9l6CH8EccTk9at2uVM3OSyEZbrUCw';
   const message = `
 🚗 <b>Нове бронювання авто</b> 🚗\n

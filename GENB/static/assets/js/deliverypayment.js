@@ -36,19 +36,18 @@ function generateContent(data) {
   partsSection.innerHTML = `
   <div class="container">
     <div class="delivery_payment_title">Список запчастин</div>
-    <table>
-      <thead>
-        <tr>
-          <th>Позиція</th>
-          <th class="price">Сума (грн)</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${data.partsList.map(part => `<tr><td>${part.name}</td><td class="price">${part.price}</td></tr>`).join('')}
-      </tbody>
-    </table>
+    <div class="flex-table">
+      <div class="flex-table-row flex-table-header">
+        <div class="flex-table-cell">Позиція</div>
+        <div class="flex-table-cell price">Сума (грн)</div>
+      </div>
+      ${data.partsList.map(part => `
+        <div class="flex-table-row">
+          <div class="flex-table-cell">${part.name}</div>
+          <div class="flex-table-cell price">${part.price}</div>
+        </div>`).join('')}
     </div>
-  `;
+  </div>`;
   contentSection.appendChild(partsSection);
 }
 

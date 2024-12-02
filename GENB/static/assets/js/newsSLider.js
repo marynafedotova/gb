@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('Fetched data:', data);
       createNewsSlider('news_slider', data); 
     })
-    .catch(error => console.error('Error fetching news data:', error));  // Обработка ошибок
+    .catch(error => console.error('Error fetching news data:', error));
 });
 
 function createNewsSlider(elementId, jsonData) {
@@ -24,7 +24,7 @@ function createNewsSlider(elementId, jsonData) {
     const imageSlider = $(`<div class='image-gallery' id='${imageGalleryId}'></div>`);
 
     item.images.forEach(image => {
-      const imageSlide = $(`<a href="${image}" ><img src="${image}" alt="${item.title}"></a>`);
+      const imageSlide = $(`<a href="${image}" ><img data-src="${image}" alt="${item.title}" class="lazy"></a>`);
       imageSlider.append(imageSlide);
     });
 

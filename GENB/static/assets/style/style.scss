@@ -533,10 +533,11 @@ h1{
 }
 
 // news
-#news{
+#news {
   padding-bottom: 150px;
-.container{
-  text-align: center;
+
+  .container {
+    text-align: center;
 
     h2 {
       padding-top: 144px;
@@ -545,73 +546,191 @@ h1{
       position: relative;
       text-transform: uppercase;
     }
+
     #news_slider {
       height: 600px;
       margin-bottom: 30px;
 
-        li {
-          height: 550px;
-          .slide{
-            display: flex;
-            flex-direction: column;
-            align-content: stretch;
-            height: 100%;
-            .slide-top {
-              padding-bottom: 10px;
-              .image-gallery{
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap ;
-          justify-content: space-evenly;
-                a > img{
-                  width: 180px;
-                }
-              }
-            }
-            .title{
-              color: $ForestGreen;
-              font-weight: 600;
-              padding-bottom: 20px;
-            }
-            .vehicle-details{
-              text-align: left;
-              p{
-                display: flex;
-                justify-content: space-between;
+      li {
+        height: 550px;
+
+        .slide {
+          display: flex;
+          flex-direction: column;
+          align-content: stretch;
+          height: 100%;
+
+          .slide-top {
+            padding-bottom: 10px;
+
+            .image-gallery {
+              display: flex;
+              flex-direction: row;
+              flex-wrap: wrap;
+              justify-content: space-evenly;
+
+              a > img {
+                width: 180px;
               }
             }
           }
-        
-  
+
+          .title {
+            color: $ForestGreen;
+            font-weight: 600;
+            padding-bottom: 20px;
+          }
+
+          .vehicle-details {
+            text-align: left;
+
+            p {
+              display: flex;
+              justify-content: space-between;
+            }
+          }
+        }
       }
     }
-    #btn-news{
-      a{
+
+    #btn-news {
+      a {
         padding: 10px 20px;
         color: $color--porcelain;
         background-color: $ForestGreen;
         border: 1px solid $color--gray;
         border-radius: 10px;
-        &:hover{
+
+        &:hover {
           background-color: $color--porcelain;
           color: $ForestGreen;
         }
       }
-      
     }
-
   }
-  .lSSlideOuter .lightSlider > *, .lSSlideOuter .lSGallery li {
+
+  .lSSlideOuter .lightSlider > *,
+  .lSSlideOuter .lSGallery li {
     padding: 20px;
     border: 1px solid #579816;
     border-radius: 8px;
-    background-color: hsl(0,0%,29.41%);
+    background-color: hsl(0, 0%, 29.41%);
   }
-  .lSSlideOuter .lSPager.lSpg > li a{
+
+  .lSSlideOuter .lSPager.lSpg > li a {
     display: none;
   }
-  
-  
+
+  /* Медиазапросы */
+  @media (max-width: 1024px) {
+    #news_slider {
+      height: 500px;
+      li {
+        height: 450px;
+
+        .slide {
+          .image-gallery {
+            a > img {
+              width: 150px;
+            }
+          }
+        }
+      }
+    }
+    h2 {
+      font-size: 32px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding-bottom: 100px;
+
+    h2 {
+      padding-top: 100px;
+      margin-bottom: 60px;
+      font-size: 28px;
+    }
+
+    #news_slider {
+      height: 400px;
+      li {
+        height: 350px;
+
+        .slide {
+          .image-gallery {
+            a > img {
+              width: 120px;
+            }
+          }
+        }
+      }
+    }
+
+    #btn-news a {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding-bottom: 80px;
+
+    h2 {
+      font-size: 24px;
+    }
+
+    #news_slider {
+      height: 300px;
+      li {
+        height: 250px;
+
+        .slide {
+          .image-gallery {
+            flex-direction: column;
+
+            a > img {
+              width: 100px;
+            }
+          }
+        }
+      }
+    }
+
+    #btn-news a {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+  }
+
+  @media (max-width: 350px) {
+    padding-bottom: 60px;
+
+    h2 {
+      font-size: 20px;
+      padding-top: 80px;
+      margin-bottom: 40px;
+    }
+
+    #news_slider {
+      height: 250px;
+      li {
+        height: 200px;
+
+        .slide {
+          .image-gallery {
+            a > img {
+              width: 80px;
+            }
+          }
+        }
+      }
+    }
+
+    #btn-news a {
+      font-size: 10px;
+      padding: 4px 8px;
+    }
+  }
 }
 
 

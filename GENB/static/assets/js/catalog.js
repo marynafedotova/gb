@@ -1,11 +1,12 @@
 const urlMonoBank = 'https://api.monobank.ua/bank/currency';
-let usdToUahRate = 1; // Курс USD к UAH
+let usdToUahRate = 37; // Курс USD к UAH
 let currentProductIndex = 0;
 const productsPerPage = 12;
-let products = []; // Все продукты
-let searchResults = []; // Результаты поиска
-let searchProductIndex = 0; // Индекс текущего отображаемого продукта в поиске
-const productsPerSearchPage = 12; // Количество продуктов на одной странице поиска
+let products = []; 
+let searchResults = []; 
+let searchProductIndex = 0; 
+const productsPerSearchPage = 12;
+
 // Функция для получения курса валют с кешированием
 async function fetchCurrencyRate() {
   const cachedRate = localStorage.getItem('usdToUahRate');
@@ -43,7 +44,7 @@ function displayProducts(filteredProducts = []) {
   }
 
   if (isSearch) {
-    productContainer.innerHTML = ''; // Очистка результатов поиска
+    productContainer.innerHTML = '';
   }
 
   const productsToDisplay = isSearch
@@ -54,7 +55,7 @@ function displayProducts(filteredProducts = []) {
     const priceInUah = Math.ceil(product.zena * usdToUahRate);
     const productCard = `
       <div class="product-card">
-        <img src="${product.photo.split(',')[0].trim()}" alt="${product.zapchast}">
+        <img src="${product.photo.split(',')[0].trim()}" alt="${product.zapchast} class="lazy">
         <h3>Артикул: ${product.ID_EXT}</h3>
         <h3>Назва: ${product.zapchast}</h3>
         <p>Ціна: ${product.zena} ${product.valyuta} / ${priceInUah} грн</p>
@@ -206,6 +207,16 @@ async function initializeCatalog() {
 // Инициализация
 initializeCatalog();
 
+document.addEventListener('click', function (event) {
+  if (event.target.classList.contains('add-to-cart')) {
+      const item = {
+          id: event.target.dataset.id,
+          price: event.target.dataset.price,
+          quantity: 1
+      };
+      addToCart(item); // Додаємо товар до кошика
+  }
+});
 
 
 //accordion
@@ -423,7 +434,7 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 })
 //lazy
 
-// var lazyLoadInstance = new LazyLoad({});
+var lazyLoadInstance = new LazyLoad({});
 
 // wow
 // new WOW().init();

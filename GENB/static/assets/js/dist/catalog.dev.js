@@ -9,18 +9,14 @@ function _iterableToArrayLimit(arr, i) { if (!(Symbol.iterator in Object(arr) ||
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var urlMonoBank = 'https://api.monobank.ua/bank/currency';
-var usdToUahRate = 1; // Курс USD к UAH
+var usdToUahRate = 37; // Курс USD к UAH
 
 var currentProductIndex = 0;
 var productsPerPage = 12;
-var products = []; // Все продукты
-
-var searchResults = []; // Результаты поиска
-
-var searchProductIndex = 0; // Индекс текущего отображаемого продукта в поиске
-
-var productsPerSearchPage = 12; // Количество продуктов на одной странице поиска
-// Функция для получения курса валют с кешированием
+var products = [];
+var searchResults = [];
+var searchProductIndex = 0;
+var productsPerSearchPage = 12; // Функция для получения курса валют с кешированием
 
 function fetchCurrencyRate() {
   var cachedRate, cachedTime, now, response, data, usdToUah;
@@ -99,13 +95,13 @@ function displayProducts() {
   }
 
   if (isSearch) {
-    productContainer.innerHTML = ''; // Очистка результатов поиска
+    productContainer.innerHTML = '';
   }
 
   var productsToDisplay = isSearch ? filteredProducts : products.slice(currentProductIndex, currentProductIndex + productsPerPage);
   productsToDisplay.forEach(function (product) {
     var priceInUah = Math.ceil(product.zena * usdToUahRate);
-    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\">\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
+    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, " class=\"lazy\">\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
     productContainer.insertAdjacentHTML('beforeend', productCard);
   }); // Обновляем индекс для каталога
 
@@ -287,7 +283,17 @@ function initializeCatalog() {
 } // Инициализация
 
 
-initializeCatalog(); //accordion
+initializeCatalog();
+document.addEventListener('click', function (event) {
+  if (event.target.classList.contains('add-to-cart')) {
+    var item = {
+      id: event.target.dataset.id,
+      price: event.target.dataset.price,
+      quantity: 1
+    };
+    addToCart(item); // Додаємо товар до кошика
+  }
+}); //accordion
 
 fetch(dataJsonUrl).then(function (response) {
   return response.json();
@@ -504,8 +510,8 @@ document.getElementById('hamb-btn').addEventListener('click', function () {
 document.getElementById('hamb-btn-mobile').addEventListener('click', function () {
   document.body.classList.toggle('open-mobile-menu');
 }); //lazy
-// var lazyLoadInstance = new LazyLoad({});
-// wow
+
+var lazyLoadInstance = new LazyLoad({}); // wow
 // new WOW().init();
 //scroll
 // document.getElementById('scrollButton').addEventListener('click', function(event) {

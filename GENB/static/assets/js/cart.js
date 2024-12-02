@@ -3,8 +3,7 @@ function displayCartItems() {
   const cartItemsContainer = document.getElementById('cart-items');
   const cart = JSON.parse(sessionStorage.getItem('cart')) || [];
 
-  cartItemsContainer.innerHTML = ''; // Очистка содержимого перед рендером
-
+  cartItemsContainer.innerHTML = ''; 
   if (cart.length === 0) {
       cartItemsContainer.innerHTML = '<p>Корзина пуста.</p>';
       return;
@@ -13,7 +12,6 @@ function displayCartItems() {
   let totalPrice = 0;
 
   cart.forEach(item => {
-      // Создаем HTML для каждого товара
       const itemElement = document.createElement('div');
       itemElement.classList.add('cart-item');
       itemElement.innerHTML = `
@@ -23,14 +21,11 @@ function displayCartItems() {
           <button class="remove-from-cart" data-id="${item.id}">Удалить</button>
       `;
 
-      // Добавляем товар в контейнер корзины
       cartItemsContainer.appendChild(itemElement);
 
-      // Рассчитываем итоговую сумму
       totalPrice += item.price * item.quantity;
   });
 
-  // Отображаем итоговую сумму
   document.getElementById('total-price').textContent = totalPrice;
 }
 

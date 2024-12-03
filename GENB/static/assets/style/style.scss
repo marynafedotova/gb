@@ -337,24 +337,16 @@ li{
   .account{
     margin-left: 0px; 
   }
-  .search-container .search-form-m #search-input-m {
-    border-radius: 8px;
-    border: 1px solid $ForestGreen;
-  }
-  .search-container #search-btn-m {
-    width: 40px;
-    height: 40px;
-    background-color: $ForestGreen;
-    border: none;
-    border-radius: 4%;
-    img{
-      width: 25px;
-      height: 25px;
-    }
+  .search-container{
+    padding: 10px 10px 10px 20px;
   }
   .search-container #search-form-m{
     display: flex;
     align-content: center;
+    height: 25px;
+    #search-input-m{
+      padding-left: 10px;
+    }
   }
 }
   a {
@@ -2306,7 +2298,7 @@ h3{
 }
 // rwd
 
-@media (max-width: 1500px) {
+@media (max-width: 1400px) {
   
   .hamburger-wrap {
     display: block;
@@ -2315,62 +2307,59 @@ h3{
   header .nav-container nav ul {
     display: none;
   }
-
+  header .header-container .tel ul li {
+    gap: 10px;
+    padding: 5px;
+  }
   .menu-panel {
     // width: 33%;
     height: 100%;
-
+  }
+  header .header-container{
+    justify-content: center;
+    padding-bottom: 0;
   }
   header .header-container .logo img {
     display: none;
   }
-}
-@media screen and (max-width: 1020px) {
-
-}
-@media (max-width: 800px) {
-  header .header-container .tel ul li{
-    gap: 10px;
-    a{
-      font-size: 1rem;
-    }
-  }
-  header .header-container{
-    justify-content: space-around;
-    padding-bottom: 0;
-  }
-
-  header .nav-container {
+  header .nav-container{
     padding-top: 0;
   }
 }
-
-@media (max-width: 480px) {
-  header {
-    min-height: 44px;
-    .header-container {
-      padding-bottom: 10px;
-
-      .tel ul li a {
-        font-size: 0.9rem;
-      }
-
-      .social-link ul li img {
-        width: 24px;
-      }
-
-      .logo img {
-        max-width: 100px;
-      }
-    }
-
-    .nav-container {
-      padding-top: 5px;
-
-      nav ul li a {
-        font-size: 0.9rem;
-      }
-    }
+@media screen and (max-width: 1220px) {
+  footer .container .schedule .work-time .time {
+    font-size: 0.9rem;
+}
+}
+@media (max-width: 860px) {
+  .footer-menu .container .footer-links{
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  header .header-container .tel ul li a {
+    font-size: 1rem;
+  }
+  header .header-container .tel ul{
+    text-align: center;
+  }
+}
+@media (max-width: 580px) {
+  footer .container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 470px) {
+  header .header-container .tel ul li a {
+    font-size: 0.9rem;
+  }
+  header .header-container .social-link ul li img {
+    width: 20px;
+    aspect-ratio: 1;
+}
+.hamburger{
+  padding: 5px;
   }
 }
 

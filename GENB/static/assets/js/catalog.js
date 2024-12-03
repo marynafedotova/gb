@@ -130,8 +130,8 @@ function searchProducts(query) {
     (product.markaavto && product.markaavto.toLowerCase().includes(lowerCaseQuery)) ||
     (product.model && product.model.toLowerCase().includes(lowerCaseQuery))
   );
-  searchProductIndex = 0; // Сброс индекса поиска
-  displaySearchResults(searchResults); // Отображаем результаты поиска
+  searchProductIndex = 0; 
+  displaySearchResults(searchResults); 
 }
 
 // Обработчик для кнопки "Загрузить больше"
@@ -140,14 +140,14 @@ document.querySelector('.load-more').addEventListener('click', function(event) {
   const query = document.getElementById('search-input').value.trim();
   if (query) {
     searchProducts(query);
-    this.style.display = 'none'; // Скрыть кнопку после загрузки
+    this.style.display = 'none'; 
   }
 });
 
 // Обработчик формы поиска
 document.getElementById('search-form').addEventListener('submit', async function(event) {
   event.preventDefault();
-  await fetchCurrencyRate(); // Получаем актуальный курс валют
+  await fetchCurrencyRate(); 
 
   const query = document.getElementById('search-input').value.trim().toLowerCase();
   if (query) {
@@ -157,15 +157,15 @@ document.getElementById('search-form').addEventListener('submit', async function
       (product.model && product.model.toLowerCase().includes(query))
     );
 
-    searchProductIndex = 0; // Сбрасываем индекс
-    document.querySelector('.search-results').innerHTML = ''; // Очищаем предыдущие результаты
-    displaySearchResults(searchResults); // Отображаем первую страницу результатов
+    searchProductIndex = 0; 
+    document.querySelector('.search-results').innerHTML = ''; 
+    displaySearchResults(searchResults); 
   } else {
-    // Если поле пустое, очищаем результаты поиска
+   
     searchResults = [];
     document.querySelector('.search-results').innerHTML = '<p>Ничего не найдено.</p>';
   }
-    // Прокрутка к результатам поиска
+    
     const resultsContainer = document.querySelector('.search-results');
     if (resultsContainer) {
       resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -173,12 +173,12 @@ document.getElementById('search-form').addEventListener('submit', async function
 });
 document.querySelector('.load-more-search').addEventListener('click', function(event) {
   event.preventDefault();
-  displaySearchResults(searchResults); // Загружаем следующую порцию результатов
+  displaySearchResults(searchResults); 
 });
 
 document.querySelector('.load-more').addEventListener('click', function(event) {
   event.preventDefault();
-  displayProducts(); // Загружаем следующую порцию товаров для каталога
+  displayProducts();
 });
 
 

@@ -209,7 +209,7 @@ initializeCatalog();
 
 
 //accordion
-fetch('..data/data_ukr.json')
+fetch('../data/data_ukr.json')
     .then(response => response.json())
     .then(data => {
         const cars = data.Sheet1

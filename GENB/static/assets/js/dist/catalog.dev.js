@@ -293,16 +293,19 @@ fetch(dataJsonUrl).then(function (response) {
   return response.json();
 }).then(function (data) {
   var cars = data.Sheet1.filter(function (item) {
-    return item.markaavto && item.model;
+    return item.markaavto && item.model && item.god;
   }) // Исключаем записи с null или пустыми значениями
   .map(function (item) {
     return {
-      markaavto: item.markaavto,
-      model: item.model,
-      god: item.god // Добавляем год, чтобы передать его в ссылку
+      markaavto: item.markaavto.trim(),
+      // Убираем пробелы
+      model: item.model.trim(),
+      // Убираем пробелы
+      god: item.god // Год должен быть числом
 
     };
-  });
+  }); // Группируем данные по маркам
+
   var carAccordionData = cars.reduce(function (acc, car) {
     if (!acc[car.markaavto]) {
       acc[car.markaavto] = new Set();
@@ -315,6 +318,7 @@ fetch(dataJsonUrl).then(function (response) {
     return acc;
   }, {});
   var accordionContainer = document.getElementById('carAccordion');
+  accordionContainer.innerHTML = ''; // Очищаем контейнер перед добавлением элементов
 
   var _loop = function _loop() {
     var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -339,10 +343,10 @@ fetch(dataJsonUrl).then(function (response) {
           model = _JSON$parse.model,
           god = _JSON$parse.god;
 
-      if (model) {
-        // Пропускаем, если модель null или пустая
+      if (model && god) {
+        // Пропускаем, если модель или год null или пустые
         var modelItem = document.createElement('p');
-        modelItem.textContent = model;
+        modelItem.textContent = "".concat(model, " (").concat(god, ")");
         modelItem.classList.add('model-item');
         modelItem.addEventListener('click', function () {
           window.location.href = "./car-page.html?make=".concat(make, "&model=").concat(model, "&year=").concat(god);
@@ -361,7 +365,7 @@ fetch(dataJsonUrl).then(function (response) {
   }
 })["catch"](function (error) {
   return console.error('Помилка завантаження даних:', error);
-}); //cars
+}); //cars card
 
 fetch('../data/data_ukr.json').then(function (response) {
   return response.json();

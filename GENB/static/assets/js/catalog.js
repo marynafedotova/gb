@@ -224,13 +224,14 @@ fetch(dataJsonUrl)
     .then(response => response.json())
     .then(data => {
         const cars = data.Sheet1
-            .filter(item => item.markaavto && item.model) // Исключаем записи с null или пустыми значениями
+            .filter(item => item.markaavto && item.model && item.god) // Исключаем записи с null или пустыми значениями
             .map(item => ({
-                markaavto: item.markaavto,
-                model: item.model,
-                god: item.god // Добавляем год, чтобы передать его в ссылку
+                markaavto: item.markaavto.trim(), // Убираем пробелы
+                model: item.model.trim(),        // Убираем пробелы
+                god: item.god                    // Год должен быть числом
             }));
 
+        // Группируем данные по маркам
         const carAccordionData = cars.reduce((acc, car) => {
             if (!acc[car.markaavto]) {
                 acc[car.markaavto] = new Set();
@@ -240,6 +241,8 @@ fetch(dataJsonUrl)
         }, {});
 
         const accordionContainer = document.getElementById('carAccordion');
+        accordionContainer.innerHTML = ''; // Очищаем контейнер перед добавлением элементов
+
         for (const [make, models] of Object.entries(carAccordionData)) {
             if (!make) continue; // Пропускаем, если марка null или пустая
 
@@ -258,9 +261,9 @@ fetch(dataJsonUrl)
             modelList.classList.add('accordion-content');
             models.forEach(modelData => {
                 const { model, god } = JSON.parse(modelData);
-                if (model) { // Пропускаем, если модель null или пустая
+                if (model && god) { // Пропускаем, если модель или год null или пустые
                     const modelItem = document.createElement('p');
-                    modelItem.textContent = model;
+                    modelItem.textContent = `${model} (${god})`;
                     modelItem.classList.add('model-item');
                     modelItem.addEventListener('click', () => {
                         window.location.href = `./car-page.html?make=${make}&model=${model}&year=${god}`;
@@ -275,7 +278,7 @@ fetch(dataJsonUrl)
     })
     .catch(error => console.error('Помилка завантаження даних:', error));
 
-//cars
+//cars card
 fetch('../data/data_ukr.json')
     .then(response => response.json())
     .then(data => {

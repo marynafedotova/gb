@@ -41,35 +41,12 @@
     <nav>
       <ul class="mobile-menu">
                 <li><a href="catalog_ru.html" target="_parent">Каталог запчастей</a></li>
-
         <li><a href="pre-order_ru.html" target="_parent">Авто в пути</a></li>
-
-
            <li><a href="warrantyreturns_ru.html" target="_parent">Гарантия и возврат</a></li>
-
-
-
         <li><a href="deliverypayment_ru.html" target="_parent">Доставка и оплата </a></li>
-
-
-
-
         <li><a href="contacts_ru.html" target="_parent">Контакты</a></li>
-
-
-
-
         <li><a href="abuotus_ru.html" target="_parent">О нас</a></li>
-
-
-
-
         <li><a href="news_ru.html" target="_parent">Статьи и новости</a></li>
-
-
-
-
-
         <li>
           <div class="account">
             <ul>
@@ -80,8 +57,7 @@
           <div class="search-container">
             <form id="search-form-m">
               <input type="text" id="search-input-m" placeholder="Пошук..." name="search">
-              <button id="search-btn-m" type="submit"><img src="../img/search.svg
-"
+              <button id="search-btn-m" type="submit"><img src="../img/search.svg"
                 alt=""></button>
             </form>
           </div>
@@ -93,7 +69,6 @@
     <header>
       <div class="header-container">
         <div class="logo"><a href="../../index_ru.html"><img src="../img/logo.svg" alt="logo"></a>
-
         </div>
         <div class="tel">
           <ul>
@@ -147,46 +122,22 @@
               </ul>
             </li>
             <li><a href="pre-order_ru.html" target="_parent">Авто в пути</a></li>
-
-
                <li><a href="warrantyreturns_ru.html" target="_parent">Гарантия и возврат</a></li>
-
-
-
             <li><a href="deliverypayment_ru.html" target="_parent">Доставка и оплата </a></li>
-
-
-
-
             <li><a href="contacts_ru.html" target="_parent">Контакты</a></li>
-
-
-
-
             <li><a href="abuotus_ru.html" target="_parent">О нас</a></li>
-
-
-
-
-            <li><a href="news_ru.html" target="_parent">Статьи и новости</a></li>
-
-
-
-
-
+           <li><a href="news_ru.html" target="_parent">Статьи и новости</a></li>
             <li>
               <div class="search-container">
                 <form id="search-form">
                   <input type="text" id="search-input" placeholder="Пошук..." name="search">
-                  <button id="search-btn" type="submit"><img src="../img/search.svg
-"
+                  <button id="search-btn" type="submit"><img src="../img/search.svg"
                       alt=""></button>
                 </form>
               </div>
             </li>
           </ul>
         </nav>
-
         <div class="hamburger-wrap">
           <button id="hamb-btn" class="hamburger hamburger--squeeze" type="button">
             <span class="hamburger-box">
@@ -194,7 +145,6 @@
             </span>
           </button>
         </div>
-
       </div>
     </header>
     <main>
@@ -202,30 +152,30 @@
         <div class="container">
           <div class="search-results"></div> 
           <div class="btn-res">
-            <a href="#" class="load-more-search" style="display: none;">Завантажити більше</a>
+            <a href="#" class="load-more-search" style="display: none;">Загрузить больше</a>
           </div>
         </div>
       </section>
       <div class="container">
-        <h1>Деталі автомобіля</h1>
+        <h1>Детали автомобиля</h1>
         <div id="car-info"></div> <!-- Здесь будет отображена информация об автомобиле -->
 
         <div id="tabs">
           <!-- Заголовки вкладок -->
           <ul id="tab-titles">
-            <li><a href="#interior">Інтер'єр / салон</a></li>
-            <li><a href="#engine">Двигун</a></li>
+            <li><a href="#interior">Интерьер / салон</a></li>
+            <li><a href="#engine">Двигатель</a></li>
             <li><a href="#body">Кузов</a></li>
-            <li><a href="#electronics">Електрика</a></li>
-            <li><a href="#parts">Запчастини ІНШІ</a></li>
-            <li><a href="#brake-system">Гальмівна система</a></li>
-            <li><a href="#suspension">Підвіска та рульове</a></li>
-            <li><a href="#doors">Двері</a></li>
-            <li><a href="#fasteners">Кріплення</a></li>
-            <li><a href="#transmission">Трансмісія</a></li>
+            <li><a href="#electronics">Электрика</a></li>
+            <li><a href="#parts">Запчасти ПРОЧИЕ</a></li>
+            <li><a href="#brake-system">Тормозная система</a></li>
+            <li><a href="#suspension">Подвеска и рулевое</a></li>
+            <li><a href="#doors">Двери</a></li>
+            <li><a href="#fasteners">Крепеж</a></li>
+            <li><a href="#transmission">Трансмиссия</a></li>
             <li><a href="#wheels">Колеса</a></li>
             <li><a href="#trunk-lock">Замок багажника</a></li>
-            <li><a href="#tire">ГУМА</a></li>
+            <li><a href="#tire">ШИНА</a></li>
           </ul>
         
           <!-- Контент вкладок -->
@@ -249,15 +199,14 @@
       <div class="page-overlay" style="display: none;"></div> <!-- Затемняющий фон -->
       <div id="cartModal" class="modal hidden">
         <div class="modal-content">
-          <h3>Товар доданий у кошик!</h3>
-          <p>Ви бажаєте продовжити покупки або оформити замовлення.</p>
+          <h3>Товар добавлен в корзину!</h3>
+          <p>Вы хотите продолжить покупки или оформить заказ?</p>
           <div class="modal-buttons">
-            <button onclick="closeCartModal()">Продовжити покупки</button>
-            <button onclick="proceedToCheckout()">Оформити замовлення</button>
+            <button onclick="closeCartModal()">Продолжить покупки</button>
+            <button onclick="proceedToCheckout()">Оформить заказ</button>
           </div>
         </div>
       </div>
-
     </main>
     <footer>
       <div class="container">

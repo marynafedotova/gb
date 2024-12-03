@@ -453,8 +453,9 @@ h1{
             font-weight: 600;
             color: $color--mine-shaft;
             background-color: $color--porcelain;
-            &:hover{
+            option:hover{
               border: 1px solid $black;
+              background-color: #7E5AFF;
             }
             &:focus{
               background-color: $ForestGreen;
@@ -1762,8 +1763,8 @@ width: 100%;
           border: 1px solid $ForestGreen;
           border-radius: 8px;
           margin-bottom: 22px;
-          height: 100%;
           width: 24%;
+          aspect-ratio: 1;
           padding: 16px;
           display: flex;
           flex-direction: column;

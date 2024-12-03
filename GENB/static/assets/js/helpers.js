@@ -22,7 +22,7 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 })
 //lazy
 
-// var lazyLoadInstance = new LazyLoad({});
+//  var lazyLoadInstance = new LazyLoad({});
 
 //  wow
 new WOW().init();
@@ -303,3 +303,11 @@ async function initialize() {
 // Запуск
 initialize();
 
+// document.querySelectorAll('.specialisation-list a').forEach(link => {
+//   link.addEventListener('click', function (event) {
+//     event.preventDefault();
+//      const brand = this.querySelector('img').alt.toLowerCase();
+//      const pageUrl = `catalog-template.html?brand=${brand}`;
+//      window.location.href = pageUrl;
+//   });
+// });

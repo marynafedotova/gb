@@ -22,7 +22,7 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 })
 //lazy
 
-// var lazyLoadInstance = new LazyLoad({});
+ var lazyLoadInstance = new LazyLoad({});
 
 // wow
 // new WOW().init();
@@ -36,18 +36,18 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 //     behavior: 'smooth'
 //   });
 // });
+
 //baner slider
 
 $(document).ready(function() {
   $('#baner').lightSlider({
     item: 1,
-    controls: true,
+    controls: false,
     loop: true,
     auto: true,
     slideMove: 1,
-    verticalHeight:500,
     slideMargin: 0,
-    speed:900
+    speed: 900
         });
 });
 
@@ -68,7 +68,7 @@ function createAdvantagesSlider(elementId, jsonData) {
     const slideElement = $(`
       <li>
       <div class="adventages-slide">
-        <img src="${item.image}" alt="">
+        <img data-src="${item.image}" alt="" class="lazy">
         <div class="adventages-text">${item.text}</div>
       </li>
       </div>

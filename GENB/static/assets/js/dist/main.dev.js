@@ -19,8 +19,8 @@ document.getElementById('hamb-btn').addEventListener('click', function () {
 document.getElementById('hamb-btn-mobile').addEventListener('click', function () {
   document.body.classList.toggle('open-mobile-menu');
 }); //lazy
-// var lazyLoadInstance = new LazyLoad({});
-// wow
+
+var lazyLoadInstance = new LazyLoad({}); // wow
 // new WOW().init();
 //scroll
 // document.getElementById('scrollButton').addEventListener('click', function(event) {
@@ -37,11 +37,10 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 $(document).ready(function () {
   $('#baner').lightSlider({
     item: 1,
-    controls: true,
+    controls: false,
     loop: true,
     auto: true,
     slideMove: 1,
-    verticalHeight: 500,
     slideMargin: 0,
     speed: 900
   });
@@ -61,7 +60,7 @@ function createAdvantagesSlider(elementId, jsonData) {
   var sliderContainer = $("#" + elementId);
   var ulElement = $("<ul></ul>");
   jsonData.forEach(function (item) {
-    var slideElement = $("\n      <li>\n      <div class=\"adventages-slide\">\n        <img src=\"".concat(item.image, "\" alt=\"\">\n        <div class=\"adventages-text\">").concat(item.text, "</div>\n      </li>\n      </div>\n    "));
+    var slideElement = $("\n      <li>\n      <div class=\"adventages-slide\">\n        <img data-src=\"".concat(item.image, "\" alt=\"\" class=\"lazy\">\n        <div class=\"adventages-text\">").concat(item.text, "</div>\n      </li>\n      </div>\n    "));
     ulElement.append(slideElement);
   });
   sliderContainer.append(ulElement);

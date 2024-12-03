@@ -44,9 +44,9 @@ function generateContent(data) {
   }).join(''), "</ul>\n  </div>");
   contentSection.appendChild(workSchedule);
   var partsSection = document.createElement('div');
-  partsSection.innerHTML = "\n  <div class=\"container\">\n    <div class=\"delivery_payment_title\">\u0421\u043F\u0438\u0441\u043E\u043A \u0437\u0430\u043F\u0447\u0430\u0441\u0442\u0438\u043D</div>\n    <table>\n      <thead>\n        <tr>\n          <th>\u041F\u043E\u0437\u0438\u0446\u0456\u044F</th>\n          <th class=\"price\">\u0421\u0443\u043C\u0430 (\u0433\u0440\u043D)</th>\n        </tr>\n      </thead>\n      <tbody>\n        ".concat(data.partsList.map(function (part) {
-    return "<tr><td>".concat(part.name, "</td><td class=\"price\">").concat(part.price, "</td></tr>");
-  }).join(''), "\n      </tbody>\n    </table>\n    </div>\n  ");
+  partsSection.innerHTML = "\n  <div class=\"container\">\n    <div class=\"delivery_payment_title\">\u0421\u043F\u0438\u0441\u043E\u043A \u0437\u0430\u043F\u0447\u0430\u0441\u0442\u0438\u043D</div>\n    <div class=\"flex-table\">\n      <div class=\"flex-table-row flex-table-header\">\n        <div class=\"flex-table-cell\">\u041F\u043E\u0437\u0438\u0446\u0456\u044F</div>\n        <div class=\"flex-table-cell price\">\u0421\u0443\u043C\u0430 (\u0433\u0440\u043D)</div>\n      </div>\n      ".concat(data.partsList.map(function (part) {
+    return "\n        <div class=\"flex-table-row\">\n          <div class=\"flex-table-cell\">".concat(part.name, "</div>\n          <div class=\"flex-table-cell price\">").concat(part.price, "</div>\n        </div>");
+  }).join(''), "\n    </div>\n  </div>");
   contentSection.appendChild(partsSection);
 }
 

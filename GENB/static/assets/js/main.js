@@ -53,7 +53,7 @@ $(document).ready(function() {
 
 //advantages slider
 document.addEventListener('DOMContentLoaded', function () {
-  fetch('assets/data/advantages.json')
+  fetch(dataJsonAdv)
     .then(response => response.json())
     .then(data => {
       createAdvantagesSlider('advantages_slider', data);

@@ -212,29 +212,36 @@ initializeCatalog();
 fetch('../data/data_ukr.json')
     .then(response => response.json())
     .then(data => {
-        const cars = data.Sheet1
-            .filter(item => item.markaavto && item.model && item.god) // Исключаем записи с null или пустыми значениями
-            .map(item => ({
-                markaavto: item.markaavto.trim(), // Убираем пробелы
-                model: item.model.trim(),        // Убираем пробелы
-                god: item.god                    // Год должен быть числом
-            }));
+        const carAccordionContainer = document.getElementById('carAccordion');
+        const uniqueCars = new Set();
 
-        // Группируем данные по маркам
-        const carAccordionData = cars.reduce((acc, car) => {
-            if (!acc[car.markaavto]) {
-                acc[car.markaavto] = new Set();
+        // Группировка данных по марке
+        const carAccordionData = data.Sheet1.reduce((acc, car) => {
+            // Проверяем, что все ключевые поля существуют и корректны
+            if (car.markaavto?.trim() && car.model?.trim() && car.god) {
+                const uniqueKey = `${car.markaavto}-${car.model}-${car.god}`;
+                
+                // Исключаем дубликаты
+                if (!uniqueCars.has(uniqueKey)) {
+                    uniqueCars.add(uniqueKey);
+                    
+                    if (!acc[car.markaavto]) {
+                        acc[car.markaavto] = [];
+                    }
+                    acc[car.markaavto].push({
+                        model: car.model.trim(),
+                        god: car.god,
+                    });
+                }
             }
-            acc[car.markaavto].add(JSON.stringify({ model: car.model, god: car.god }));
             return acc;
         }, {});
 
-        const accordionContainer = document.getElementById('carAccordion');
-        accordionContainer.innerHTML = ''; // Очищаем контейнер перед добавлением элементов
+        // Очистка контейнера перед добавлением новых данных
+        carAccordionContainer.innerHTML = '';
 
-        for (const [make, models] of Object.entries(carAccordionData)) {
-            if (!make) continue; // Пропускаем, если марка null или пустая
-
+        // Создание аккордеона
+        Object.entries(carAccordionData).forEach(([make, models]) => {
             const makeDiv = document.createElement('div');
             makeDiv.classList.add('accordion-item');
 
@@ -248,24 +255,29 @@ fetch('../data/data_ukr.json')
 
             const modelList = document.createElement('div');
             modelList.classList.add('accordion-content');
-            models.forEach(modelData => {
-                const { model, god } = JSON.parse(modelData);
-                if (model && god) { // Пропускаем, если модель или год null или пустые
+
+            models.forEach(({ model, god }) => {
+                // Проверяем, что данные корректны
+                if (model && god) {
                     const modelItem = document.createElement('p');
                     modelItem.textContent = `${model} (${god})`;
                     modelItem.classList.add('model-item');
+
+                    // Переход по клику
                     modelItem.addEventListener('click', () => {
                         window.location.href = `./car-page.html?make=${make}&model=${model}&year=${god}`;
                     });
+
                     modelList.appendChild(modelItem);
                 }
             });
 
             makeDiv.appendChild(modelList);
-            accordionContainer.appendChild(makeDiv);
-        }
+            carAccordionContainer.appendChild(makeDiv);
+        });
     })
     .catch(error => console.error('Помилка завантаження даних:', error));
+
 
 
 //cars

@@ -212,39 +212,40 @@ initializeCatalog();
 fetch('../data/data_ukr.json')
     .then(response => response.json())
     .then(data => {
-        // Фильтрация данных: исключаем записи, где нет марки, модели или года
         const cars = data.Sheet1
-            .filter(item => item.markaavto?.trim() && item.model?.trim() && item.god)
+            .filter(item => {
+                // Проверяем, чтобы все ключевые поля были заполнены
+                return (
+                    item.markaavto?.trim() && // Марка не пустая
+                    item.model?.trim() &&    // Модель не пустая
+                    item.god &&              // Год задан
+                    item.pictures?.trim()    // Ссылка на изображение не пустая
+                );
+            })
             .map(item => ({
                 markaavto: item.markaavto.trim(),
                 model: item.model.trim(),
-                god: item.god
+                god: item.god,
+                pictures: item.pictures.trim()
             }));
 
-        // Группировка по маркам автомобилей
         const carAccordionData = cars.reduce((acc, car) => {
-            if (!car.markaavto) return acc; // Пропускаем пустые марки
-
             if (!acc[car.markaavto]) {
                 acc[car.markaavto] = new Set();
             }
-            // Добавляем уникальную комбинацию модели и года
-            acc[car.markaavto].add(JSON.stringify({ model: car.model, god: car.god }));
+            acc[car.markaavto].add(JSON.stringify({ model: car.model, god: car.god, pictures: car.pictures }));
             return acc;
         }, {});
 
-        // Очищаем контейнер аккордеона
         const accordionContainer = document.getElementById('carAccordion');
-        accordionContainer.innerHTML = '';
+        accordionContainer.innerHTML = ''; // Очищаем контейнер перед заполнением
 
-        // Создание аккордеона
         for (const [make, models] of Object.entries(carAccordionData)) {
-            if (!make.trim() || models.size === 0) continue; // Пропускаем пустые марки или без моделей
+            if (!make.trim()) continue; // Пропускаем, если марка пустая
 
             const makeDiv = document.createElement('div');
             makeDiv.classList.add('accordion-item');
 
-            // Заголовок марки
             const makeHeader = document.createElement('h3');
             makeHeader.textContent = make;
             makeHeader.classList.add('accordion-header');
@@ -253,12 +254,12 @@ fetch('../data/data_ukr.json')
             });
             makeDiv.appendChild(makeHeader);
 
-            // Список моделей
             const modelList = document.createElement('div');
             modelList.classList.add('accordion-content');
             models.forEach(modelData => {
-                const { model, god } = JSON.parse(modelData);
-                if (model && god) { // Пропускаем, если модель или год пустые
+                const { model, god, pictures } = JSON.parse(modelData);
+
+                if (model && god && pictures) {
                     const modelItem = document.createElement('p');
                     modelItem.textContent = `${model} (${god})`;
                     modelItem.classList.add('model-item');
@@ -266,6 +267,8 @@ fetch('../data/data_ukr.json')
                         window.location.href = `./car-page.html?make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}&year=${god}`;
                     });
                     modelList.appendChild(modelItem);
+                } else {
+                    console.warn('Пропущен объект с некорректными данными:', { make, model, god, pictures });
                 }
             });
 
@@ -274,6 +277,7 @@ fetch('../data/data_ukr.json')
         }
     })
     .catch(error => console.error('Помилка завантаження даних:', error));
+
 
 
 //cars

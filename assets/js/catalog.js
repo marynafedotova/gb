@@ -209,7 +209,7 @@ initializeCatalog();
 
 
 //accordion
-fetch(dataJsonUrl)
+fetch('../data/data_ukr.json')
     .then(response => response.json())
     .then(data => {
         // Фильтрация данных: исключаем записи, где нет марки, модели или года

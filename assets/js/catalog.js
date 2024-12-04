@@ -209,18 +209,24 @@ initializeCatalog();
 
 
 //accordion
-fetch('../data/data_ukr.json')
+fetch(dataJsonUrl)
     .then(response => response.json())
     .then(data => {
         const cars = data.Sheet1
             .filter(item => {
-                // Проверяем, чтобы все ключевые поля были заполнены
-                return (
-                    item.markaavto?.trim() && // Марка не пустая
-                    item.model?.trim() &&    // Модель не пустая
-                    item.god &&              // Год задан
-                    item.pictures?.trim()    // Ссылка на изображение не пустая
-                );
+                // Исключаем записи, где ключевые поля отсутствуют или пустые
+                const markaavto = item.markaavto?.trim();
+                const model = item.model?.trim();
+                const god = item.god;
+                const pictures = item.pictures?.trim();
+
+                // Проверяем валидность всех ключевых полей
+                if (!markaavto || !model || !god || !pictures) {
+                    console.warn('Пропущена запись с некорректными данными:', item);
+                    return false; // Исключаем запись
+                }
+
+                return true; // Включаем запись
             })
             .map(item => ({
                 markaavto: item.markaavto.trim(),

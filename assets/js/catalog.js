@@ -214,40 +214,36 @@ fetch('../data/data_ukr.json')
     .then(data => {
         const cars = data.Sheet1
             .filter(item => {
-                // Исключаем записи, где ключевые поля отсутствуют или пустые
                 const markaavto = item.markaavto?.trim();
                 const model = item.model?.trim();
                 const god = item.god;
-                const pictures = item.pictures?.trim();
 
-                // Проверяем валидность всех ключевых полей
-                if (!markaavto || !model || !god || !pictures) {
+                if (!markaavto || !model || !god) {
                     console.warn('Пропущена запись с некорректными данными:', item);
-                    return false; // Исключаем запись
+                    return false;
                 }
 
-                return true; // Включаем запись
+                return true;
             })
             .map(item => ({
                 markaavto: item.markaavto.trim(),
                 model: item.model.trim(),
-                god: item.god,
-                pictures: item.pictures.trim()
+                god: item.god
             }));
 
         const carAccordionData = cars.reduce((acc, car) => {
             if (!acc[car.markaavto]) {
                 acc[car.markaavto] = new Set();
             }
-            acc[car.markaavto].add(JSON.stringify({ model: car.model, god: car.god, pictures: car.pictures }));
+            acc[car.markaavto].add(JSON.stringify({ model: car.model, god: car.god }));
             return acc;
         }, {});
 
         const accordionContainer = document.getElementById('carAccordion');
-        accordionContainer.innerHTML = ''; // Очищаем контейнер перед заполнением
+        accordionContainer.innerHTML = ''; // Очищаем контейнер перед рендером
 
         for (const [make, models] of Object.entries(carAccordionData)) {
-            if (!make.trim()) continue; // Пропускаем, если марка пустая
+            if (!make) continue; // Пропускаем записи с пустыми марками
 
             const makeDiv = document.createElement('div');
             makeDiv.classList.add('accordion-item');
@@ -262,19 +258,18 @@ fetch('../data/data_ukr.json')
 
             const modelList = document.createElement('div');
             modelList.classList.add('accordion-content');
-            models.forEach(modelData => {
-                const { model, god, pictures } = JSON.parse(modelData);
 
-                if (model && god && pictures) {
+            models.forEach(modelData => {
+                const { model, god } = JSON.parse(modelData);
+
+                if (model && god) {
                     const modelItem = document.createElement('p');
                     modelItem.textContent = `${model} (${god})`;
                     modelItem.classList.add('model-item');
                     modelItem.addEventListener('click', () => {
-                        window.location.href = `./car-page.html?make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}&year=${god}`;
+                        window.location.href = `./car-page.html?make=${make}&model=${model}&year=${god}`;
                     });
                     modelList.appendChild(modelItem);
-                } else {
-                    console.warn('Пропущен объект с некорректными данными:', { make, model, god, pictures });
                 }
             });
 
@@ -283,6 +278,7 @@ fetch('../data/data_ukr.json')
         }
     })
     .catch(error => console.error('Помилка завантаження даних:', error));
+
 
 
 

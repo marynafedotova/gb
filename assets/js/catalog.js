@@ -56,7 +56,7 @@ function displayProducts(filteredProducts = []) {
       <div class="product-card">
         <img src="${product.photo.split(',')[0].trim()}" alt="${product.zapchast}">
         <h3>Артикул: ${product.ID_EXT}</h3>
-        <h3>Назва: ${product.zapchast}</h3>
+        <h3> ${product.zapchast}</h3>
         <p>Ціна: ${product.zena} ${product.valyuta} / ${priceInUah} грн</p>
         <div class="btn-cart">
           <button class="add-to-cart" data-id="${product.ID_EXT}" data-price="${priceInUah}">Додати до кошика</button>

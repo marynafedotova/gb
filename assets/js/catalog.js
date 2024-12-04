@@ -276,8 +276,6 @@ fetch('../data/data_ukr.json')
     .catch(error => console.error('Помилка завантаження даних:', error));
 
 
-
-
 //cars
 fetch('../data/data_ukr.json')
     .then(response => response.json())

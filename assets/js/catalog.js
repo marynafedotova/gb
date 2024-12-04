@@ -209,42 +209,42 @@ initializeCatalog();
 
 
 //accordion
-fetch('../data/data_ukr.json')
+fetch(dataJsonUrl)
     .then(response => response.json())
     .then(data => {
-        const carAccordionContainer = document.getElementById('carAccordion');
-        const uniqueCars = new Set();
+        // Фильтрация данных: исключаем записи, где нет марки, модели или года
+        const cars = data.Sheet1
+            .filter(item => item.markaavto?.trim() && item.model?.trim() && item.god)
+            .map(item => ({
+                markaavto: item.markaavto.trim(),
+                model: item.model.trim(),
+                god: item.god
+            }));
 
-        // Группировка данных по марке
-        const carAccordionData = data.Sheet1.reduce((acc, car) => {
-            // Проверяем, что все ключевые поля существуют и корректны
-            if (car.markaavto?.trim() && car.model?.trim() && car.god) {
-                const uniqueKey = `${car.markaavto}-${car.model}-${car.god}`;
-                
-                // Исключаем дубликаты
-                if (!uniqueCars.has(uniqueKey)) {
-                    uniqueCars.add(uniqueKey);
-                    
-                    if (!acc[car.markaavto]) {
-                        acc[car.markaavto] = [];
-                    }
-                    acc[car.markaavto].push({
-                        model: car.model.trim(),
-                        god: car.god,
-                    });
-                }
+        // Группировка по маркам автомобилей
+        const carAccordionData = cars.reduce((acc, car) => {
+            if (!car.markaavto) return acc; // Пропускаем пустые марки
+
+            if (!acc[car.markaavto]) {
+                acc[car.markaavto] = new Set();
             }
+            // Добавляем уникальную комбинацию модели и года
+            acc[car.markaavto].add(JSON.stringify({ model: car.model, god: car.god }));
             return acc;
         }, {});
 
-        // Очистка контейнера перед добавлением новых данных
-        carAccordionContainer.innerHTML = '';
+        // Очищаем контейнер аккордеона
+        const accordionContainer = document.getElementById('carAccordion');
+        accordionContainer.innerHTML = '';
 
         // Создание аккордеона
-        Object.entries(carAccordionData).forEach(([make, models]) => {
+        for (const [make, models] of Object.entries(carAccordionData)) {
+            if (!make.trim() || models.size === 0) continue; // Пропускаем пустые марки или без моделей
+
             const makeDiv = document.createElement('div');
             makeDiv.classList.add('accordion-item');
 
+            // Заголовок марки
             const makeHeader = document.createElement('h3');
             makeHeader.textContent = make;
             makeHeader.classList.add('accordion-header');
@@ -253,30 +253,28 @@ fetch('../data/data_ukr.json')
             });
             makeDiv.appendChild(makeHeader);
 
+            // Список моделей
             const modelList = document.createElement('div');
             modelList.classList.add('accordion-content');
-
-            models.forEach(({ model, god }) => {
-                // Проверяем, что данные корректны
-                if (model && god) {
+            models.forEach(modelData => {
+                const { model, god } = JSON.parse(modelData);
+                if (model && god) { // Пропускаем, если модель или год пустые
                     const modelItem = document.createElement('p');
                     modelItem.textContent = `${model} (${god})`;
                     modelItem.classList.add('model-item');
-
-                    // Переход по клику
                     modelItem.addEventListener('click', () => {
-                        window.location.href = `./car-page.html?make=${make}&model=${model}&year=${god}`;
+                        window.location.href = `./car-page.html?make=${encodeURIComponent(make)}&model=${encodeURIComponent(model)}&year=${god}`;
                     });
-
                     modelList.appendChild(modelItem);
                 }
             });
 
             makeDiv.appendChild(modelList);
-            carAccordionContainer.appendChild(makeDiv);
-        });
+            accordionContainer.appendChild(makeDiv);
+        }
     })
     .catch(error => console.error('Помилка завантаження даних:', error));
+
 
 
 

@@ -286,6 +286,7 @@ fetch('../data/data_ukr.json')
 
 
 
+
 //cars
 fetch('../data/data_ukr.json')
     .then(response => response.json())

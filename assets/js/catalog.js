@@ -218,7 +218,8 @@ fetch('../data/data_ukr.json')
                 const model = item.model?.trim();
                 const god = item.god;
 
-                if (!markaavto || !model || !god) {
+                // Исключаем записи с некорректными значениями
+                if (!markaavto || !model || !god || markaavto === '#REF!' || model === '#REF!' || god === '#REF!') {
                     console.warn('Пропущена запись с некорректными данными:', item);
                     return false;
                 }
@@ -230,6 +231,8 @@ fetch('../data/data_ukr.json')
                 model: item.model.trim(),
                 god: item.god
             }));
+
+        console.log('Обработанные данные:', cars);
 
         const carAccordionData = cars.reduce((acc, car) => {
             if (!acc[car.markaavto]) {
@@ -243,7 +246,7 @@ fetch('../data/data_ukr.json')
         accordionContainer.innerHTML = ''; // Очищаем контейнер перед рендером
 
         for (const [make, models] of Object.entries(carAccordionData)) {
-            if (!make) continue; // Пропускаем записи с пустыми марками
+            if (!make || make === '#REF!') continue; // Пропускаем пустые или некорректные марки
 
             const makeDiv = document.createElement('div');
             makeDiv.classList.add('accordion-item');
@@ -262,7 +265,7 @@ fetch('../data/data_ukr.json')
             models.forEach(modelData => {
                 const { model, god } = JSON.parse(modelData);
 
-                if (model && god) {
+                if (model && god && model !== '#REF!' && god !== '#REF!') {
                     const modelItem = document.createElement('p');
                     modelItem.textContent = `${model} (${god})`;
                     modelItem.classList.add('model-item');
@@ -278,6 +281,7 @@ fetch('../data/data_ukr.json')
         }
     })
     .catch(error => console.error('Помилка завантаження даних:', error));
+
 
 
 

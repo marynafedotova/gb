@@ -71,20 +71,20 @@ class Car(models.Model):
     brand_car = models.CharField(
         max_length=150,
         choices=[
-            ('jaguar', 'Jaguar'),
-            ('volkswagen', 'Volkswagen'),
-            ('jeep', 'Jeep'),
-            ('lincoln', 'Lincoln'),
-            ('dodge', 'Dodge'),
-            ('infiniti', 'Infiniti'),
-            ('kia', 'Kia'),
-            ('hyundai', 'Hyundai'),
-            ('acura', 'Acura'),
-            ('chrysler', 'Chrysler'),
-            ('nissan', 'Nissan'),
-            ('bmw', 'BMW'),
-            ('land_rover', 'Land Rover'),
-            ('audi', 'Audi'),
+            ('Jaguar', 'Jaguar'),
+            ('Volkswagen', 'Volkswagen'),
+            ('Jeep', 'Jeep'),
+            ('Lincoln', 'Lincoln'),
+            ('Dodge', 'Dodge'),
+            ('Infiniti', 'Infiniti'),
+            ('Kia', 'Kia'),
+            ('Hyundai', 'Hyundai'),
+            ('Acura', 'Acura'),
+            ('Chrysler', 'Chrysler'),
+            ('Nissan', 'Nissan'),
+            ('Bmw', 'BMW'),
+            ('Land_rover', 'Land Rover'),
+            ('Audi', 'Audi'),
             ('Honda', 'Honda'),
         ], verbose_name='Марка авто')
     model_car = models.CharField(
@@ -112,16 +112,16 @@ class Car(models.Model):
     engine_volume = models.PositiveIntegerField(
         choices=[
             (3, '3'),
-            (2.4, '2.4'),
-            (3.6, '3.6'),
-            (3.7, '3.7'),
+            (24, '2.4'),
+            (36, '3.6'),
+            (37, '3.7'),
             (2, '2'),
-            (3.5, '3.5'),
-            (1.8, '1.8'),
-            (2.5, '2.5'),
-            (2.2, '2.2'),
-            (5.7, '5.7'),
-            (1.4, '1.4'),
+            (35, '3.5'),
+            (18, '1.8'),
+            (25, '2.5'),
+            (22, '2.2'),
+            (57, '5.7'),
+            (14, '1.4'),
         ],
         verbose_name='Об\'єм двигуна')
     fueld_type = models.CharField(
@@ -176,6 +176,7 @@ class Car(models.Model):
         ],
         verbose_name='Колір')
     photo = models.ImageField(upload_to='car_image', blank=True, null=True, verbose_name='Фото авто')
+    
 
 
     class Meta:

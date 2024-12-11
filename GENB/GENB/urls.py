@@ -19,12 +19,16 @@ import django
 from django.contrib import admin
 from django.urls import include, path
 
+from GENB.settings import DEBUG
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('MAIN.urls', namespace='main')),
     path('catalog/', include('GOODS.urls', namespace='catalog')),
 
-
-    
 ]
+
+
+if DEBUG:
+    urlpatterns += [path("__debug__/", include("debug_toolbar.urls")),] 

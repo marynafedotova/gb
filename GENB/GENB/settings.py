@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #Tools
+    "debug_toolbar",
+
     #my apps
     'MAIN',
     'GOODS',
@@ -55,6 +58,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    #TOOLS MIDDLEWARE
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 
     #LANGUAGE MIDDLEWARE
     'django.middleware.locale.LocaleMiddleware',
@@ -142,6 +148,15 @@ LOCALE_PATHS = [
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

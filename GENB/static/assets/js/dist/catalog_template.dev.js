@@ -4,12 +4,17 @@
 document.querySelectorAll('.submenu a').forEach(function (link) {
   link.addEventListener('click', function (event) {
     event.preventDefault();
-    var brand = this.querySelector('img').alt.toLowerCase();
-    var pageUrl = "catalog-template.html?brand=".concat(brand);
-    window.location.href = pageUrl;
-  });
-}); // Код для отображения данных о бренде
+    var imgElement = this.querySelector('img');
 
+    if (imgElement && imgElement.alt) {
+      var brand = imgElement.alt.toLowerCase();
+      var pageUrl = "catalog-template.html?brand=".concat(brand);
+      window.location.href = pageUrl;
+    } else {
+      console.error('Атрибут alt у изображения не найден.');
+    }
+  });
+});
 document.addEventListener('DOMContentLoaded', function () {
   var urlParams = new URLSearchParams(window.location.search);
   var brand = urlParams.get('brand');
@@ -98,8 +103,7 @@ function loadData() {
         case 0:
           _context.prev = 0;
           _context.next = 3;
-          return regeneratorRuntime.awrap(fetch('..data/data_ukr.json
-'));
+          return regeneratorRuntime.awrap(fetch('..data/data_ukr.json'));
 
         case 3:
           response = _context.sent;
@@ -136,31 +140,24 @@ function filterCars(cars, brand) {
 function createCarCards(brand) {
   var minYear = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
   loadData().then(function (cars) {
-    // Фильтруем автомобили по марке и году
-    var filteredCars = filterCars(cars, brand, minYear); // Получаем элемент для вставки карточек
-
+    var filteredCars = filterCars(cars, brand, minYear);
     var contentElement = document.getElementById('content');
-    if (!contentElement) return; // Очищаем контент
-
-    contentElement.innerHTML = ''; // Если нет автомобилей, показываем сообщение
+    if (!contentElement) return;
+    contentElement.innerHTML = '';
 
     if (filteredCars.length === 0) {
       contentElement.innerHTML = '<p>Нет автомобилей для отображения по выбранному фильтру.</p>';
       return;
-    } // Создаем карточки для каждого автомобиля
-
+    }
 
     filteredCars.forEach(function (car) {
       var card = document.createElement('div');
-      card.classList.add('car-card'); // Класс для стилей карточки
-      // Создаем HTML для карточки
+      card.classList.add('car-card'); // Создаем HTML для карточки
 
-      card.innerHTML = "\n          <div class=\"car-image\">\n            <img src=\"".concat(car.pictures.split(',')[0], "\" alt=\"").concat(car.model, "\" />\n          </div>\n          <div class=\"car-details\">\n            <h3>").concat(car.markaavto, " ").concat(car.model, " (").concat(car.god, ")</h3>\n            <p><strong>\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435:</strong> ").concat(car.description, "</p>\n            <p><strong>\u0426\u0435\u043D\u0430:</strong> ").concat(car.price, " ").concat(car.currency, "</p>\n            <p><a href=\"").concat(car.link, "\" target=\"_blank\">\u041F\u043E\u0434\u0440\u043E\u0431\u043D\u0435\u0435</a></p>\n          </div>\n        "); // Добавляем карточку на страницу
-
+      card.innerHTML = "\n          <div class=\"car-image\">\n            <img src=\"".concat(car.pictures.split(',')[0], "\" alt=\"").concat(car.model, "\" />\n          </div>\n          <div class=\"car-details\">\n            <h3>").concat(car.markaavto, " ").concat(car.model, " (").concat(car.god, ")</h3>\n            <p><strong>\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435:</strong> ").concat(car.description, "</p>\n            <p><strong>\u0426\u0435\u043D\u0430:</strong> ").concat(car.price, " ").concat(car.currency, "</p>\n            <p><a href=\"").concat(car.link, "\" target=\"_blank\">\u041F\u043E\u0434\u0440\u043E\u0431\u043D\u0435\u0435</a></p>\n          </div>\n        ");
       contentElement.appendChild(card);
     });
   });
-} // Вызов функции для создания карточек для определенной марки (например, Jaguar)
-
+}
 
 createCarCards('Jaguar', 2012);

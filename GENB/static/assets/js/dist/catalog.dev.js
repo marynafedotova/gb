@@ -149,9 +149,8 @@ function searchProducts(query) {
   searchResults = products.filter(function (product) {
     return product.zapchast && product.zapchast.toLowerCase().includes(lowerCaseQuery) || product.markaavto && product.markaavto.toLowerCase().includes(lowerCaseQuery) || product.model && product.model.toLowerCase().includes(lowerCaseQuery);
   });
-  searchProductIndex = 0; // Сброс индекса поиска
-
-  displaySearchResults(searchResults); // Отображаем результаты поиска
+  searchProductIndex = 0;
+  displaySearchResults(searchResults);
 } // Обработчик для кнопки "Загрузить больше"
 
 
@@ -161,7 +160,7 @@ document.querySelector('.load-more').addEventListener('click', function (event) 
 
   if (query) {
     searchProducts(query);
-    this.style.display = 'none'; // Скрыть кнопку после загрузки
+    this.style.display = 'none';
   }
 }); // Обработчик формы поиска
 
@@ -176,24 +175,19 @@ document.getElementById('search-form').addEventListener('submit', function _call
           return regeneratorRuntime.awrap(fetchCurrencyRate());
 
         case 3:
-          // Получаем актуальный курс валют
           query = document.getElementById('search-input').value.trim().toLowerCase();
 
           if (query) {
             searchResults = products.filter(function (product) {
               return product.zapchast && product.zapchast.toLowerCase().includes(query) || product.markaavto && product.markaavto.toLowerCase().includes(query) || product.model && product.model.toLowerCase().includes(query);
             });
-            searchProductIndex = 0; // Сбрасываем индекс
-
-            document.querySelector('.search-results').innerHTML = ''; // Очищаем предыдущие результаты
-
-            displaySearchResults(searchResults); // Отображаем первую страницу результатов
+            searchProductIndex = 0;
+            document.querySelector('.search-results').innerHTML = '';
+            displaySearchResults(searchResults);
           } else {
-            // Если поле пустое, очищаем результаты поиска
             searchResults = [];
             document.querySelector('.search-results').innerHTML = '<p>Ничего не найдено.</p>';
-          } // Прокрутка к результатам поиска
-
+          }
 
           resultsContainer = document.querySelector('.search-results');
 
@@ -213,11 +207,11 @@ document.getElementById('search-form').addEventListener('submit', function _call
 });
 document.querySelector('.load-more-search').addEventListener('click', function (event) {
   event.preventDefault();
-  displaySearchResults(searchResults); // Загружаем следующую порцию результатов
+  displaySearchResults(searchResults);
 });
 document.querySelector('.load-more').addEventListener('click', function (event) {
   event.preventDefault();
-  displayProducts(); // Загружаем следующую порцию товаров для каталога
+  displayProducts();
 }); // Функция инициализации каталога
 
 function initializeCatalog() {
@@ -299,16 +293,19 @@ fetch(dataJsonUrl).then(function (response) {
   return response.json();
 }).then(function (data) {
   var cars = data.Sheet1.filter(function (item) {
-    return item.markaavto && item.model;
+    return item.markaavto && item.model && item.god;
   }) // Исключаем записи с null или пустыми значениями
   .map(function (item) {
     return {
-      markaavto: item.markaavto,
-      model: item.model,
-      god: item.god // Добавляем год, чтобы передать его в ссылку
+      markaavto: item.markaavto.trim(),
+      // Убираем пробелы
+      model: item.model.trim(),
+      // Убираем пробелы
+      god: item.god // Год должен быть числом
 
     };
-  });
+  }); // Группируем данные по маркам
+
   var carAccordionData = cars.reduce(function (acc, car) {
     if (!acc[car.markaavto]) {
       acc[car.markaavto] = new Set();
@@ -321,6 +318,7 @@ fetch(dataJsonUrl).then(function (response) {
     return acc;
   }, {});
   var accordionContainer = document.getElementById('carAccordion');
+  accordionContainer.innerHTML = ''; // Очищаем контейнер перед добавлением элементов
 
   var _loop = function _loop() {
     var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -345,10 +343,10 @@ fetch(dataJsonUrl).then(function (response) {
           model = _JSON$parse.model,
           god = _JSON$parse.god;
 
-      if (model) {
-        // Пропускаем, если модель null или пустая
+      if (model && god) {
+        // Пропускаем, если модель или год null или пустые
         var modelItem = document.createElement('p');
-        modelItem.textContent = model;
+        modelItem.textContent = "".concat(model, " (").concat(god, ")");
         modelItem.classList.add('model-item');
         modelItem.addEventListener('click', function () {
           window.location.href = "./car-page.html?make=".concat(make, "&model=").concat(model, "&year=").concat(god);
@@ -367,7 +365,7 @@ fetch(dataJsonUrl).then(function (response) {
   }
 })["catch"](function (error) {
   return console.error('Помилка завантаження даних:', error);
-}); //cars
+}); //cars card
 
 fetch('../data/data_ukr.json').then(function (response) {
   return response.json();

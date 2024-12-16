@@ -130,8 +130,8 @@ function searchProducts(query) {
     (product.markaavto && product.markaavto.toLowerCase().includes(lowerCaseQuery)) ||
     (product.model && product.model.toLowerCase().includes(lowerCaseQuery))
   );
-  searchProductIndex = 0; // Сброс индекса поиска
-  displaySearchResults(searchResults); // Отображаем результаты поиска
+  searchProductIndex = 0; 
+  displaySearchResults(searchResults); 
 }
 
 // Обработчик для кнопки "Загрузить больше"
@@ -140,14 +140,14 @@ document.querySelector('.load-more').addEventListener('click', function(event) {
   const query = document.getElementById('search-input').value.trim();
   if (query) {
     searchProducts(query);
-    this.style.display = 'none'; // Скрыть кнопку после загрузки
+    this.style.display = 'none'; 
   }
 });
 
 // Обработчик формы поиска
 document.getElementById('search-form').addEventListener('submit', async function(event) {
   event.preventDefault();
-  await fetchCurrencyRate(); // Получаем актуальный курс валют
+  await fetchCurrencyRate(); 
 
   const query = document.getElementById('search-input').value.trim().toLowerCase();
   if (query) {
@@ -157,15 +157,15 @@ document.getElementById('search-form').addEventListener('submit', async function
       (product.model && product.model.toLowerCase().includes(query))
     );
 
-    searchProductIndex = 0; // Сбрасываем индекс
-    document.querySelector('.search-results').innerHTML = ''; // Очищаем предыдущие результаты
-    displaySearchResults(searchResults); // Отображаем первую страницу результатов
+    searchProductIndex = 0; 
+    document.querySelector('.search-results').innerHTML = ''; 
+    displaySearchResults(searchResults); 
   } else {
-    // Если поле пустое, очищаем результаты поиска
+   
     searchResults = [];
     document.querySelector('.search-results').innerHTML = '<p>Ничего не найдено.</p>';
   }
-    // Прокрутка к результатам поиска
+    
     const resultsContainer = document.querySelector('.search-results');
     if (resultsContainer) {
       resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -173,12 +173,12 @@ document.getElementById('search-form').addEventListener('submit', async function
 });
 document.querySelector('.load-more-search').addEventListener('click', function(event) {
   event.preventDefault();
-  displaySearchResults(searchResults); // Загружаем следующую порцию результатов
+  displaySearchResults(searchResults); 
 });
 
 document.querySelector('.load-more').addEventListener('click', function(event) {
   event.preventDefault();
-  displayProducts(); // Загружаем следующую порцию товаров для каталога
+  displayProducts();
 });
 
 
@@ -224,13 +224,14 @@ fetch(dataJsonUrl)
     .then(response => response.json())
     .then(data => {
         const cars = data.Sheet1
-            .filter(item => item.markaavto && item.model) // Исключаем записи с null или пустыми значениями
+            .filter(item => item.markaavto && item.model && item.god) // Исключаем записи с null или пустыми значениями
             .map(item => ({
-                markaavto: item.markaavto,
-                model: item.model,
-                god: item.god // Добавляем год, чтобы передать его в ссылку
+                markaavto: item.markaavto.trim(), // Убираем пробелы
+                model: item.model.trim(),        // Убираем пробелы
+                god: item.god                    // Год должен быть числом
             }));
 
+        // Группируем данные по маркам
         const carAccordionData = cars.reduce((acc, car) => {
             if (!acc[car.markaavto]) {
                 acc[car.markaavto] = new Set();
@@ -240,6 +241,8 @@ fetch(dataJsonUrl)
         }, {});
 
         const accordionContainer = document.getElementById('carAccordion');
+        accordionContainer.innerHTML = ''; // Очищаем контейнер перед добавлением элементов
+
         for (const [make, models] of Object.entries(carAccordionData)) {
             if (!make) continue; // Пропускаем, если марка null или пустая
 
@@ -258,9 +261,9 @@ fetch(dataJsonUrl)
             modelList.classList.add('accordion-content');
             models.forEach(modelData => {
                 const { model, god } = JSON.parse(modelData);
-                if (model) { // Пропускаем, если модель null или пустая
+                if (model && god) { // Пропускаем, если модель или год null или пустые
                     const modelItem = document.createElement('p');
-                    modelItem.textContent = model;
+                    modelItem.textContent = `${model} (${god})`;
                     modelItem.classList.add('model-item');
                     modelItem.addEventListener('click', () => {
                         window.location.href = `./car-page.html?make=${make}&model=${model}&year=${god}`;
@@ -275,7 +278,7 @@ fetch(dataJsonUrl)
     })
     .catch(error => console.error('Помилка завантаження даних:', error));
 
-//cars
+//cars card
 fetch('../data/data_ukr.json')
     .then(response => response.json())
     .then(data => {

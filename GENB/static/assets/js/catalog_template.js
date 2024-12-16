@@ -1,13 +1,18 @@
   // Код для обработки кликов по ссылкам
-  document.querySelectorAll('.submenu a').forEach(link => {
-    link.addEventListener('click', function (event) {
-      event.preventDefault();
-      const brand = this.querySelector('img').alt.toLowerCase();
+document.querySelectorAll('.submenu a').forEach(link => {
+  link.addEventListener('click', function (event) {
+    event.preventDefault();
+    const imgElement = this.querySelector('img');
+    if (imgElement && imgElement.alt) {
+      const brand = imgElement.alt.toLowerCase();
       const pageUrl = `catalog-template.html?brand=${brand}`;
       window.location.href = pageUrl;
-    });
+    } else {
+      console.error('Атрибут alt у изображения не найден.');
+    }
   });
-    // Код для отображения данных о бренде
+});
+
     document.addEventListener('DOMContentLoaded', function () {
       const urlParams = new URLSearchParams(window.location.search);
       const brand = urlParams.get('brand');
@@ -94,7 +99,7 @@
     try {
       const response = await fetch('..data/data_ukr.json');
       const data = await response.json();
-      return data.Sheet1; // Путь к данным в JSON
+      return data.Sheet1; 
     } catch (error) {
       console.error('Ошибка загрузки данных:', error);
       return [];
@@ -109,26 +114,23 @@
   // Функция для создания карточек автомобилей
   function createCarCards(brand, minYear = 2000) {
     loadData().then(cars => {
-      // Фильтруем автомобили по марке и году
+     
       const filteredCars = filterCars(cars, brand, minYear);
   
-      // Получаем элемент для вставки карточек
       const contentElement = document.getElementById('content');
       if (!contentElement) return;
   
-      // Очищаем контент
       contentElement.innerHTML = '';
   
-      // Если нет автомобилей, показываем сообщение
       if (filteredCars.length === 0) {
         contentElement.innerHTML = '<p>Нет автомобилей для отображения по выбранному фильтру.</p>';
         return;
       }
   
-      // Создаем карточки для каждого автомобиля
+   
       filteredCars.forEach(car => {
         const card = document.createElement('div');
-        card.classList.add('car-card'); // Класс для стилей карточки
+        card.classList.add('car-card'); 
   
         // Создаем HTML для карточки
         card.innerHTML = `
@@ -143,12 +145,12 @@
           </div>
         `;
   
-        // Добавляем карточку на страницу
+        
         contentElement.appendChild(card);
       });
     });
   }
   
-  // Вызов функции для создания карточек для определенной марки (например, Jaguar)
+  
   createCarCards('Jaguar', 2012);
   

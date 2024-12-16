@@ -92,8 +92,7 @@
   // Функция для загрузки данных из JSON
   async function loadData() {
     try {
-      const response = await fetch('..data/data_ukr.json
-');
+      const response = await fetch('..data/data_ukr.json');
       const data = await response.json();
       return data.Sheet1; // Путь к данным в JSON
     } catch (error) {

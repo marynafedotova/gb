@@ -1,32 +1,47 @@
-(function($) {
-    $(document).ready(function() {
-        const conditionField = $('#id_condition');
-        const additionalConditionField = $('#id_additional_condition');
+jQuery(document).ready(function($) {
+    const conditionField = $('#id_condition');
+    let additionalConditionField = $('#id_additional_condition');
+    const additionalConditionLabel = $('label[for="id_additional_condition"]'); // Мітка
 
-        function updateAdditionalChoices() {
-            const condition = conditionField.val();
-            const options = {
-                living: [
-                    {value: 'good', text: 'Хороший'},
-                    {value: 'satisfactory', text: 'Задовільний'},
-                    {value: 'defective', text: 'З дефектом'},
-                    {value: 'repaired', text: 'Зі слідами ремонту'}
-                ],
-                new: []
-            };
+    // Опції для стану "Житловий"
+    const options = [
+        { value: 'good', text: 'Хороший' },
+        { value: 'satisfactory', text: 'Задовільний' },
+        { value: 'defective', text: 'З дефектом' },
+        { value: 'repaired', text: 'Зі слідами ремонту' }
+    ];
 
-            additionalConditionField.empty();
+    function updateAdditionalField() {
+        const condition = conditionField.val();
 
-            if (options[condition]) {
-                options[condition].forEach(option => {
-                    additionalConditionField.append(
-                        new Option(option.text, option.value)
-                    );
+        if (!condition) {
+            // Якщо стан не вибрано, ховаємо поле та мітку
+            additionalConditionField.hide();
+            additionalConditionLabel.hide();
+        } else if (condition === 'new') {
+            // При стані "new" ховаємо поле та мітку
+            additionalConditionField.hide();
+            additionalConditionLabel.hide();
+        } else if (condition === 'living') {
+            // Показуємо поле та мітку
+            if (additionalConditionField.is('input')) {
+                // Замінюємо текстове поле на селект, якщо це необхідно
+                const selectField = $('<select></select>').attr('id', 'id_additional_condition');
+                options.forEach(option => {
+                    selectField.append(new Option(option.text, option.value));
                 });
-            }
-        }
 
-        conditionField.on('change', updateAdditionalChoices);
-        updateAdditionalChoices();  // Ініціалізуємо при завантаженні
-    });
-})(django.jQuery);
+                additionalConditionField.replaceWith(selectField);
+                additionalConditionField = selectField;
+            }
+            additionalConditionField.show(); // Показуємо поле
+            additionalConditionLabel.show(); // Показуємо мітку
+        }
+    }
+
+    // Відслідковуємо зміну стану conditionField
+    conditionField.on('change', updateAdditionalField);
+
+    // Ініціалізація при завантаженні сторінки
+    updateAdditionalField();
+});

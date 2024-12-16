@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from email.policy import default
 from hmac import new
 from os import name
@@ -11,7 +12,7 @@ import csv
 #Categoris
 class Categories(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name='Назва')
-    slug = models.SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL')
+    slug = models.SlugField(max_length=200, unique=True, blank=True, verbose_name='URL')
 
     class Meta:
         db_table = 'category'
@@ -24,7 +25,7 @@ class Categories(models.Model):
 
 class SubCategory(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name='Підкатегорія')
-    slug = models.SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL')
+    slug = models.SlugField(max_length=200, unique=True, blank=True, verbose_name='URL')
     category = models.ForeignKey(to=Categories, on_delete=models.SET_NULL, null=True, verbose_name='Категорія')
 
 
@@ -39,7 +40,7 @@ class SubCategory(models.Model):
 
 class AdditionalСategory(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name='Назва')
-    slug = models.SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL')
+    slug = models.SlugField(max_length=200, unique=True, blank=True, verbose_name='URL')
     sub_category = models.ForeignKey(to=SubCategory, on_delete=models.SET_NULL, null=True, verbose_name='Підкатегорія')
     
 
@@ -66,7 +67,7 @@ def get_model_choices():
 
 
 class Car(models.Model):
-    vin_code = models.CharField(max_length=17, unique=True, verbose_name='Він код')
+    vin_code = models.CharField(max_length=17, unique=True, blank=True, verbose_name='Він код')
     slug = models.SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL')
     brand_car = models.CharField(
         max_length=150,
@@ -183,6 +184,7 @@ class Car(models.Model):
         db_table = 'car'
         verbose_name = 'Автомомбіль'
         verbose_name_plural = 'Автомобілі'
+        ordering = ("id",)
 
     def __str__(self) -> str:
         return f'{self.brand_car} {self.model_car} {self.year} | {self.vin_code}'
@@ -194,7 +196,7 @@ class SparePart(models.Model):
     oem_code = models.CharField(max_length=50, unique=True, verbose_name='Оригінальний номер запчастини')
     name = models.CharField(max_length=150, verbose_name='Назва запчастини')
     slug = models.SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL')
-    sku = models.PositiveIntegerField(unique=True, verbose_name='Артикул')
+    sku = models.CharField(max_length=50, unique=True, verbose_name='Артикул', blank=True)
     category = models.ForeignKey(Categories, on_delete=models.SET_NULL, null=True, verbose_name='Категорія')
     sub_category = models.ForeignKey(SubCategory, on_delete=models.SET_NULL, null=True, verbose_name='Підкатегорія')
     additional_category = models.ForeignKey(AdditionalСategory, on_delete=models.SET_NULL, null=True, verbose_name='Дод.категорія')
@@ -213,13 +215,18 @@ class SparePart(models.Model):
         max_length=50,
         choices=[
             ('new', 'Нова'),
-            ('living', 'Б\У'),
+            ('living', 'Вживана')
         ],
-        verbose_name='Стан')
-    
+        verbose_name='Стан'
+    )
     additional_condition = models.CharField(
         max_length=50,
-        choices=[], 
+        choices=[
+            ('good','Хороший' ),
+            ('satisfactory', 'Задовільний'),
+            ('defective', 'З дефектом'),
+            ('repaired', 'Зі слідами ремонту'),
+        ], 
         blank=True,
         null=True,
         verbose_name='Додаткова умова'
@@ -246,7 +253,22 @@ class SparePart(models.Model):
         db_table = 'spare_part'
         verbose_name = 'Запчастина'
         verbose_name_plural = 'Запчастини'
+        ordering = ("id",)
 
 
     def __str__(self) -> str:
+        if self.additional_condition:
+            return f'{self.name} | Стан - {self.get_condition_display()} ({self.get_additional_condition_display()}) | Статус - {self.get_availability_display()}'
         return f'{self.name} | Стан - {self.get_condition_display()} | Статус - {self.get_availability_display()}'
+    
+
+    def save(self, *args, **kwargs):
+        if not self.sku and self.car:  # Автоматичне формування артикула, якщо його немає
+            vin_last_digits = self.car.vin_code[-4:]  # Останні 4 цифри VIN-коду
+            self.sku = f"{vin_last_digits}0000"  # Попереднє значення артикула (замість id)
+            super().save(*args, **kwargs)  # Зберегти об'єкт
+
+        # Після збереження оновити SKU до значення "вин_last_digits + id"
+            self.sku = f"{vin_last_digits}-{self.id}"
+        super().save(*args, **kwargs)  # Повторне збереження з оновленим sku
+ # Зберегти об'єкт вдруге з оновленим sku

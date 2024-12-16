@@ -17,6 +17,7 @@
   <div class="container ">
     <div id="carAccordion">
       <div class="accordion-item">
+      {% tag_car as car %}
       {% for cars in car %}
         <h3 class="accordion-header">{{ cars.brand_car }}</h3>
       {% endfor %}
@@ -51,51 +52,71 @@
 
         </form>
       </div>
-      <div id="cars-catalog">
-      {% tag_car as car %}
-      {% for cars in car %}
-        <div class="car-card">
-          {% if cars.photo %}
-            <img src="{{cars.photo.url}}" alt="">
+
+
+      
+
+
+</section>
+<section>
+  <section class="catalog_zapchast">
+    <div class="container">
+      <h2>{% trans "Каталог товарів" %}</h2>
+      <div class="product-list">
+        {% for product in goods %}
+        <div class="product-card">
+          {% if product.photo %}
+          <img src="{{ product.photo.url }}" alt="">
           {% endif %}
-          <div class="car-details">
-            <h2>{{cars.brand_car}} {{cars.model_car}}</h2>
-            <p>Рік: {{cars.year}}</p>
+          <h3>{% trans "Артикул:" %} {{ product.display_sku }}</h3>
+          <p>{% trans "Ціна:" %} {{ product.price }}</p>
+          <div class="btn-cart">
+            <button class="add-to-cart" data-id="{{ product.id }}" data-price="{{ product.price }}" data-name="{{ product.display_sku }}" data-photo="{{ product.photo.url }}">
+              {% trans "Додати до кошика" %}
+            </button>
+          </div>
+          <div class="product_btn">
+            <a href="{% url 'catalog:product' product.slug %}">{% trans "Детальніше" %}</a>
           </div>
         </div>
-      {% endfor %}
-      </div> 
-    </div>
-  </div>
-</section>
-<section class="catalog_zapchast">
-  <div class="container">
-    <h2>{% trans "Каталог товарів" %}</h2>
-    <div class="product-list">
-    {% tag_sparepart as sparepart %}
-    {% for spareparts in sparepart %}
-      <div class="product-card">
-      {% if  spareparts.photo %}
-        <img src="{{spareparts.photo.url}}"
-          alt="">
-      {% endif %}
-        <h3>Артикул: {{spareparts.sku}}</h3>
-        <h4></h4>
-        <p>Ціна: {{spareparts.price}}</p>
-        <div class="btn-cart">
-          <button class="add-to-cart" data-id="" data-price="" data-name=""
-            data-photo="">
-            Додати до кошика
-          </button>
-        </div>
-        <div class="product_btn">
-          <a href="product.html?id=8122-47">Детальніше</a>
-        </div>
+        {% endfor %}
       </div>
-    {% endfor %}
+
+      <!-- Блок пагінації -->
+      <div class="pagination">
+        <ul>
+          {% if goods.has_previous %}
+          <li>
+            <a href="?page=1">{% trans "Перша" %}</a>
+          </li>
+          <li>
+            <a href="?page={{ goods.previous_page_number }}">{{ goods.previous_page_number }}</a>
+          </li>
+          {% endif %}
+          <li class="current">
+            <span>{{ goods.number }}</span>
+          </li>
+          {% if goods.has_next %}
+          <li>
+            <a href="?page={{ goods.next_page_number }}">{{ goods.next_page_number }}</a>
+          </li>
+          <li>
+            <a href="?page={{ goods.paginator.num_pages }}">{% trans "Остання" %}</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
     </div>
+  </section>
+</section>
+
+
+
+    
+    {% comment %} </div>
     <button class="load-more">{% trans "Завантажити більше" %}</button>
-  </div>
+  </div> {% endcomment %}
+  
 </section>
 <section class="catalog_mark_avto">
   <div class="hero-screan">

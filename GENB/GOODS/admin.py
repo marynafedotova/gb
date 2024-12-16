@@ -23,7 +23,7 @@ class SparePartForm(ModelForm):
 @admin.register(Categories)
 class CategoriesAdmin(admin.ModelAdmin):
     fieldsets = (
-        ('Інформація', {'fields': ('name',),}),
+        ('Інформація', {'fields': ('name', 'slug'),}),  # Додано 'slug'
     )
     prepopulated_fields = {'slug': ('name',)}
 
@@ -32,7 +32,7 @@ class CategoriesAdmin(admin.ModelAdmin):
 @admin.register(SubCategory)
 class SubCategoryAdmin(admin.ModelAdmin):
     fieldsets = (
-        ('Інформація', {'fields': ('name', 'category'),}),
+        ('Інформація', {'fields': ('name', 'category', 'slug'),}),  # Додано 'slug'
     )
     prepopulated_fields = {'slug': ('name',)}
 
@@ -40,9 +40,10 @@ class SubCategoryAdmin(admin.ModelAdmin):
 @admin.register(AdditionalСategory)
 class AdditionalСategoryAdmin(admin.ModelAdmin):
     fieldsets = (
-        ('Інформація', {'fields': ('name', 'sub_category'),}),
+        ('Інформація', {'fields': ('name', 'sub_category', 'slug'),}),  # Додано 'slug'
     )
     prepopulated_fields = {'slug': ('name',)}
+
 
 
 @admin.register(Car)

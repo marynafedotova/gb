@@ -100,10 +100,15 @@ function displayProducts() {
 
   var productsToDisplay = isSearch ? filteredProducts : products.slice(currentProductIndex, currentProductIndex + productsPerPage);
   productsToDisplay.forEach(function (product) {
-    var priceInUah = Math.ceil(product.zena * usdToUahRate);
-    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, " class=\"lazy\">\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
+    var priceInUah = Math.ceil(product.zena * usdToUahRate); // Печать для диагностики пути
+    // console.log('Фото для товара:', product.photo);
+    // Берем первое изображение из списка, если оно есть, или дефолтное фото
+
+    var photoUrl = product.photo ? product.photo.split(',')[0].trim() : 'default-photo.jpg'; // console.log('Используемое фото:', photoUrl);  // Логирование выбранного пути
+
+    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(photoUrl, "\" alt=\"").concat(product.zapchast, "\">\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" \n                  data-id=\"").concat(product.ID_EXT, "\" \n                  data-price=\"").concat(priceInUah, "\" \n                  data-name=\"").concat(product.zapchast, "\" \n                  data-photo=\"").concat(photoUrl, "\">\n              \u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430\n          </button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
     productContainer.insertAdjacentHTML('beforeend', productCard);
-  }); // Обновляем индекс для каталога
+  });
 
   if (!isSearch) {
     currentProductIndex += productsPerPage;
@@ -126,14 +131,24 @@ function displaySearchResults() {
     return;
   }
 
+  if (filteredProducts.length === 0) {
+    console.log('Нет результатов для поиска');
+    productContainer.innerHTML = '<p>Ничего не найдено.</p>';
+    return;
+  }
+
+  console.log('Найдено товаров:', filteredProducts.length);
   var productsToDisplay = filteredProducts.slice(searchProductIndex, searchProductIndex + productsPerSearchPage);
+  console.log('Отображаем товары с индекса:', searchProductIndex);
   productsToDisplay.forEach(function (product) {
     var priceInUah = Math.ceil(product.zena * usdToUahRate);
-    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(product.photo.split(',')[0].trim(), "\" alt=\"").concat(product.zapchast, "\">\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
+    var photoUrl = product.photo ? product.photo.split(',')[0].trim() : 'default-photo.jpg'; // Используем поле photo
+
+    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(photoUrl, "\" alt=\"").concat(product.zapchast, "\">\n        <h3>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</h3>\n        <h3>\u041D\u0430\u0437\u0432\u0430: ").concat(product.zapchast, "</h3>\n        <p>\u0426\u0456\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" \n                  data-id=\"").concat(product.ID_EXT, "\" \n                  data-price=\"").concat(priceInUah, "\" \n                  data-name=\"").concat(product.zapchast, "\" \n                  data-photo=\"").concat(photoUrl, "\">\n              \u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430\n          </button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
     productContainer.insertAdjacentHTML('beforeend', productCard);
   });
-  searchProductIndex += productsPerSearchPage; // Управление кнопкой "Загрузить больше"
-
+  searchProductIndex += productsPerSearchPage;
+  console.log('Новый индекс поиска:', searchProductIndex);
   var loadMoreButton = document.querySelector('.load-more-search');
 
   if (searchProductIndex < filteredProducts.length) {
@@ -141,112 +156,93 @@ function displaySearchResults() {
   } else {
     loadMoreButton.style.display = 'none';
   }
-} // Модификация функции поиска товаров
+} // Обработчик кнопки "Загрузить ещё"
 
 
-function searchProducts(query) {
-  var lowerCaseQuery = query.toLowerCase();
-  searchResults = products.filter(function (product) {
-    return product.zapchast && product.zapchast.toLowerCase().includes(lowerCaseQuery) || product.markaavto && product.markaavto.toLowerCase().includes(lowerCaseQuery) || product.model && product.model.toLowerCase().includes(lowerCaseQuery);
+document.querySelector('.load-more-search').addEventListener('click', function (event) {
+  event.preventDefault(); // Отменяем стандартное поведение ссылки
+
+  var query = document.getElementById('search-input').value.trim().toLowerCase();
+  var filteredProducts = products.filter(function (product) {
+    return product.ID_EXT && product.ID_EXT.toLowerCase().includes(query) || product.zapchast && product.zapchast.toLowerCase().includes(query) || product.markaavto && product.markaavto.toLowerCase().includes(query) || product.model && product.model.toLowerCase().includes(query) || product.category && product.category.toLowerCase().includes(query) || product.dop_category && product.dop_category.toLowerCase().includes(query) || product.originalnumber && product.originalnumber.toLowerCase().includes(query);
   });
-  searchProductIndex = 0;
-  displaySearchResults(searchResults);
-} // Обработчик для кнопки "Загрузить больше"
-
-
-document.querySelector('.load-more').addEventListener('click', function (event) {
-  event.preventDefault();
-  var query = document.getElementById('search-input').value.trim();
-
-  if (query) {
-    searchProducts(query);
-    this.style.display = 'none';
-  }
+  displayProducts(filteredProducts);
 }); // Обработчик формы поиска
 
-document.getElementById('search-form').addEventListener('submit', function _callee(event) {
-  var query, resultsContainer;
-  return regeneratorRuntime.async(function _callee$(_context2) {
-    while (1) {
-      switch (_context2.prev = _context2.next) {
-        case 0:
-          event.preventDefault();
-          _context2.next = 3;
-          return regeneratorRuntime.awrap(fetchCurrencyRate());
-
-        case 3:
-          query = document.getElementById('search-input').value.trim().toLowerCase();
-
-          if (query) {
-            searchResults = products.filter(function (product) {
-              return product.zapchast && product.zapchast.toLowerCase().includes(query) || product.markaavto && product.markaavto.toLowerCase().includes(query) || product.model && product.model.toLowerCase().includes(query);
-            });
-            searchProductIndex = 0;
-            document.querySelector('.search-results').innerHTML = '';
-            displaySearchResults(searchResults);
-          } else {
-            searchResults = [];
-            document.querySelector('.search-results').innerHTML = '<p>Ничего не найдено.</p>';
-          }
-
-          resultsContainer = document.querySelector('.search-results');
-
-          if (resultsContainer) {
-            resultsContainer.scrollIntoView({
-              behavior: 'smooth',
-              block: 'start'
-            });
-          }
-
-        case 7:
-        case "end":
-          return _context2.stop();
-      }
-    }
-  });
-});
-document.querySelector('.load-more-search').addEventListener('click', function (event) {
+document.getElementById('search-form').addEventListener('submit', function (event) {
   event.preventDefault();
-  displaySearchResults(searchResults);
+  var query = document.getElementById('search-input').value.trim().toLowerCase();
+  console.log('Search query:', query);
+
+  if (query) {
+    var filteredProducts = products.filter(function (product) {
+      return product.ID_EXT && product.ID_EXT.toLowerCase().includes(query) || product.zapchast && product.zapchast.toLowerCase().includes(query) || product.markaavto && product.markaavto.toLowerCase().includes(query) || product.model && product.model.toLowerCase().includes(query) || product.category && product.category.toLowerCase().includes(query) || product.dop_category && product.dop_category.toLowerCase().includes(query) || product.originalnumber && product.originalnumber.toLowerCase().includes(query);
+    });
+    console.log('Filtered products:', filteredProducts);
+    displayedProductCount = 0;
+    displayProducts(filteredProducts);
+  } else {
+    displayedProductCount = 0;
+    displayProducts([]);
+  }
+
+  var resultsContainer = document.querySelector('.search-results');
+
+  if (resultsContainer) {
+    resultsContainer.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  }
 });
-document.querySelector('.load-more').addEventListener('click', function (event) {
-  event.preventDefault();
-  displayProducts();
+document.getElementById('search-input').addEventListener('input', function () {
+  var query = this.value.trim().toLowerCase();
+
+  if (query) {
+    var filteredProducts = products.filter(function (product) {
+      return product.ID_EXT && product.ID_EXT.toLowerCase().includes(query) || product.zapchast && product.zapchast.toLowerCase().includes(query) || product.markaavto && product.markaavto.toLowerCase().includes(query) || product.model && product.model.toLowerCase().includes(query) || product.category && product.category.toLowerCase().includes(query) || product.dop_category && product.dop_category.toLowerCase().includes(query) || product.originalnumber && product.originalnumber.toLowerCase().includes(query);
+    });
+    displayedProductCount = 0;
+    displayProducts(filteredProducts);
+  } else {
+    displayedProductCount = 0;
+    displayProducts([]);
+  }
 }); // Функция инициализации каталога
 
 function initializeCatalog() {
   var response, data;
-  return regeneratorRuntime.async(function initializeCatalog$(_context3) {
+  return regeneratorRuntime.async(function initializeCatalog$(_context2) {
     while (1) {
-      switch (_context3.prev = _context3.next) {
+      switch (_context2.prev = _context2.next) {
         case 0:
-          _context3.next = 2;
+          _context2.next = 2;
           return regeneratorRuntime.awrap(fetchCurrencyRate());
 
         case 2:
-          _context3.prev = 2;
-          _context3.next = 5;
+          _context2.prev = 2;
+          _context2.next = 5;
           return regeneratorRuntime.awrap(fetch('../data/data_ukr.json'));
 
         case 5:
-          response = _context3.sent;
+          response = _context2.sent;
 
           if (response.ok) {
-            _context3.next = 8;
+            _context2.next = 8;
             break;
           }
 
           throw new Error('Ошибка загрузки JSON');
 
         case 8:
-          _context3.next = 10;
+          _context2.next = 10;
           return regeneratorRuntime.awrap(response.json());
 
         case 10:
-          data = _context3.sent;
+          data = _context2.sent;
 
           if (!(!data || !data.Sheet1)) {
-            _context3.next = 13;
+            _context2.next = 13;
             break;
           }
 
@@ -254,71 +250,57 @@ function initializeCatalog() {
 
         case 13:
           products = data.Sheet1;
-          displayProducts(); // Отображаем начальные продукты
-
+          displayProducts();
           document.querySelector('.load-more').addEventListener('click', function (event) {
             event.preventDefault();
             displayProducts();
           });
-          _context3.next = 21;
+          _context2.next = 21;
           break;
 
         case 18:
-          _context3.prev = 18;
-          _context3.t0 = _context3["catch"](2);
-          console.error('Ошибка инициализации каталога:', _context3.t0);
+          _context2.prev = 18;
+          _context2.t0 = _context2["catch"](2);
+          console.error('Ошибка инициализации каталога:', _context2.t0);
 
         case 21:
         case "end":
-          return _context3.stop();
+          return _context2.stop();
       }
     }
   }, null, null, [[2, 18]]);
 } // Инициализация
 
 
-initializeCatalog();
-document.addEventListener('click', function (event) {
-  if (event.target.classList.contains('add-to-cart')) {
-    var item = {
-      id: event.target.dataset.id,
-      price: event.target.dataset.price,
-      quantity: 1
-    };
-    addToCart(item); // Додаємо товар до кошика
-  }
-}); //accordion
+initializeCatalog(); //accordion
 
-fetch(dataJsonUrl).then(function (response) {
+fetch('../data/data_ukr.json').then(function (response) {
   return response.json();
 }).then(function (data) {
   var cars = data.Sheet1.filter(function (item) {
     return item.markaavto && item.model && item.god;
-  }) // Исключаем записи с null или пустыми значениями
-  .map(function (item) {
+  }).map(function (item) {
     return {
-      markaavto: item.markaavto.trim(),
-      // Убираем пробелы
-      model: item.model.trim(),
-      // Убираем пробелы
-      god: item.god // Год должен быть числом
+      markaavto: item.markaavto,
+      model: item.model,
+      god: item.god // Добавляем год для передачи в ссылку
 
     };
-  }); // Группируем данные по маркам
-
+  });
   var carAccordionData = cars.reduce(function (acc, car) {
     if (!acc[car.markaavto]) {
-      acc[car.markaavto] = new Set();
+      acc[car.markaavto] = {};
     }
 
-    acc[car.markaavto].add(JSON.stringify({
-      model: car.model,
-      god: car.god
-    }));
+    if (!acc[car.markaavto][car.model]) {
+      acc[car.markaavto][car.model] = new Set(); // Используем Set для уникальных годов
+    }
+
+    acc[car.markaavto][car.model].add(car.god); // Добавляем только уникальные года
+
     return acc;
   }, {});
   var accordionContainer = document.getElementById('carAccordion');
-  accordionContainer.innerHTML = ''; // Очищаем контейнер перед добавлением элементов
 
   var _loop = function _loop() {
     var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
@@ -333,27 +315,44 @@ fetch(dataJsonUrl).then(function (response) {
     makeHeader.textContent = make;
     makeHeader.classList.add('accordion-header');
     makeHeader.addEventListener('click', function () {
+      var modelList = this.nextElementSibling;
       modelList.classList.toggle('active');
     });
     makeDiv.appendChild(makeHeader);
     var modelList = document.createElement('div');
     modelList.classList.add('accordion-content');
-    models.forEach(function (modelData) {
-      var _JSON$parse = JSON.parse(modelData),
-          model = _JSON$parse.model,
-          god = _JSON$parse.god;
 
-      if (model && god) {
-        // Пропускаем, если модель или год null или пустые
-        var modelItem = document.createElement('p');
-        modelItem.textContent = "".concat(model, " (").concat(god, ")");
-        modelItem.classList.add('model-item');
-        modelItem.addEventListener('click', function () {
-          window.location.href = "./car-page.html?make=".concat(make, "&model=").concat(model, "&year=").concat(god);
+    var _loop2 = function _loop2() {
+      var _Object$entries2$_i = _slicedToArray(_Object$entries2[_i2], 2),
+          model = _Object$entries2$_i[0],
+          years = _Object$entries2$_i[1];
+
+      var modelHeader = document.createElement('h4');
+      modelHeader.textContent = model;
+      modelHeader.classList.add('model-header');
+      modelHeader.addEventListener('click', function () {
+        var yearList = this.nextElementSibling;
+        yearList.classList.toggle('active');
+      });
+      modelList.appendChild(modelHeader);
+      var yearList = document.createElement('div');
+      yearList.classList.add('year-list');
+      years.forEach(function (year) {
+        var yearItem = document.createElement('p');
+        yearItem.textContent = "\u0413\u043E\u0434: ".concat(year);
+        yearItem.classList.add('year-item');
+        yearItem.addEventListener('click', function () {
+          window.location.href = "./car-page.html?make=".concat(make, "&model=").concat(model, "&year=").concat(year);
         });
-        modelList.appendChild(modelItem);
-      }
-    });
+        yearList.appendChild(yearItem);
+      });
+      modelList.appendChild(yearList);
+    };
+
+    for (var _i2 = 0, _Object$entries2 = Object.entries(models); _i2 < _Object$entries2.length; _i2++) {
+      _loop2();
+    }
+
     makeDiv.appendChild(modelList);
     accordionContainer.appendChild(makeDiv);
   };
@@ -421,58 +420,23 @@ fetch('../data/data_ukr.json').then(function (response) {
   return console.error('Помилка завантаження даних:', error);
 }); //cart
 
-document.addEventListener("DOMContentLoaded", function () {
-  var continueShoppingBtn = document.getElementById("continueShopping");
-  var addToCartBtns = document.querySelectorAll('.add-to-cart'); // Обработчик для кнопки "Продолжить покупки"
+document.addEventListener('click', function (event) {
+  if (event.target.classList.contains('add-to-cart')) {
+    var item = {
+      id: event.target.dataset.id,
+      // ID товара
+      name: event.target.dataset.name,
+      // Название товара
+      price: parseFloat(event.target.dataset.price || 0),
+      // Цена товара
+      quantity: 1,
+      // Количество товара (по умолчанию 1)
+      photo: event.target.dataset.photo // Фото товара
 
-  if (continueShoppingBtn) {
-    continueShoppingBtn.addEventListener("click", function () {
-      window.location.href = "catalog.html"; // Переход на страницу каталога товаров
-    });
-  } // Обработчик для кнопок добавления в корзину
-
-
-  addToCartBtns.forEach(function (btn) {
-    btn.addEventListener("click", function () {
-      var item = {
-        id: this.dataset.id,
-        name: this.dataset.name,
-        price: this.dataset.price,
-        quantity: 1 // Количество товара (можно сделать настраиваемым)
-
-      };
-      addToCart(item); // Добавление товара в корзину
-    });
-  });
-}); // Функция для отображения модального окна
-
-function showCartModal() {
-  var modal = document.getElementById("cartModal");
-  var overlay = document.querySelector(".page-overlay");
-
-  if (modal && overlay) {
-    modal.classList.remove("hidden");
-    overlay.style.display = "block";
+    };
+    addToCart(item); // Добавляем товар в корзину
   }
-} // Функция для закрытия модального окна
-
-
-function closeCartModal() {
-  var modal = document.getElementById("cartModal");
-  var overlay = document.querySelector(".page-overlay");
-
-  if (modal && overlay) {
-    modal.classList.add("hidden");
-    overlay.style.display = "none";
-  }
-} // Функция для перехода к оформлению заказа
-
-
-function proceedToCheckout() {
-  closeCartModal();
-  window.location.href = "cart.html";
-} // Функция для добавления товара в корзину
-
+}); // Функция для добавления товара в корзину
 
 function addToCart(item) {
   var cart = JSON.parse(sessionStorage.getItem("cart")) || [];
@@ -482,11 +446,49 @@ function addToCart(item) {
 
   if (existingItemIndex > -1) {
     cart[existingItemIndex].quantity += 1;
+  } else {
     cart.push(item);
   }
 
   sessionStorage.setItem("cart", JSON.stringify(cart));
+  console.log('Корзина обновлена:', cart);
   showCartModal();
+} // Функция для отображения модального окна
+
+
+function showCartModal() {
+  var modal = document.getElementById("cartModal");
+  var overlay = document.querySelector(".overlay");
+
+  if (modal && overlay) {
+    console.log("Показываем модальное окно"); // Для проверки
+
+    modal.classList.remove("hidden");
+    overlay.style.display = "block"; // Проверим текущие стили модального окна
+
+    console.log("Стили модального окна:", window.getComputedStyle(modal));
+  } else {
+    console.error('Модальное окно или затемняющий фон не найдены!');
+  }
+} // Функция для закрытия модального окна
+
+
+function closeCartModal() {
+  var modal = document.getElementById("cartModal");
+  var overlay = document.querySelector(".overlay");
+
+  if (modal && overlay) {
+    modal.classList.add("hidden");
+    overlay.style.display = "none";
+  } else {
+    console.error('Модальное окно или затемняющий фон не найдены!');
+  }
+} // Функция для перехода к оформлению заказа
+
+
+function proceedToCheckout() {
+  closeCartModal();
+  window.location.href = "cart.html";
 } //header
 
 
@@ -537,4 +539,124 @@ document.querySelectorAll('.submenu a').forEach(function (link) {
     var pageUrl = "catalog-template.html?brand=".concat(brand);
     window.location.href = pageUrl;
   });
+}); //form
+
+document.addEventListener('DOMContentLoaded', function () {
+  var form = document.getElementById('feedback_form');
+  var nameFld = document.getElementById('exampleInputName');
+  var telFld = document.getElementById('exampleInputTel');
+
+  if (!form || !nameFld || !telFld) {
+    console.error('Form or fields not found!');
+    return;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var name = nameFld.value ? nameFld.value.trim() : '';
+    var tel = telFld.value ? telFld.value.trim() : '';
+    var errors = []; // Очистка классов ошибок
+
+    nameFld.classList.remove('is-invalid');
+    telFld.classList.remove('is-invalid');
+
+    if (name === '') {
+      errors.push("Введіть, будь ласка, Ваше ім'я");
+      nameFld.classList.add('is-invalid');
+    } else if (name.length < 2) {
+      errors.push('Ваше ім\'я занадто коротке');
+      nameFld.classList.add('is-invalid');
+    }
+
+    if (tel === '' || tel.length < 17) {
+      errors.push('Введіть, будь ласка, правильний номер телефону');
+      telFld.classList.add('is-invalid');
+    }
+
+    if (errors.length > 0) {
+      toast.error(errors.join('. '));
+      return;
+    }
+
+    var CHAT_ID = '-1002278785620';
+    var BOT_TOKEN = '8046931960:AAHhJdRaBEv_3zyB9evNFxZQlEdiz8FyWL8';
+    var message = "<b>\u0406\u043C'\u044F: </b> ".concat(name, "\r\n<b>\u0422\u0435\u043B\u0435\u0444\u043E\u043D: </b>").concat(tel);
+    var url = "https://api.telegram.org/bot".concat(BOT_TOKEN, "/sendMessage?chat_id=").concat(CHAT_ID, "&text=").concat(encodeURIComponent(message), "&parse_mode=HTML");
+    fetch(url, {
+      method: 'POST'
+    }).then(function (response) {
+      return response.json();
+    }).then(function (data) {
+      if (data.ok) {
+        nameFld.value = '';
+        telFld.value = '';
+        toast.success('Ваше повідомлення успішно надіслано.');
+      } else {
+        toast.error('Сталася помилка.');
+      }
+    })["catch"](function (error) {
+      toast.error('Помилка: ' + error.message);
+    });
+  });
+
+  if (telFld) {
+    telFld.addEventListener('input', function (e) {
+      var input = e.target.value.replace(/\D/g, ''); // Удаляем все нецифровые символы
+
+      var prefix = '38'; // Префикс для Украины
+
+      var maxLength = 12; // Максимальная длина номера
+
+      if (!input.startsWith(prefix)) {
+        input = prefix + input;
+      }
+
+      if (input.length > maxLength) {
+        input = input.substring(0, maxLength);
+      }
+
+      var formattedInput = '+38';
+
+      if (input.length > 2) {
+        formattedInput += ' (' + input.substring(2, 5);
+      }
+
+      if (input.length > 5) {
+        formattedInput += ') ' + input.substring(5, 8);
+      }
+
+      if (input.length > 8) {
+        formattedInput += '-' + input.substring(8, 10);
+      }
+
+      if (input.length > 10) {
+        formattedInput += '-' + input.substring(10, 12);
+      }
+
+      var cursorPosition = e.target.selectionStart;
+      var prevLength = e.target.value.length;
+      var newLength = formattedInput.length;
+      var diff = newLength - prevLength;
+      e.target.value = formattedInput;
+
+      if (diff > 0 && cursorPosition >= prevLength) {
+        e.target.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
+      } else if (diff < 0 && cursorPosition > newLength) {
+        e.target.setSelectionRange(newLength, newLength);
+      } else {
+        e.target.setSelectionRange(cursorPosition, cursorPosition);
+      }
+    });
+  }
+
+  nameFld.addEventListener('input', function (e) {
+    var input = e.target.value;
+    e.target.value = input.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
+  });
+  var currentYear = new Date().getFullYear();
+  var yearElement = document.getElementById('year');
+
+  if (yearElement) {
+    yearElement.textContent = currentYear;
+  }
 });

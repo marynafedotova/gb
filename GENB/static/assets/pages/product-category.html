@@ -48,18 +48,17 @@
         <li><a href="abuotus.html" target="_parent">Про нас</a></li>
         <li><a href="news.html" target="_parent">Статті та новини</a></li>
         <li>
-          <          <div class="account">
+          <div class="account">
             <ul>
               <!-- <li><img src="../img/person-circle-fill-svgrepo-com.svg" alt=""></li> -->
-              <li><a href="cart.html" target="_parent" rel="noopener noreferrer"><img src="../img/cart-large-svgrepo-com.svg" alt="cart"></a></li>
+              <li><a href="cart.html" target="_parent" rel="noopener noreferrer"><img
+                    src="../img/cart-large-svgrepo-com.svg" alt="cart"></a></li>
             </ul>
           </div>
           <div class="search-container">
             <form id="search-form-m">
               <input type="text" id="search-input-m" placeholder="Пошук..." name="search">
-              <button id="search-btn-m" type="submit"><img src="../img/search.svg
-"
-                alt=""></button>
+              <button id="search-btn-m" type="submit"><img src="../img/search.svg" alt=""></button>
             </form>
           </div>
         </li>
@@ -70,7 +69,6 @@
     <header>
       <div class="header-container">
         <div class="logo"><a href="../../index.html"><img src="../img/logo.svg" alt="logo"></a>
-
         </div>
         <div class="tel">
           <ul>
@@ -89,16 +87,18 @@
                   src="../img/tiktok-fill-svgrepo-com.svg" alt="link tik-tok"></a></li>
           </ul>
         </div>
-      <div class="account">
+        <div class="account">
           <ul>
             <!-- <li><img src="../img/person-circle-fill-svgrepo-com.svg" alt=""></li> -->
-            <li><a href="cart.html" target="_parent" rel="noopener noreferrer"><img src="../img/cart-large-svgrepo-com.svg" alt="cart"></a></li>
+            <li><a href="cart.html" target="_parent" rel="noopener noreferrer"><img
+                  src="../img/cart-large-svgrepo-com.svg" alt="cart"></a></li>
           </ul>
         </div>
         <div class="language">
           <ul>
-             <li><a href=""></a><img src="../img/russia.svg" alt="ru lamguage"></li>
-<li><img src="../img/ukraine.svg" alt="ua language"></li>          </ul>
+            <li><a href=""></a><img src="../img/russia.svg" alt="ru lamguage"></li>
+            <li><img src="../img/ukraine.svg" alt="ua language"></li>
+          </ul>
         </div>
       </div>
       <div class="nav-container">
@@ -129,20 +129,16 @@
             <li><a href="contacts.html" target="_parent">Контакти</a></li>
             <li><a href="abuotus.html" target="_parent">Про нас</a></li>
             <li><a href="news.html" target="_parent">Статті та новини</a></li>
-
             <li>
               <div class="search-container">
                 <form id="search-form">
                   <input type="text" id="search-input" placeholder="Пошук..." name="search">
-                  <button id="search-btn" type="submit"><img src="../img/search.svg
-"
-                      alt=""></button>
+                  <button id="search-btn" type="submit"><img src="../img/search.svg" alt=""></button>
                 </form>
               </div>
             </li>
           </ul>
         </nav>
-
         <div class="hamburger-wrap">
           <button id="hamb-btn" class="hamburger hamburger--squeeze" type="button">
             <span class="hamburger-box">
@@ -150,37 +146,23 @@
             </span>
           </button>
         </div>
-
       </div>
     </header>
     <main>
       <section id="search-res">
         <div class="container">
-          <div class="search-results"></div> 
+          <div class="search-results"></div>
           <div class="btn-res">
             <a href="#" class="load-more-search" style="display: none;">Завантажити більше</a>
           </div>
         </div>
       </section>
-
       <section>
-        <div >
-          <div id="parts-container" class="container">
+        <div class="container">
+          <div class="product-list">
           </div>
-
+        </div>
       </section>
-            <!-- Модальное окно -->
-            <div class="page-overlay" style="display: none;"></div> <!-- Затемняющий фон -->
-            <div id="cartModal" class="modal hidden">
-              <div class="modal-content">
-                <h3>Товар доданий у кошик!</h3>
-                <p>Ви бажаєте продовжити покупки або оформити замовлення.</p>
-                <div class="modal-buttons">
-                  <button onclick="closeCartModal()">Продовжити покупки</button>
-                  <button onclick="proceedToCheckout()">Оформити замовлення</button>
-                </div>
-              </div>
-            </div>      
     </main>
     <footer>
       <div class="container">
@@ -218,7 +200,7 @@
         <div class="form-footer">
           <div class="text-form wow animate__animated animate__fadeInRight">Якщо у Вас виникла складність із замовленням
             або з якістю обслуговування – заповніть просту форму. Ми вирішуватимемо Ваше питання.</div>
-          <form id="feedback_form"  method="post">
+          <form id="feedback_form" method="post">
             <div class="name">
               <input type="text" id="exampleInputName" name="name" placeholder="Ім'я">
             </div>
@@ -228,7 +210,8 @@
 
             <button type="submit" class="btn-primary">Відправити</button>
           </form>
-        </div>      </div>
+        </div>
+      </div>
     </footer>
     <div class="footer-menu">
       <div class="container">
@@ -247,17 +230,27 @@
           <div class="f-link"><a href="https://www.work.ua/jobs/by-company/2506907/" target="_blank"
               rel="nofollow">Вакансії</a></div>
         </div>
-        <script src="../js/jquery/jquery-3.7.1.min.js"></script>
-        <script src="../js/wow.min.js"></script>
-        <script src="../js/toast.js"></script>
-        <!-- <script src="../js/cart.js"></script> -->
-        <script src="../js/product-category.js"></script>
-        <script src="../js/helpers.js"></script>
-
       </div>
       <span id="copyright">© <span id="year"></span> My Web Genius</span>
-
     </div>
+    <!-- Модальне вікно корзини-->
+    <div class="overlay" style="display: none;"></div>
+    <div id="cartModal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Товар доданий у кошик!</h3>
+        <p>Ви бажаєте продовжити покупки або оформити замовлення.</p>
+        <div class="modal-buttons">
+          <button id="continueShopping" onclick="closeCartModal()">Продовжити покупки</button>
+          <button id="checkout" onclick="proceedToCheckout()">Оформити замовлення</button>
+        </div>
+      </div>
+    </div>
+    <script src="../js/jquery/jquery-3.7.1.min.js"></script>
+    <script src="../js/wow.min.js"></script>
+    <script src="../js/toast.js"></script>
+    <script src="../js/lazyload.min.js"></script>
+    <script src="../js/product-category.js"></script>
+    <script src="../js/helpers.js"></script>
   </div>
 </body>
 

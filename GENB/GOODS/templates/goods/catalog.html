@@ -13,7 +13,7 @@
 {% block hero-section %}
 <!-- hero-section -->
 <section id="first-section">
-  <h1>{% trans "Розбирання автомобілів з США 'Gen Brothers'. Низькі ціни." %}</h1>
+  <h1>{% trans "Розборка Gen Brothers" %}</h1>
   <div class="container ">
     <div id="carAccordion">
       <div class="accordion-item">
@@ -69,6 +69,7 @@
           <img src="{{ product.photo.url }}" alt="">
           {% endif %}
           <h3>{% trans "Артикул:" %} {{ product.display_sku }}</h3>
+          <h4></h4> 
           <p>{% trans "Ціна:" %} {{ product.price }}</p>
           <div class="btn-cart">
             <button class="add-to-cart" data-id="{{ product.id }}" data-price="{{ product.price }}" data-name="{{ product.display_sku }}" data-photo="{{ product.photo.url }}">

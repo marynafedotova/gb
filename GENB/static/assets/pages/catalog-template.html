@@ -131,8 +131,7 @@
               <div class="search-container">
                 <form id="search-form">
                   <input type="text" id="search-input" placeholder="Пошук..." name="search">
-                  <button id="search-btn" type="submit"><img src="../img/search.svg
-"
+                  <button id="search-btn" type="submit"><img src="../img/search.svg"
                       alt=""></button>
                 </form>
               </div>
@@ -163,21 +162,11 @@
         <div class="container">
           <h1 id="brand-title">Заголовок бренда</h1>
           <p id="brand-description">Описание бренда</p>
-          <div id="content"></div>
+          <div id="content">
+            <div id="cars-catalog" class="cars-catalog"></div>
+          </div>
         </div>
       </section>
-            <!-- Модальное окно -->
-            <div class="page-overlay" style="display: none;"></div> <!-- Затемняющий фон -->
-            <div id="cartModal" class="modal hidden">
-              <div class="modal-content">
-                <h3>Товар добавлен в корзину!</h3>
-                <p>Ви бажаєте продовжити покупки або оформити замовлення.</p>
-                <div class="modal-buttons">
-                  <button onclick="closeCartModal()">Продолжить покупки</button>
-                  <button onclick="proceedToCheckout()">Оформить заказ</button>
-                </div>
-              </div>
-            </div>
     </main>
     <footer>
       <div class="container">
@@ -245,10 +234,23 @@
       </div>
       <span id="copyright">© <span id="year"></span> My Web Genius</span>
     </div>
+        <!-- Модальне вікно корзини--> 
+        <div class="overlay" style="display: none;"></div> ->
+        <div id="cartModal" class="modal hidden">
+          <div class="modal-content">
+            <h3>Товар доданий у кошик!</h3>
+            <p>Ви бажаєте продовжити покупки або оформити замовлення.</p>
+            <div class="modal-buttons">
+              <button id="continueShopping" onclick="closeCartModal()">Продовжити покупки</button>
+              <button id="checkout" onclick="proceedToCheckout()">Оформити замовлення</button>
+            </div>
+          </div>
+        </div>    
         <script src="../js/jquery/jquery-3.7.1.min.js"></script>
         <script src="../js/wow.min.js"></script>
         <script src="../js/toast.js"></script>
         <script src="../js/catalog_template.js"></script>
+        <script src="../js/helpers.js"></script>
   </div>
 </body>
 

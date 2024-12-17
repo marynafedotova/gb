@@ -414,7 +414,6 @@ h1{
       display: none;
     }
   }
-  
   .container {
     display: flex;
     flex-direction: column;
@@ -426,8 +425,8 @@ h1{
       .sidebar_filter{
         top: 8%;
         border-radius: 16px;
-        width: 25%;
-        left: 4%;
+        width: 400px;
+        left: 30px;
         padding: 16px;
         display: flex;
         flex-direction: column;
@@ -572,18 +571,19 @@ h1{
           height: 100%;
 
           .slide-top {
-            padding-bottom: 10px;
-
-            .image-gallery {
-              display: flex;
-              flex-direction: row;
-              flex-wrap: wrap;
-              justify-content: space-evenly;
-
-              a > img {
-                width: 180px;
+            margin-bottom: 16px;
+              a {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                color: $ForestGreen;
+                font-weight: 600;
+                img{
+                  width: 185px;
+                }
               }
-            }
+
           }
 
           .title {
@@ -594,7 +594,7 @@ h1{
 
           .vehicle-details {
             text-align: left;
-
+            color: $color--porcelain;
             p {
               display: flex;
               justify-content: space-between;
@@ -753,7 +753,7 @@ h1{
   border: 2px solid red;
 }
 .is-invalid {
-  border: 2px solid red;
+  border: 2px solid red !important;
 }
 footer{
   border-top: 1px solid #579816;
@@ -890,7 +890,6 @@ li {
 #search-res{
   text-align: center;
   .container{
-    height: 10px;
     .btn-res{
       padding: 24px 40%;
       .load-more-search{
@@ -900,8 +899,12 @@ li {
         padding: 16px 24px;
         border: 1px solid $color--gray;
         border-radius: 8px;
+        &:hover{
+          scale: 1.1;
+          color: $ForestGreen;
+        background-color: $color--porcelain;
+        }
       }
-  
     }
     .search-results{
       display: flex;
@@ -909,6 +912,7 @@ li {
       flex-wrap: wrap;
       gap: 10px;
       justify-content: space-between;
+
       .product-card{
         border: 1px solid $ForestGreen; 
         border-radius: 8px; 
@@ -1166,13 +1170,22 @@ font-weight: 700;
         height: 510px !important;
       }
       li {
-
         margin-bottom: 5px;
       }
     }
   }
 
 }
+.modal,
+.overlay-feedback-modal {
+  display: none; 
+}
+
+.modal.active,
+.overlay-feedback-modal.active {
+  display: block; 
+}
+
 .modal {
   display: none;
   position: fixed;
@@ -1190,159 +1203,352 @@ font-weight: 700;
   display: block; 
 }
 
-.overlay {
-  display: none;
+.overlay.active {
+  display: block;
+}
+.overlay-feedback-modal {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7); /* Прозрачный черный фон */
-  z-index: 999; /* Чуть ниже модального окна */
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);  
+  display: none;
+  z-index: 999;  
 }
 
-.overlay.active {
-  display: block; /* Активное состояние overlay */
-}
-
-
-#feedback-modal .modal-content{
-  background-color: $color--oslo-gray;
-padding-top: 20px;
-width: 100%;
-  .feedback-header{
-    text-align: center;
-    padding-bottom: 30px;
-    border-bottom: 1px solid $ForestGreen;
-    .feedback-title{
-      text-transform: uppercase;
-      color: $color--porcelain;
-      font-weight: 700;
-      margin-left: 38%;
-      margin-right: 40%;
-      font-size: 1.1rem;
-    }
-    .close-feedback{
-      background-color: $blue-gradient;
-      padding: 5px 8px;
-      border-radius: 5px;
-      &:hover{
-        background-color: $color--torch-green;
-      }
+#car-modal {
+  height: 100%;
+  width: 100%;
+  .container{
+    padding-top: 20%;
+    #car-order-modal{
+      .modal-content{
+        background-color: $color--oslo-gray;
+        z-index: 1000;
+        .car-order-header{
+          text-align: center;
+          padding: 16px 30px;
+          border-bottom: 1px solid $ForestGreen;
+          display: flex;
+          .car-order-title{
+            text-transform: uppercase;
+            color: $color--porcelain;
+            font-weight: 700;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            margin-top: 16px;
+          }
+          .close-feedback{
+            background-color: $ForestGreen;
+            padding: 8px 14px;
+            border-radius: 5px;
+            &:hover{
+              background-color: $color--torch-green;
+            }
+          }
+        }
+        #car-order-form_cars{
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          padding: 24px 16px;
+          justify-content: center;
+          gap: 16px;
+          .btn{
+            background-color: transparent;
+            padding: 0;
+          }
+          input, #comments{
+            width: 95%;
+            padding: 5px 0px 5px 8px;
+            border-radius: 5px;
+            &:focus{
+              border: $ForestGreen;
+            }
+          }
+          #comments{
+            width: 95%;
+            height: 100px;
+    
+          }
+          #btn-cars-order{
+            background-color: $ForestGreen;
+            padding: 10px 20px;
+            border: 1px solid $color--gray;
+            border-radius: 10px;
+            color: $color--porcelain;
+            text-transform: uppercase;
+            &:hover{
+              background-color: $color--porcelain;
+              color: $ForestGreen;
+            }
+          }
+        }
+        
+      }  
     }
   }
-  #feedback-form_cars{
-    display: flex;
-    flex-direction: wrap;
-    flex-wrap: wrap;
-    padding: 30px;
-    gap: 30px;
-    input, #comments{
-      width: 30%;
-      padding: 5px 0px 5px 8px;
-      border-radius: 5px;
-    }
-    #comments{
-      width: 80%;
-      height: 100px;
-    }
-    #btn-cars-order{
-      margin-top: 50px;
-      background-color: $ForestGreen;
-      padding: 10px 20px;
-      border: 1px solid $color--gray;
-      border-radius: 10px;
-      color: $color--porcelain;
-      text-transform: uppercase;
-      &:hover{
-        background-color: $color--porcelain;
-        color: $ForestGreen;
-      }
-    }
-  }
-  
 }
-.modal.active, #car-modal, #feedback-modal {
-  z-index: 1000000;
+.modal.active,  #feedback-modal {
+  z-index: 10000;
 }
 
 //modal cart
-/* Стиль для затемнения заднего фона */
-.page-overlay {
+.hidden {
   display: none;
+}
+
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 10;
+  z-index: 999;
 }
-
-/* Основной стиль модального окна */
 .modal {
-  display: none; /* скрыто по умолчанию */
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
-  background-color: #fff;
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 20;
-}
-
-/* Кнопки внутри модального окна */
-.modal-buttons button {
-  margin: 10px 5px;
-  padding: 10px;
-  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: block;
 }
 
 .hidden {
   display: none;
 }
+#cartModal{
+  width: 100%;
+  .modal-content {
+    text-align: center;
+    padding: 16px;
+    h3{
+      color: $background-color;
+    }
+      .modal-buttons {
+        margin-top: 15px;
+        transition: all .4s ease;
 
-/* Заголовок и текст */
-.modal-content p {
-  margin-bottom: 15px;
-  font-size: 18px;
-  color: #333;
+        #continueShopping {
+          background-color: $ForestGreen; 
+          color: white;
+          transition: background-color 0.3s;
+          border: 1px solid $color--porcelain;
+        }
+        
+        #continueShopping:hover {
+          background-color: $color--mine-shaft;
+          scale: 1.1;
+        }
+        
+        #checkout {
+          background-color: $color--porcelain; 
+          color: $background-color;
+          transition: background-color 0.3s;
+        }
+        
+        #checkout:hover {
+          background-color: $background-icon;
+          border: 1px solid $color--porcelain;
+          scale: 1.1;
+        }
+        
+      }
+    .modal-buttons button {
+      margin: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 8px;
+    }
+  }
+  
 }
 
-/* Кнопки */
-.modal-content button {
-  padding: 10px 20px;
-  margin: 5px;
+fieldset {
   border: none;
-  border-radius: 4px;
+}
+#cart{
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  #cartItems{
+    width: 45%;
+    padding-top: 24px;
+    .cart-item{
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1); 
+      padding: 16px;
+      margin-bottom: 8px;
+
+      .cart-controls{
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        button{
+          width: 34px;
+          height: 34px;
+          border-radius: 8px;
+          border: transparent;
+          transition: all .4s ease;
+          &:hover{
+            scale: 1.1;
+          }
+        }
+      }
+      .cart-list{
+        width: 250px;
+        .cart_item_tile{
+          font-weight: 700;
+          color: $ForestGreen;
+        }
+        .cart_item_price{
+          font-weight: 800;
+          font-size: 1.1rem;
+          padding: 8px;
+        }
+      }
+    }
+  }
+  .cart-data{
+    padding: 16px;
+    width: 50%;
+    box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1); 
+    margin: 32px;
+    .contacts-cart, .delivery-cart, .payment-cart{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    .contacts-title, .delivery-cart-title, .payment-cart-title{
+      width: 100%;
+      color: $ForestGreen;
+      font-weight: 700;
+    }
+    .contacts-cart{
+      form{
+        display: flex;
+        gap: 16px;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 24px;
+        flex-wrap: wrap;
+        .form-contacts-item{
+          display: flex;
+          flex-direction: column;
+          width: 45%;
+          padding: 16px;
+          input{
+            padding: 8px;
+            border-radius: 8px;
+            outline: none;
+            border: 2px solid $background-icon;
+            width: 100%;
+          }
+        }
+      }
+    }
+    .delivery-cart,.payment-cart{
+      padding: 16px;
+      .delivery-cart-title{
+        padding: 16px;
+      }
+      form{
+        fieldset{
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-between;
+          gap: 16px;
+        }
+      }
+    }
+    .delivery-cart{
+      #novaPostDepartment{
+        border-top: 1px solid $color--oslo-gray;
+        padding-top: 16px;
+        width: 500px;
+        #cityInput, #department{
+          width: 500px;
+        }
+      }
+      #novaPostDepartment #cityInput{
+        color: $black;
+        border-radius: 8px;
+        border: 1px solid $ForestGreen;
+        margin-bottom: 16px;
+        &::placeholder{
+          color: $background-color;
+        }
+      }
+      #novaPostDepartment #department{
+        padding: 8px;
+        border-radius: 8px;
+        border: 1px solid $ForestGreen;
+      }
+      #addressDelivery{
+        width: 100%;
+      }
+    }
+  }
+}
+.btn-send{
+  text-align: center;
+  padding-bottom: 100px;
+  #sendToTelegram{
+    padding: 8px 16px;
+    background-color: $ForestGreen;
+    width: 20%;
+    font-size: 1.3rem;
+    border: 1px solid $color--oslo-gray;
+    border-radius: 8px;
+  &:hover{
+    scale: 1.1;
+    background-color: $color--porcelain;
+  }
+  }
+  
+}
+.addressDeliveryScrean{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#addressDelivery .delivery-option.hidden {
+  display: none !important; 
+}
+
+.suggestions {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  position: absolute;
+  background-color: $background-icon;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.suggestions li {
+  padding: 10px;
   cursor: pointer;
-  font-size: 16px;
 }
 
-/* Кнопка "Продовжити покупку" */
-#continueShopping {
-  background-color: #4CAF50; /* Зеленый фон */
-  color: white;
-  transition: background-color 0.3s;
+.suggestions li:hover {
+  background-color: $color--oslo-gray;
 }
 
-#continueShopping:hover {
-  background-color: #45a049;
-}
-
-/* Кнопка "Оформлення замовлення" */
-#checkout {
-  background-color: #2196F3; /* Синий фон */
-  color: white;
-  transition: background-color 0.3s;
-}
-
-#checkout:hover {
-  background-color: #1e87d1;
-}
 
 /* Адаптивность: уменьшение размера окна на маленьких экранах */
 @media (max-width: 600px) {
@@ -1560,7 +1766,7 @@ width: 100%;
 
 .info-block{
   padding: 32px 0;
-  margin-bottom: 24px;
+  margin-bottom: 74px;
   box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1); 
   .info-header{
     display: flex;
@@ -1676,7 +1882,7 @@ width: 100%;
   display: flex;
   flex-direction: row;
     #carAccordion {
-      width: 18%;
+      width: 25%;
       padding: 16px;
       border-radius: 8px;
     }
@@ -1755,36 +1961,6 @@ width: 100%;
           }
         }
       }
-      #cars-catalog{
-        padding: 16px;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        .car-card{
-          background-color: $color--oslo-gray;
-          border: 1px solid $ForestGreen;
-          border-radius: 8px;
-          margin-bottom: 22px;
-          width: 24%;
-          aspect-ratio: 1;
-          padding: 16px;
-          display: flex;
-          flex-direction: column;
-          transition: all .5s ease;
-          justify-content: center;
-          img{
-            padding: 8px;
-            width: 200px;
-            object-fit:contain;
-            flex-grow: 1;
-          }
-          &:hover{
-            background-color: $ForestGreen;
-            border: 1px solid linear-gradient(to top right, rgba(215, 224, 217, 0.9), rgba(219, 171, 12, 0.7));
-          } 
-        }
-      }
     }
   }
 }
@@ -1808,8 +1984,80 @@ width: 100%;
   }
 }
 
-
-
+#cars-catalog{
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  .car-card{
+    background-color: #fff;
+    border: 1px solid $ForestGreen;
+    border-radius: 8px;
+    margin-bottom: 22px;
+    width: 24%;
+    aspect-ratio: 1;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    transition: all .5s ease;
+    justify-content: center;
+    color: $ForestGreen;
+      .view-details-btn{
+        text-align: center;
+        padding: 8px 24px;
+        margin-top: 16px;
+        background-color: $background-color;
+        color: $color--porcelain;
+        border-radius: 8px;
+        border: 1px solid $black;
+        width: 100%;
+        font-size: 1.2rem;
+        &:hover{
+          background-color: $ForestGreen;
+          border: 1px solid $color--porcelain;
+        }
+      }
+    
+    img{
+      padding: 8px;
+      width: 200px;
+      object-fit:contain;
+      flex-grow: 1;
+      margin: 0 auto;
+    }
+    &:hover{
+      cursor: pointer;
+      scale: 1.1;
+      border: 1px solid linear-gradient(to top right, rgba(215, 224, 217, 0.9), rgba(219, 171, 12, 0.7));
+    } 
+  }
+}
+#brand-title{
+  color: $ForestGreen;
+  margin-bottom: 24px;
+}
+#brand-description{
+  text-align: center;
+  margin-bottom: 24px;
+}
+.empty-cart-message{
+  margin: 54px auto;
+  text-align: center;
+  .link{
+    padding: 8px 16px;
+    background-color: $ForestGreen;
+    border-radius: 8px;
+    font-weight: 600;
+    margin: 0 16px;
+    transition: all .4s ease;
+    &:hover{
+      background-color: $color--porcelain;
+    }
+  }
+  
+}
 //about us
 .abuotus{
   h1{
@@ -2130,6 +2378,13 @@ h3{
   margin-bottom: 50px;
   gap: 48px;
   background-color: $color--mine-shaft;
+  .stan{
+    background-color: $ForestGreen;
+    width: 31%;
+    padding: 8px;
+    margin-left: 90%;
+    font-weight: 700;
+  }
   .product-name{
     padding-bottom: 16px;
   }
@@ -2147,6 +2402,14 @@ h3{
     {
       color: $color--porcelain;
     }
+  }
+  .product-title-item.articul{
+    justify-content: flex-end;
+    text-transform:uppercase;
+  }
+  .product-title-item.price{
+    padding: 16px;
+    font-size: 2rem;
   }
   .add-to-cart{
     margin-top: 16px;
@@ -2232,7 +2495,7 @@ h3{
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  z-index: 100;
 }
 
 .modal-window {
@@ -2242,6 +2505,7 @@ h3{
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+  z-index: 10000;
   p{
     padding: 16px;
     color: $color--porcelain;
@@ -2273,21 +2537,198 @@ h3{
     }
   }
 }
+.InOneClickoverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  display: none;
+}
 
+.buyInOneClick {
+  position: fixed;
+  top: 75%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  z-index: 1000;
+  display: none;
+  border-radius: 8px;
+}
+
+.modal-content{
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  h4{
+    color: $color--porcelain;
+    font-size: 1.2rem;
+    margin: auto;
+    padding-bottom: 16px;
+
+  }
+}
+.buyInOneClick form input,
+.buyInOneClick form textarea {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid $ForestGreen;
+  border-radius: 4px;
+}
+
+.buyInOneClick form button {
+  display: block;
+  width: 100%;
+  background-color: $ForestGreen;
+  border: none;
+  padding: 16px 24px;
+  margin: auto;
+  border-radius: 8px;
+  color: $color--porcelain;
+  font-size: 1.125rem;
+  &:hover{
+    background-color: $color--porcelain;
+    color: $ForestGreen;
+  }
+}
+
+//prodect-categoty pages
+.product-list{
+  width: 100%;
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  .product-card{
+    width: 24%;
+    border: 1px solid $ForestGreen; 
+    border-radius: 8px; 
+    padding: 15px; 
+    box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1); 
+    transition: transform 0.3s;
+    text-align: left;
+      display: flex;
+      flex-direction: column;
+    img {
+      max-width: 100%; 
+      height: auto; 
+      border-radius: 4px; 
+    }
+  
+    h3 {
+      margin: 10px 0;
+      font-size: 1rem;
+      flex-grow: 1; 
+    }
+  
+    p {
+      margin: 10px 0;
+      font-size: 1rem;
+      color: $background-icon; 
+    }
+    .btn-cart{
+      text-align: center;
+    }
+    .product_btn{
+    text-align: center;
+  
+      a {
+        display: inline-block; 
+        padding: 16px 47px;
+        background-color: $color--porcelain; 
+        color: $ForestGreen; 
+        text-align: center; 
+        border-radius: 8px; 
+        text-decoration: none; 
+        text-transform: uppercase;
+        font-weight: 600;
+    &:hover {
+      background-color: $background-icon;
+      color: $color--porcelain; 
+    }
+    
+  }
+    }
+    &:hover {
+      transform: translateY(-5px); 
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    }
+  }
+}
 //cars pages
+#car-info{
+ text-align: center;
+ padding: 16px;
+ h2{
+  color: $ForestGreen;
+  padding: 16px 24px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+ }
+ .car-info-card{
+  display: flex;
+  justify-content: space-around;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+  padding: 16px;
+  margin-bottom: 48px;
+  .car-info-img{
+    width: 700px;
+    border: 1ps solid $ForestGreen;
+    border-radius: 8px;
+
+    img{
+      border-radius: 8px;
+    }
+  }
+  .car-info-total{
+    margin:auto;
+    font-size: 1.5rem;
+    font-weight: 700;
+    .totalParts{
+      color: $ForestGreen;
+      font-weight: 800;
+      font-size: 4rem;
+    }
+  }
+ }
+}
 #tabs{
   padding-bottom: 100px;
   ul {
-    display: inline-flex;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
     li{
       display: block;
-      border: 1px solid $color--gray;
-      padding: 16px 8px;
+      border: 1px solid $color--porcelain;
+      border-radius: 8px;
+      padding: 16px 16px;
       text-align: center;
-
+      transition: all .4s ease;
       a{
         color: $ForestGreen;
         margin: 0 auto;
+        font-size: 1.2rem;
+        display: flex;
+        font-weight: 700;
+        .sum-details{
+          color: $color--porcelain;
+          padding: 0 8px;
+        }
+      }
+      &:hover{
+        background-color: $color--gray;
+        cursor: pointer;
+        a{
+          color:$color--porcelain;
+          .sum-details{
+            color: $ForestGreen;
+          }
+        }
       }
     }
   }
@@ -2301,7 +2742,11 @@ h3{
 }
 }
 // rwd
-
+@media (max-width: 1500px) {
+  #first-section_index .container .first_screan .sidebar_filter{
+    top:190px;
+  }
+}
 @media (max-width: 1400px) {
   
   .hamburger-wrap {
@@ -2310,31 +2755,95 @@ h3{
 
   header .nav-container nav ul {
     display: none;
+
   }
   header .header-container .tel ul li {
     gap: 10px;
     padding: 5px;
   }
   .menu-panel {
-    // width: 33%;
+    width: 33%;
     height: 100%;
   }
   header .header-container{
-    justify-content: center;
-    padding-bottom: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
   header .header-container .logo img {
-    display: none;
+    width: 130px;
+    object-fit: contain;
   }
+  header .account ul li img, header .language ul li img {
+    width: 0px;
+    height: 0;
+    display: none;
+}
   header .nav-container{
     padding-top: 0;
   }
 }
-@media screen and (max-width: 1220px) {
+@media screen and (max-width: 1270px) {
+  header .header-container .social-link ul li img {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+}
+header .language ul li{
+  height: 16px;
+  img{
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+  }
+}
+header .header-container .social-link ul li{
+  height: 20px;
+}
+    #first-section_index .container .first_screan .sidebar_filter{
+      top:150px;
+      width: 300px;
+      padding: 8px;
+      h2{
+        font-size: 1rem;
+      }
+      form select{
+        width: 280px;
+        font-size: 1rem;
+        height: 30px;
+        #search-sidebar{
+          margin-top: 8px;
+          padding: 8px;
+        } 
+      }
+      form {
+        margin-bottom: 8px;
+      }
+    }
   footer .container .schedule .work-time .time {
     font-size: 0.9rem;
 }
 }
+@media screen and (max-width: 1130px) {
+  #first-section_index .container .first_screan .sidebar_filter{
+    top: 8%;
+    position: relative;
+    margin: 0 auto;
+    width: 80%;
+    form select{
+      width: 100%;
+    }
+  }
+  #first-section_index .container .first_screan {
+    justify-content: center;
+  }
+}
+@media screen and (max-width: 700px) {
+  header .header-container .tel ul li a {
+    font-size: 0.8rem;
+}
+}
+
 @media (max-width: 860px) {
   .footer-menu .container .footer-links{
     flex-wrap: wrap;
@@ -2366,34 +2875,33 @@ h3{
   padding: 5px;
   }
 }
-
-@media (max-width: 320px) {
-  header {
-    padding: 5px 2px 0px;
-
-    .header-container {
-      .tel ul {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .social-link ul {
-        flex-direction: column;
-        align-items: center;
-        gap: 5px;
-      }
-
-      .logo img {
-        max-width: 80px;
-      }
-    }
-
-    .nav-container {
-      nav ul li a {
-        font-size: 0.8rem;
-      }
-    }
+/* Смартфони маленького розміру */
+@media (max-width: 480px) {
+  .container {
+    width: 95%;
+  }
+  .product-card {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  #cars-catalog .car-card {
+    width: 100%;
   }
 }
 
+/* Найменші пристрої */
+@media (max-width: 350px) {
+
+  .menu-panel {
+    width: 100%;
+  }
+  .product-card,
+  #cars-catalog .car-card {
+    width: 100%;
+  }
+  footer .container {
+    gap: 15px;
+    text-align: center;
+  }
+}
 

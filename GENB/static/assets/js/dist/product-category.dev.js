@@ -18,8 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
     model: model,
     year: year
   });
-  fetch('../data/data_ukr.json
-').then(function (response) {
+  fetch('../data/data_ukr.json').then(function (response) {
     return response.json();
   }).then(function (data) {
     var carsArray = data.Sheet1.map(function (car) {
@@ -71,17 +70,46 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
-    var partsContainer = document.getElementById('parts-container');
+    var partsContainer = document.querySelector('.product-list');
 
     if (filteredParts.length > 0) {
       partsContainer.innerHTML = "\n          ".concat(alternativeMessage ? "<p>".concat(alternativeMessage, "</p>") : '', "\n          ").concat(filteredParts.map(function (part) {
-        return "\n            <div class=\"part-item\">\n              <h3>".concat(part.zapchast, "</h3>\n              <p>\u0426\u0456\u043D\u0430: ").concat(part.zena, " ").concat(part.valyuta, "</p>\n              <p>\u0420\u0456\u043A \u0432\u0438\u043F\u0443\u0441\u043A\u0443: ").concat(part.god, "</p>\n              <a href=\"product.html?id=").concat(part.ID_EXT, "\">\u041F\u0435\u0440\u0435\u0433\u043B\u044F\u043D\u0443\u0442\u0438 \u0434\u0435\u0442\u0430\u043B\u0456</a>\n            </div>\n          ");
+        return "\n            <div class=\"product-card\">\n              <img src=\"".concat(part.photo.split(',')[0].trim(), "\" alt=\"").concat(part.zapchast, "\" width=\"100%\">\n              <h2>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(part.ID_EXT, "</h2>\n              <h3>").concat(part.zapchast, "</h3>\n              <p>\u0426\u0456\u043D\u0430: ").concat(part.zena, " ").concat(part.valyuta, " / ").concat((parseFloat(part.zena) * usdToUahRate).toFixed(2), " \u0433\u0440\u043D</p>\n              <div class=\"btn-cart\">\n                <button class=\"add-to-cart\" \n                        data-id=\"").concat(part.ID_EXT, "\"\n                        data-price=\"").concat(part.zena, "\"\n                        data-name=\"").concat(part.zapchast, "\"\n                        data-photo=\"").concat(part.photo, "\">\n                  \u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430\n                </button>\n              </div>\n              <div class=\"product_btn\">\n                <a href=\"product.html?id=").concat(part.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n              </div>\n            </div>\n          ");
       }).join(''), "\n        ");
     } else {
       partsContainer.innerHTML = "<p>Запчастини для цієї категорії не знайдені.</p>";
     }
+
+    fetch('https://api.monobank.ua/bank/currency').then(function (response) {
+      return response.json();
+    }).then(function (currencyData) {
+      var usdRate = currencyData.find(function (currency) {
+        return currency.currencyCodeA === 840 && currency.currencyCodeB === 980;
+      });
+
+      if (!usdRate) {
+        throw new Error('Курс валюты не знайдено');
+      }
+
+      var usdToUahRate = usdRate.rate; // Курс USD → UAH
+
+      var parts = document.querySelectorAll('.product-card');
+      parts.forEach(function (part) {
+        var priceElement = part.querySelector('p'); // Ищем элемент p с ценой
+
+        if (priceElement) {
+          var priceInUsd = parseFloat(part.zena); // Конвертация строки в число
+
+          var priceInUah = (priceInUsd * usdToUahRate).toFixed(2); // Конвертируем цену в гривны
+
+          priceElement.textContent = "\u0426\u0456\u043D\u0430: ".concat(priceInUsd, " ").concat(part.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D"); // Обновляем текст цены
+        }
+      });
+    })["catch"](function (error) {
+      console.error('Ошибка при получении курса валюты:', error); // Обработать ошибки при отсутствии курса
+    });
   })["catch"](function (error) {
     console.error('Помилка при завантаженні даних:', error);
-    document.getElementById('parts-container').innerHTML = "<p>Помилка при завантаженні даних.</p>";
+    document.querySelector('.product-list').innerHTML = "<p>Помилка при завантаженні даних.</p>";
   });
 });

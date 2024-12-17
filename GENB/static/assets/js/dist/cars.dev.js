@@ -1,6 +1,6 @@
 "use strict";
 
-fetch(dataJsonUrl).then(function (response) {
+fetch('../data/cars.json').then(function (response) {
   return response.json();
 }).then(function (data) {
   createTable(data.cars_in_transit);
@@ -12,7 +12,7 @@ function createTable(cars) {
   var tableContainer = document.getElementById('cars-table');
 
   if (!tableContainer) {
-    console.error('Таблиця не найдена в DOM');
+    console.error('Таблиця не знайдена в DOM');
     return;
   }
 
@@ -28,7 +28,7 @@ function createTable(cars) {
     carLink.textContent = car.model;
     carLink.addEventListener('click', function (event) {
       event.preventDefault();
-      toggleAccordion(car, row);
+      toggleAccordion(row);
     });
     wrapperDiv.appendChild(carLink);
     nameCell.appendChild(wrapperDiv);
@@ -36,18 +36,16 @@ function createTable(cars) {
     var bookingCell = document.createElement('td');
     var bookingButton = document.createElement('button');
     bookingButton.textContent = "Забронювати";
-    bookingButton.addEventListener('click', function (event) {
-      event.preventDefault();
-      openFeedbackModal();
+    bookingButton.addEventListener('click', function () {
+      return openModal(car.model);
     });
-    bookingCell.appendChild(bookingButton); // row.appendChild(nameCell);
-
+    bookingCell.appendChild(bookingButton);
     row.appendChild(bookingCell);
     tbody.appendChild(row);
     var accordionRow = document.createElement('tr');
     var accordionCell = document.createElement('td');
     accordionCell.colSpan = 2;
-    accordionCell.innerHTML = "\n      <div class=\"accordion-content\" style=\"display: none;\">\n        <div class=\"car-deteils\">\n        <h3>\u041C\u043E\u0434\u0435\u043B\u044C: ".concat(car.model, "</h3>\n        <ul>\n          <li><div class=\"cardeteils-item\">\u0420\u0456\u043A \u0432\u0438\u043F\u0443\u0441\u043A\u0443: </div> ").concat(car.year, "</li>\n          <li><div class=\"cardeteils-item\">\u0410\u0443\u043A\u0446\u0456\u043E\u043D:</div> ").concat(car.auction, "</li>\n          <li><div class=\"cardeteils-item\">\u0414\u0430\u0442\u0430 \u043F\u0440\u043E\u0434\u0430\u0436\u0443:</div> ").concat(car.sale_date, "</li>\n          <li><div class=\"cardeteils-item\">VIN:</div> ").concat(car.vin, "</li>\n          <li><div class=\"cardeteils-item\">\u0421\u0442\u0430\u043D:</div> ").concat(car.status, "</li>\n          <li><div class=\"cardeteils-item\">\u0414\u0432\u0438\u0433\u0443\u043D:</div> ").concat(car.engine, "</li>\n          <li><div class=\"cardeteils-item\">\u041F\u0440\u043E\u0431\u0456\u0433:</div> ").concat(car.mileage, "</li>\n          <li><div class=\"cardeteils-item\">\u041F\u0440\u043E\u0434\u0430\u0432\u0435\u0446\u044C:</div> ").concat(car.seller, "</li>\n          <li><div class=\"cardeteils-item\">\u041C\u0456\u0441\u0446\u0435 \u043F\u0440\u043E\u0434\u0430\u0436\u0443:</div> ").concat(car.location, "</li>\n          <li><div class=\"cardeteils-item\">\u041E\u0441\u043D\u043E\u0432\u043D\u0435 \u0443\u0448\u043A\u043E\u0434\u0436\u0435\u043D\u043D\u044F:</div> ").concat(car.primary_damage, "</li>\n          <li><div class=\"cardeteils-item\">\u0414\u0440\u0443\u0433\u043E\u0440\u044F\u0434\u043D\u0435 \u043F\u043E\u0448\u043A\u043E\u0434\u0436\u0435\u043D\u043D\u044F:</div> ").concat(car.secondary_damage, "</li>\n          <li><div class=\"cardeteils-item\">\u041E\u0446\u0456\u043D\u043E\u0447\u043D\u0430 \u0432\u0430\u0440\u0442\u0456\u0441\u0442\u044C:</div> ").concat(car.estimated_value, "</li>\n          <li><div class=\"cardeteils-item\">\u0426\u0456\u043D\u0430 \u0440\u0435\u043C\u043E\u043D\u0442\u0443:</div> ").concat(car.repair_cost, "</li>\n          <li><div class=\"cardeteils-item\">\u041A\u043E\u0440\u043E\u0431\u043A\u0430 \u043F\u0435\u0440\u0435\u0434\u0430\u0447:</div> ").concat(car.transmission, "</li>\n          <li><div class=\"cardeteils-item\">\u041A\u043E\u043B\u0456\u0440 \u043A\u0443\u0437\u043E\u0432\u0430:</div> ").concat(car.color, "</li>\n          <li><div class=\"cardeteils-item\">\u041F\u0440\u0438\u0432\u0456\u0434:</div> ").concat(car.drive, "</li>\n        </ul>\n        </div>\n         <div id=\"car-slider\">\n        <ul id=\"image-slider-").concat(car.vin, "\" class=\"image-slider\"></ul>\n      </div>\n    ");
+    accordionCell.innerHTML = "\n      <div class=\"accordion-content\" style=\"display: none;\"> \n      <div class=\"car-deteils\">\n        <h3>\u041C\u043E\u0434\u0435\u043B\u044C: ".concat(car.model, "</h3>\n        <ul>\n          <li><div class=\"cardeteils-item\">\u0420\u0456\u043A \u0432\u0438\u043F\u0443\u0441\u043A\u0443: </div> ").concat(car.year, "</li>\n          <li><div class=\"cardeteils-item\">\u0410\u0443\u043A\u0446\u0456\u043E\u043D:</div> ").concat(car.auction, "</li>\n          <li><div class=\"cardeteils-item\">\u0414\u0430\u0442\u0430 \u043F\u0440\u043E\u0434\u0430\u0436\u0443:</div> ").concat(car.sale_date, "</li>\n          <li><div class=\"cardeteils-item\">VIN:</div> ").concat(car.vin, "</li>\n          <li><div class=\"cardeteils-item\">\u0421\u0442\u0430\u043D:</div> ").concat(car.status, "</li>\n          <li><div class=\"cardeteils-item\">\u0414\u0432\u0438\u0433\u0443\u043D:</div> ").concat(car.engine, "</li>\n          <li><div class=\"cardeteils-item\">\u041F\u0440\u043E\u0431\u0456\u0433:</div> ").concat(car.mileage, "</li>\n          <li><div class=\"cardeteils-item\">\u041F\u0440\u043E\u0434\u0430\u0432\u0435\u0446\u044C:</div> ").concat(car.seller, "</li>\n          <li><div class=\"cardeteils-item\">\u041C\u0456\u0441\u0446\u0435 \u043F\u0440\u043E\u0434\u0430\u0436\u0443:</div> ").concat(car.location, "</li>\n          <li><div class=\"cardeteils-item\">\u041E\u0441\u043D\u043E\u0432\u043D\u0435 \u0443\u0448\u043A\u043E\u0434\u0436\u0435\u043D\u043D\u044F:</div> ").concat(car.primary_damage, "</li>\n          <li><div class=\"cardeteils-item\">\u0414\u0440\u0443\u0433\u043E\u0440\u044F\u0434\u043D\u0435 \u043F\u043E\u0448\u043A\u043E\u0434\u0436\u0435\u043D\u043D\u044F:</div> ").concat(car.secondary_damage, "</li>\n          <li><div class=\"cardeteils-item\">\u041E\u0446\u0456\u043D\u043E\u0447\u043D\u0430 \u0432\u0430\u0440\u0442\u0456\u0441\u0442\u044C:</div> ").concat(car.estimated_value, "</li>\n          <li><div class=\"cardeteils-item\">\u0426\u0456\u043D\u0430 \u0440\u0435\u043C\u043E\u043D\u0442\u0443:</div> ").concat(car.repair_cost, "</li>\n          <li><div class=\"cardeteils-item\">\u041A\u043E\u0440\u043E\u0431\u043A\u0430 \u043F\u0435\u0440\u0435\u0434\u0430\u0447:</div> ").concat(car.transmission, "</li>\n          <li><div class=\"cardeteils-item\">\u041A\u043E\u043B\u0456\u0440 \u043A\u0443\u0437\u043E\u0432\u0430:</div> ").concat(car.color, "</li>\n          <li><div class=\"cardeteils-item\">\u041F\u0440\u0438\u0432\u0456\u0434:</div> ").concat(car.drive, "</li>\n        </ul>\n        </div>\n         <div id=\"car-slider\">\n        <ul id=\"image-slider-").concat(car.vin, "\" class=\"image-slider\"></ul>\n      </div>\n      </div>\n    ");
     accordionRow.appendChild(accordionCell);
     tbody.appendChild(accordionRow);
 
@@ -64,15 +62,15 @@ function createTable(cars) {
     }
   });
   tableContainer.appendChild(table);
-}
+} // Функция для переключения отображения аккордеона
 
-function toggleAccordion(car, row) {
-  var accordionContent = row.nextElementSibling.querySelector('.accordion-content');
 
-  if (accordionContent.style.display === 'none') {
-    accordionContent.style.display = 'flex';
-  } else {
-    accordionContent.style.display = 'none';
+function toggleAccordion(row) {
+  var accordionRow = row.nextElementSibling;
+
+  if (accordionRow && accordionRow.querySelector('.accordion-content')) {
+    var accordionContent = accordionRow.querySelector('.accordion-content');
+    accordionContent.style.display = accordionContent.style.display === 'none' ? 'flex' : 'none';
   }
 }
 
@@ -82,12 +80,14 @@ function initImageSlider(car, sliderId) {
   car.images.forEach(function (imagePath, index) {
     var fullPath = "../img/cars/".concat(imagePath.replace('../img/cars/', ''));
     var imageLi = document.createElement('li');
-    imageLi.setAttribute('data-thumb', fullPath);
-    imageLi.innerHTML = "<a href=\"".concat(fullPath, "\" data-lightgallery=\"item\">\n                           <img src=\"").concat(fullPath, "\" alt=\"\u0418\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 ").concat(car.model, " ").concat(index + 1, "\">\n                         </a>");
+    imageLi.setAttribute('data-thumb', fullPath); // Добавляем ссылку и изображение внутри элемента li
+
+    imageLi.innerHTML = "\n      <a href=\"".concat(fullPath, "\" data-lightgallery=\"item\">\n        <img src=\"").concat(fullPath, "\" alt=\"\u0418\u0437\u043E\u0431\u0440\u0430\u0436\u0435\u043D\u0438\u0435 ").concat(car.model, " ").concat(index + 1, "\">\n      </a>\n    ");
     ulElement.appendChild(imageLi);
   });
-  imageSlider.appendChild(ulElement);
-  $(ulElement).lightSlider({
+  imageSlider.appendChild(ulElement); // Инициализируем LightSlider
+
+  var lightSliderInstance = $(ulElement).lightSlider({
     gallery: true,
     item: 1,
     vertical: true,
@@ -100,7 +100,8 @@ function initImageSlider(car, sliderId) {
     auto: true,
     loop: true,
     onSliderLoad: function onSliderLoad() {
-      console.log('Слайдер загружен');
+      console.log('Слайдер загружен'); // Инициализируем LightGallery после загрузки слайдера
+
       lightGallery(imageSlider, {
         selector: 'a[data-lightgallery="item"]',
         allowMediaOverlap: true,
@@ -108,74 +109,79 @@ function initImageSlider(car, sliderId) {
       });
     }
   });
-}
+} // Получение элементов
 
-var modal = document.getElementById('feedback-modal');
-var overlay = document.querySelector('.overlay');
-var closeModalButton = document.querySelector('.close-feedback');
-var openModalButton = document.querySelector('#btn-cars-order');
-openModalButton.addEventListener('click', function () {
-  modal.classList.add('active');
-  overlay.classList.add('active');
-});
-closeModalButton.addEventListener('click', function () {
-  modal.classList.remove('active');
-  overlay.classList.remove('active');
-});
 
-function openFeedbackModal() {
-  var feedbackModal = document.getElementById('feedback-modal');
-  var overlay = document.querySelector('.overlay');
+var modal = document.getElementById('car-modal');
+var overlay = modal ? modal.querySelector('.overlay-feedback-modal') : null;
+var closeModalButton = modal ? modal.querySelector('.close-feedback') : null;
+var openModalButtons = document.querySelectorAll('button[data-action="book"]');
 
-  if (feedbackModal && overlay) {
-    console.log('Відкриття модального вікна');
-    feedbackModal.classList.add('active');
-    overlay.classList.add('active');
-  } else {
-    console.error('Модальне вікно або overlay не знайдено');
-  }
-}
-
-function closeModals() {
-  var modals = document.querySelectorAll('.modal');
-  var overlay = document.querySelector('.overlay');
-  modals.forEach(function (modal) {
-    return modal.classList.remove('active');
+if (modal && overlay && closeModalButton && openModalButtons.length > 0) {
+  // События для закрытия модального окна
+  closeModalButton.addEventListener('click', closeModal);
+  overlay.addEventListener('click', closeModal);
+  openModalButtons.forEach(function (button) {
+    button.addEventListener('click', function () {
+      var carName = button.dataset.carName || 'Неизвестная модель';
+      openModal(carName);
+    });
   });
+} // Функция открытия модального окна
 
-  if (overlay) {
-    overlay.classList.remove('active');
+
+function openModal(carName) {
+  if (modal && overlay) {
+    modal.style.display = 'block';
+    overlay.style.display = 'block';
+    var carNameField = modal.querySelector('#car-name');
+
+    if (carNameField) {
+      carNameField.textContent = carName;
+    }
   }
-}
+} // Функция закрытия модального окна
+
+
+function closeModal() {
+  if (modal && overlay) {
+    modal.style.display = 'none';
+    overlay.style.display = 'none';
+  }
+} // Событие для кнопок "Забронювати"
+
+
+openModalButtons.forEach(function (button) {
+  button.addEventListener('click', function () {
+    var carName = button.dataset.carName || 'Неизвестная модель'; // Получить название автомобиля
+
+    openModal(carName);
+  });
+}); // События для закрытия модального окна
+
+closeModalButton.addEventListener('click', closeModal);
+overlay.addEventListener('click', closeModal); // Убираем автоматическое открытие модального окна при загрузке страницы
 
 document.addEventListener('DOMContentLoaded', function () {
-  var closeFeedbackBtn = document.querySelector('.close-feedback');
-
-  if (closeFeedbackBtn) {
-    closeFeedbackBtn.addEventListener('click', closeModals);
-  }
+  modal.style.display = 'none';
+  overlay.style.display = 'none';
 }); // form
 
-document.getElementById('feedback-form_cars').addEventListener('submit', function (event) {
+document.getElementById('car-order-form_cars').addEventListener('submit', function (event) {
   event.preventDefault();
   var nameFld = document.getElementById('name');
   var telFld = document.getElementById('phone');
   var emailFld = document.getElementById('email');
-  var rozdiFld = document.getElementById('rozdil');
-  var pidrozdiFld = document.getElementById('pidrozdil');
-  var zapchastFld = document.getElementById('zapchast');
   var commentsFld = document.getElementById('comments');
   var name = nameFld.value.trim();
   var phone = telFld.value.trim();
   var email = emailFld.value.trim();
-  var rozdi = rozdiFld.value.trim();
-  var pidrozdi = pidrozdiFld.value.trim();
-  var zapchast = zapchastFld.value.trim();
   var comments = commentsFld.value.trim();
   var errors = []; // Очистка классов ошибок
 
   nameFld.classList.remove('is-invalid');
-  telFld.classList.remove('is-invalid'); // Валидация имени
+  telFld.classList.remove('is-invalid');
+  emailFld.classList.remove('is-invalid'); // Валидация имени
 
   if (name === '') {
     toast.error("Введіть, будь ласка, Ваше ім'я");
@@ -185,14 +191,16 @@ document.getElementById('feedback-form_cars').addEventListener('submit', functio
     nameFld.classList.add('is-invalid');
   } else {
     nameFld.classList.remove('is-invalid');
-  }
+  } // Валидация телефона
+
 
   if (phone === '' || phone.length < 17) {
     toast.error('Введіть, будь ласка, правильний номер телефону');
     telFld.classList.add('is-invalid');
   } else {
     telFld.classList.remove('is-invalid');
-  }
+  } // Валидация email
+
 
   if (email === '') {
     toast.error("Введіть, будь ласка, Вашу електронну пошту");
@@ -207,12 +215,19 @@ document.getElementById('feedback-form_cars').addEventListener('submit', functio
 
   if (nameFld.classList.contains('is-invalid') || telFld.classList.contains('is-invalid') || emailFld.classList.contains('is-invalid')) {
     return;
-  } // Отправка данных в Telegram
+  } // Предположим, что данные о машине хранятся в переменной car
 
+
+  var car = {
+    name: "Volkswagen Passat",
+    // Пример имени автомобиля, замените на ваше реальное значение
+    model: "1.8T Wolfsburg Edition 2014",
+    vin: "1234567890"
+  }; // Отправка данных в Telegram
 
   var CHAT_ID = '-1002485030400';
   var BOT_TOKEN = '7527794477:AAFxOk9l6CH8EccTk9at2uVM3OSyEZbrUCw';
-  var message = "\n\uD83D\uDE97 <b>\u041D\u043E\u0432\u0435 \u0431\u0440\u043E\u043D\u044E\u0432\u0430\u043D\u043D\u044F \u0430\u0432\u0442\u043E</b> \uD83D\uDE97\n\n    \u0406\u043C'\u044F: ".concat(name, "\n\n    \u0422\u0435\u043B\u0435\u0444\u043E\u043D: ").concat(phone, "\n\n    Email: ").concat(email, "\n\n    \u0420\u043E\u0437\u0434\u0456\u043B \u0437\u0430\u043F\u0447\u0430\u0441\u0442\u0438\u043D: ").concat(rozdi, "\n\n    \u041F\u0456\u0434\u0440\u043E\u0437\u0434\u0456\u043B \u0437\u0430\u043F\u0447\u0430\u0441\u0442\u0438\u043D: ").concat(pidrozdi, "\n\n    \u0417\u0430\u043F\u0447\u0430\u0441\u0442\u0438\u043D\u0438: ").concat(zapchast, "\n\n    \u041A\u043E\u043C\u0435\u043D\u0442\u0430\u0440\u0456: ").concat(comments || 'Без коментарів', "\n  ");
+  var message = "\n  \uD83D\uDE97 <b>\u041D\u043E\u0432\u0435 \u0431\u0440\u043E\u043D\u044E\u0432\u0430\u043D\u043D\u044F \u0430\u0432\u0442\u043E</b> \uD83D\uDE97\n\n  \u041D\u0430\u0437\u0432\u0430 \u0430\u0432\u0442\u043E: ".concat(car.name, "\n\n  \u041C\u043E\u0434\u0435\u043B\u044C: ").concat(car.model, "\n\n  VIN: ").concat(car.vin, "\n\n  \u0406\u043C'\u044F: ").concat(name, "\n\n  \u0422\u0435\u043B\u0435\u0444\u043E\u043D: ").concat(phone, "\n\n  Email: ").concat(email, "\n\n  \u041A\u043E\u043C\u0435\u043D\u0442\u0430\u0440\u0456: ").concat(comments || 'Без коментарів', "\n  ");
   var url = "https://api.telegram.org/bot".concat(BOT_TOKEN, "/sendMessage?chat_id=").concat(CHAT_ID, "&text=").concat(encodeURIComponent(message), "&parse_mode=HTML");
   fetch(url, {
     method: 'POST'
@@ -222,8 +237,10 @@ document.getElementById('feedback-form_cars').addEventListener('submit', functio
     if (data.ok) {
       nameFld.value = '';
       telFld.value = '';
+      emailFld.value = '';
+      commentsFld.value = '';
       toast.success('Ваше повідомлення успішно надіслано.');
-      closeModals();
+      closeModal(); // Закрытие модального окна
     } else {
       toast.error('Сталася помилка.');
     }

@@ -68,10 +68,10 @@
           {% if product.photo %}
           <img src="{{ product.photo.url }}" alt="">
           {% endif %}
-          <h3>{% trans "Артикул:" %} {{ product.display_sku }}</h3>
+          <h3>{% trans "Артикул:" %} {{ product.sku }}</h3>
           <p>{% trans "Ціна:" %} {{ product.price }}</p>
           <div class="btn-cart">
-            <button class="add-to-cart" data-id="{{ product.id }}" data-price="{{ product.price }}" data-name="{{ product.display_sku }}" data-photo="{{ product.photo.url }}">
+            <button class="add-to-cart" data-id="{{ product.id }}" data-price="{{ product.price }}" data-name="{{ product.sku }}" data-photo="{{ product.photo.url }}">
               {% trans "Додати до кошика" %}
             </button>
           </div>

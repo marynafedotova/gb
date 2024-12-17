@@ -1,335 +1,167 @@
-
 {% extends "main/base.html" %}
 {% load static %}
-{% load i18n %} 
+{% load i18n %}
 
 {% block title_meta %}
-  <meta name="description"
-    content={% trans "Підбір запчастин. Доставка автозапчастин здійснюється по всій Україні (Одеса, Київ, Харків, Львів, Дніпро, Запоріжжя, Чернігів)" %}>
+<meta name="description" content={%
+  trans "Підбір запчастин. Доставка автозапчастин здійснюється по всій Україні (Одеса, Київ, Харків, Львів, Дніпро, Запоріжжя, Чернігів)"
+  %}>
 
-<<<<<<< HEAD
-  <title>{% trans "Деталі продукту" %}</title>
-{% endblock title_meta %}
-{% block hero-section %}
-=======
-  <title>Деталі продукту</title>
-</head>
+<<<<<<< HEAD <title>{% trans "Деталі продукту" %}</title>
+  {% endblock title_meta %}
 
-<body>
-  <div class="page-overlay"></div>
-  <div class="menu-panel">
-    <div class="panel-top">
-      <div class="logo"><a href="../../index.html"><img src="../img/logo.svg" alt="logo"></a></div>
-      <div class="hamburger-wrap">
-        <button id="hamb-btn-mobile" class="hamburger hamburger--squeeze is-active" type="button">
-          <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-          </span>
-        </button>
-      </div>
-    </div>
-    <nav>
-      <ul class="mobile-menu">
-        <li><a href="catalog.html" target="_parent">Каталог запчастин</a></li>
-        <li><a href="pre-order.html" target="_parent">Авто в дорозі</a></li>
-        <li><a href="warrantyreturns.html" target="_parent">Гарантія та повернення</a></li>
-        <li><a href="deliverypayment.html" target="_parent">Доставка і оплата </a></li>
-        <li><a href="contacts.html" target="_parent">Контакти</a></li>
-        <li><a href="abuotus.html" target="_parent">Про нас</a></li>
-        <li><a href="news.html" target="_parent">Статті та новини</a></li>
-        <li>
-          <div class="account">
-            <ul>
-              <!-- <li><img src="../img/person-circle-fill-svgrepo-com.svg" alt=""></li> -->
-              <li><a href="cart.html" target="_parent" rel="noopener noreferrer"><img src="../img/cart-large-svgrepo-com.svg" alt="cart"></a></li>
-            </ul>
-          </div>
-          <div class="search-container">
-            <form id="search-form-m">
-              <input type="text" id="search-input-m" placeholder="Пошук..." name="search">
-              <button id="search-btn-m" type="submit"><img src="../img/search.svg
-"
-                alt=""></button>
-            </form>
-          </div>
-
-        </li>
-      </ul>
-    </nav>
-  </div>
-  <div class="page-wrapper">
-    <header>
-      <div class="header-container">
-        <div class="logo"><a href="../../index.html"><img src="../img/logo.svg" alt="logo"></a>
-
-        </div>
-        <div class="tel">
-          <ul>
-            <li><a href="+380689255252">+380689255252</a></li>
-            <li><a href="+380509255252">+380509255252</a></li>
-            <li><a href="+380739255252">+380739255252</a></li>
-          </ul>
-        </div>
-        <div class="social-link">
-          <ul>
-            <li><a href="https://www.facebook.com/?locale=uk_UA" target="_blank" rel="nofollow"><img
-                  src="../img/facebook-176-svgrepo-com.svg" alt="link facebook"></a></li>
-            <li><a href="https://www.instagram.com/" target="_blank" rel="nofollow"><img
-                  src="../img//instagram-167-svgrepo-com.svg" alt="link instagram"></a></li>
-            <li><a href="https://www.tiktok.com/uk-UA/" target="_blank" rel="nofollow"><img
-                  src="../img/tiktok-fill-svgrepo-com.svg" alt="link tik-tok"></a></li>
-          </ul>
-        </div>
-        <div class="account">
-          <ul>
-            <!-- <li><img src="../img/person-circle-fill-svgrepo-com.svg" alt=""></li> -->
-            <li><a href="cart.html" target="_parent" rel="noopener noreferrer"><img src="../img/cart-large-svgrepo-com.svg" alt="cart"></a></li>
-          </ul>
-        </div>
-        <div class="language">
-          <ul>
-            <li><img src="../img/russia.svg" alt="ru lamguage"></li>
-            <li><img src="../img/ukraine.svg" alt="ua language"></li>
-          </ul>
-        </div>
-      </div>
-      <div class="nav-container">
-        <div class="nav-container">
-          <nav>
-            <ul>
-              <li><a href="catalog.html" target="_parent">Каталог запчастин</a>
-                <ul class="submenu">
-                  <li><a href="#"><img src="../img/acura.svg" alt="acura"></a></li>
-                  <li><a href="#"><img src="../img/audi.svg" alt="audi"></a></li>
-                  <li><a href="#"><img src="../img/bmw.svg" alt="bmw"></a></li>
-                  <li><a href="#"><img src="../img/crysler.svg" alt="crysler"></a></li>
-                  <li><a href="#"><img src="../img/dodge.svg" alt="dodge"></a></li>
-                  <li><a href="#"><img src="../img/honda.svg" alt="honda"></a></li>
-                  <li><a href="#"><img src="../img/hynday.svg" alt="hynday"></a></li>
-                  <li><a href="#"><img src="../img/infiniti.svg" alt="infiniti"></a></li>
-                  <li><a href="#"><img src="../img/jaguar.svg" alt="jaguar"></a></li>
-                  <li><a href="#"><img src="../img/jeep.svg" alt="jeep"></a></li>
-                  <li><a href="#"><img src="../img/linkoln.svg" alt="linkoln"></a></li>
-                  <li><a href="#"><img src="../img/kia.svg" alt="kia"></a></li>
-                  <li><a href="#"><img src="../img/land_rover.svg" alt="landrover"></a></li>
-                  <li><a href="#"><img src="../img/nissan.svg" alt="nissan"></a></li>
-                  <li><a href="#"><img src="../img/volkswagen.svg" alt="volkswagen"></a></li>
+  {% block hero-section %}
+        <section class="product-section">
+          <div class="container">
+            <div class="product-details">
+              <div class="product-image-slider">
+                <ul id="imageGallery">
                 </ul>
-              </li>
-              <li><a href="pre-order.html" target="_parent">Авто в дорозі</a></li>
-              <li><a href="warrantyreturns.html" target="_parent">Гарантія та повернення</a></li>
-              <li><a href="deliverypayment.html" target="_parent">Доставка і оплата </a></li>
-              <li><a href="contacts.html" target="_parent">Контакти</a></li>
-              <li><a href="abuotus.html" target="_parent">Про нас</a></li>
-              <li><a href="news.html" target="_parent">Статті та новини</a></li>
-              <li>
-                <div class="search-container">
-                  <form id="search-form">
-                    <input type="text" id="search-input" placeholder="Пошук..." name="search">
-                    <button id="search-btn" type="submit"><img src="../img/search.svg
-"
-                        alt=""></button>
-                  </form>
+              </div>
+              <div class="product-item">
+                <div class="stan"></div>
+                <h1 class="product-name">{% trans  product.name %}</h1>
+                <div class="product-title-item articul">{% trans "Артикул:" %} {{product.sku}}<span class="product-id"></span></div>
+                <div class="product-title-item">{% trans "Марка авто:" %} {{ product.car.brand_car }}<span class="product-markaavto"></span></div>
+                <div class="product-title-item">{% trans "Модель:" %} {{ product.car.model_car }}<span class="product-model"></span></div>
+                <div class="product-title-item">{% trans "Рік випуску:" %} {{ product.car.year }}<span class="product-god"></span></div>
+                <div class="product-title-item">{% trans "ОЕМ:" %} {{ product.oem_code }} <span class="product-originalnumber"></span></div>
+                <div class="product-title-item">{% trans "Категорія:" %} {{ product.category }} <span class="product-category"></span></div>
+                <div class="product-title-item">{% trans "Підкатегорія:" %} {{ product.sub_category }}<span class="product-pod_category"></span></div>
+                <div class="product-title-item">{% trans "Доп.категорія:" %} {{ product.additional_category }} <span class="product-dop_category"></span></div>
+                <div class="product-title-item">{% trans "Паливо:"%} {{ product.car.fueld_type }} <span class="product-toplivo"></span></div>
+                <div class="product-title-item">{% trans "Тип кузова:" %} {{ product.car.body_type }} <span class="product-typ_kuzova"></span></div>
+                <div class="product-title-item price"><span class="product-price"></span>{{ product.price }}<span class="product-price-uah"></span></div>
+                <button class="add-to-cart" data-id="${product.ID_EXT}" data-price="${product.zena}" data-tipe="${product.zapchast}">{% trans "Додати до кошика" %}</button>
+                <button class="buy-now" data-id="${product.ID_EXT}" data-price="${product.zena}" data-tipe="${product.zapchast}">{% trans "Купити в 1 клік" %}</button>
+              </div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="info-block">
+              <div class="info-header">
+                <div id="deteils" class="info-tab">{% trans "Подробиці" %}</div>
+                <div id="analog" class="info-tab">{% trans "Підходить" %}</div>
+                <div id="delivery" class="info-tab">{% trans "Доставка і оплата" %}</div>
+                <div id="guarantees" class="info-tab">{% trans "Гарантії" %}</div>
+              </div>
+              <div class="deteils-info info-content">
+                <div class="opysanye"></div>
+              </div>
+              <div class="analog-info info-content">
+                <span> {% trans "авто котрим підходить ця позиція" %}</span>
+              </div>
+              <div class="delivery-info info-content">
+                <div class="container">
+                  <h1 class=" wow animate__animated animate__flipOutY">{% trans "Доставка і оплата" %}</h1>
+                  <div class="delivery wow animate__animated animate__zoomIn">
+                    <h2>{% trans "Доставка товару :" %}</h2>
+                    <ul>
+                      <li>{% trans "Самовивіз;" %}</li>
+                      <li>{% trans "Кур'єрські служби Нова Пошта, Делівері;" %}</li>
+                      <li>{% trans "Відправка на таксі (за рахунок покупця) по м. Київ після повної оплати;" %}</li>
+                      <li>{% trans "Bеликогабаритні товари - мікроавтобусом компанії за попереднім поgodженням ціни." %}
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="payment wow animate__animated animate__rollIn">
+                    <h2>{% trans "Оплата:" %}</h2>
+                    <ul>
+                      <li>{% trans "Готівковий/безготівковий розрахунок (на рахунок ФОП без ПДВ)." %}</li>
+                      <li>{% trans "При відправках кур'єрськими службами - за передоплатою на послуги перевізника в
+                        обидві сторони або
+                        повна оплата (за бажанням)" %}</li>
+                    </ul>
+                  </div>
                 </div>
-              </li>
-            </ul>
-          </nav> 
-          <div class="hamburger-wrap">
-            <button id="hamb-btn" class="hamburger hamburger--squeeze" type="button">
-              <span class="hamburger-box">
-                <span class="hamburger-inner"></span>
-              </span>
-            </button>
-          </div>
-        </div>
-    </header>
-    <main>
-      <section id="search-res">
-        <div class="container">
-          <div class="search-results"></div> 
-          <div class="btn-res">
-            <a href="#" class="load-more-search" style="display: none;">Завантажити більше</a>
-          </div>
-        </div>
-      </section>
->>>>>>> 4902450efe223d71c517bfe16de0e79562ef2aa1
-      <section class="product-section">
-        <div class="container">
-          <div class="product-details">
-            <div class="product-image-slider">
-              <ul id="imageGallery">
-              </ul>
-            </div>
-            <div class="product-item">
-              <h1 class="product-name">{% trans "Назва продукту" %}</h1>
-              <div class="product-title-item">{% trans "Артікул:" %} <span class="product-id"></span></div>
-              <div class="product-title-item">{% trans "Ціна:" %} <span class="product-price"></span></div>
-              <div class="product-title-item">{% trans "Ціна в грн:" %} <span class="product-price-uah"></span></div>
-              <div class="product-title-item">{% trans "Марка авто:" %} <span class="product-markaavto"></span></div>
-              <div class="product-title-item">{% trans "Модель:" %} <span class="product-model"></span></div>
-              <div class="product-title-item">{% trans "Рік випуску:" %} <span class="product-god"></span></div>
-              <div class="product-title-item">ОЕМ: <span class="product-originalnumber"></span></div>
-              <div class="product-title-item">{% trans "Категорія:" %} <span class="product-category"></span></div>
-              <div class="product-title-item">{% trans "Підкатегорія:" %} <span class="product-pod_category"></span></div>
-              <div class="product-title-item">{% trans "Доп.категорія:" %} <span class="product-dop_category"></span></div>
-              <div class="product-title-item">{% trans "Паливо:" %} <span class="product-toplivo"></span></div>
-              <div class="product-title-item">{% trans "Тип кузова:" %} <span class="product-typ_kuzova"></span></div>
-              <button class="add-to-cart" data-id="${product.ID_EXT}" data-price="${product.zena}" data-tipe="${product.zapchast}">{% trans "Додати до кошика" %}</button>
-              <button class="buy-now" data-id="${product.ID_EXT}" data-price="${product.zena}" data-tipe="${product.zapchast}">{% trans "Купити в 1 клік" %}</button>            
-            </div>
-          </div>
-        </div>
-        <div class="container">
-        <div class="delivery">
-          <div class="delivery-name">{% trans "Доставка" %}</div>
-          <ul>
-            <li>
-              <div class="delivery-title">{% trans "Київ, пров. Квітневий, буд. 1" %}</div>
-              <div class="delivery-time"></div>
-              <div class="delivety-pay">{% trans "Безкоштовно" %}</div>
-            </li>
-            <li>
-              <div class="delivery-title">{% trans "Одеса, вул. Картамишівська, 9" %}</div>
-              <div class="delivery-time"></div>
-              <div class="delivety-pay">{% trans "Безкоштовно" %}</div>
-            </li>
-            <li>
-              <div class="delivery-title">{% trans "Нова пошта(до відділення)" %}</div>
-              <div class="delivery-time"></div>
-              <div class="delivety-pay">{% trans "За тарифами НП" %}</div>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="container">
-        <div class="info-block">
-          <div class="info-header">
-            <div id="deteils" class="info-tab">{% trans "Подробиці" %}</div>
-            <div id="analog" class="info-tab">{% trans "Підходить" %}</div>
-            <div id="delivery" class="info-tab">{% trans "Доставка і оплата" %}</div>
-            <div id="guarantees" class="info-tab">{% trans "Гарантії" %}</div>
-          </div>
-          <div class="deteils-info info-content">
-            <div class="opysanye"></div>
-          </div>
-          <div class="analog-info info-content">
-            <span> {% trans "авто котрим підходить ця позиція" %}</span>
-          </div>
-          <div class="delivery-info info-content">
-            <div class="container">
-              <h1 class=" wow animate__animated animate__flipOutY">{% trans "Доставка і оплата" %}</h1>
-              <div class="delivery wow animate__animated animate__zoomIn">
-                <h2>{% trans "Доставка товару :" %}</h2>
-                <ul>
-                  <li>{% trans "Самовивіз;" %}</li>
-                  <li>{% trans "Кур'єрські служби Нова Пошта, Делівері;" %}</li>
-                  <li>{% trans "Відправка на таксі (за рахунок покупця) по м. Київ після повної оплати;" %}</li>
-                  <li>{% trans "Bеликогабаритні товари - мікроавтобусом компанії за попереднім поgodженням ціни." %}</li>
-                </ul>
               </div>
-              <div class="payment wow animate__animated animate__rollIn">
-                <h2>{% trans "Оплата:" %}</h2>
-                <ul>
-                  <li>{% trans "Готівковий/безготівковий розрахунок (на рахунок ФОП без ПДВ)." %}</li>
-                  <li>{% trans "При відправках кур'єрськими службами - за передоплатою на послуги перевізника в обидві сторони або
-                    повна оплата (за бажанням)" %}</li>
-                </ul>
+              <div class="guarantees-info info-content">
+                <div class="container">
+                  <div class="guarantees  wow animate__animated animate__rubberBand">{% trans "Компанія GenBrothers
+                    надає можливість
+                    перевірки якість запчастин. " %}</div>
+                  <p class="guarantees-item  wow animate__animated animate__lightSpeedInRight">{% trans "Повернути, або
+                    обміняти
+                    товар, можна протягом" %} <span class="guarantees-weight">{% trans "7 календарних дні в" %}</span>
+                    {% trans "з моменту отримання замовлення. Термін перевірки двигунів і КПП - 7 календарних днів. " %}
+                  </p>
+                  <div class="guarantees-item  wow animate__animated animate__lightSpeedInLeft">{% trans "Звертаємо Вашу
+                    увагу, що
+                    згідно ЗУ» Про захист прав споживачів', повернення або обмін вживаного товару можливий тільки за
+                    згодою
+                    продавця." %}
+                  </div>
+                  <p class="guarantees-item  wow animate__animated animate__lightSpeedInRight">{% trans "Компанія Gen
+                    Brothers бере на
+                    себе, на добровільній основі ці зобов’язання згідно " %}<span class="guarantees-weight">{% trans "ЗУ
+                      «Про захист прав
+                      споживачів» Ч.2 статті 8. " %}</span>
+                    {% trans "Умови для товарів, котрі реалізуються вже вживаними — «щодо непродовольчих товарів, які
+                    перебували у
+                    використанні та були реалізовані через роздрібні комісійні торговельні підприємства, вимоги
+                    споживача,
+                    зазначені в частині першій статті 8, задовольняються за згодою продавця. Відповідно до цієї частини
+                    задовольняються вимоги споживача щодо товарів, гарантійний термін на які не закінчився»." %}
+                  </p>
+                  <span class="guarantees-weight  wow animate__animated animate__lightSpeedInLeft">{% trans "Не
+                    підлягають поверненню
+                    автозапчастини, якщо:" %}</span>
+                  <ul class="guarantees-list  wow animate__animated animate__lightSpeedInRight">
+                    <li>{% trans "автозапчастина була встановлена (експлуатувалася);" %}</li>
+                    <li>{% trans "пошкоджена покупцем;" %}</li>
+                    <li>{% trans "пломби та мітки були порушені." %}</li>
+                  </ul>
+                  <span class="guarantees-weight  wow animate__animated animate__lightSpeedInLeft">{% trans "Підлягають
+                    поверненню
+                    автозапчастини, якщо:" %}</span>
+                  <ul class="guarantees-list wow animate__animated animate__lightSpeedInRight">
+                    <li>{% trans "запчастина не підходить до Вашого автомобіля (за умови, що ви дали повну та правильну
+                      інформацію);" %}
+                    </li>
+                    <li>{% trans "запчастина має приховані дефекти, що не були виявлені при покупці (необхідно надати
+                      фото або відео
+                      підтвердження);" %} </li>
+                    <li>{% trans "пломби та мітки не порушені." %}</li>
+                  </ul>
+                  <span class="guarantees-importantly  wow animate__animated animate__heartBeat">{% trans "ВАЖЛИВО!!!"
+                    %} </span>
+                  <div id="returns">
+                    <ul>
+                      <li> {% trans "Протягом гарантійного терміну, забороняється проводити ремонт чи розбирання
+                        запчастин;" %}
+                      </li>
+                      <li>{% trans "Поверненню не підлягає електрика, електроніка, мікросхеми, блоки та інші види
+                        електротехнічних
+                        пристроїв. У виняткових випадках повернення можливе з утриманням комісії на розсуд продавця від
+                        10%
+                        (але не менше 200 грн);" %}
+                      </li>
+                      <li>{% trans "Оренда запчастин для діагностики автомобіля складає 25% вартості запчастини, але не
+                        менше 1000
+                        грн. Доставку у разі оплачує покупець в обидві сторони, але для оренди не надаються:
+                        електротехнічні
+                        пристрої." %}
+                      </li>
+                      <li>{% trans "Якщо запчастина не знадобилася, при цьому немає провини компанії (напр. помилка
+                        підбору клієнтом,
+                        відмова кінцевого клієнта, затримка доставки з вини перевізника) стягується 10% але від вартості
+                        запчастини або прийом запчастини на реалізацію та після її продажу виплата повної суми." %}
+                      </li>
+                    </ul>
+                  </div>
+                  <span class="guarantees-weight  wow animate__animated animate__heartBeat">{% trans "Повернення
+                    грошових коштів
+                    відбувається тільки після отримання та перевірки запчастини (до 14 днів)." %}</span>
+                </div>
               </div>
             </div>
           </div>
-          <div class="guarantees-info info-content">
-            <div class="container">
-              <div class="guarantees  wow animate__animated animate__rubberBand">{% trans "Компанія GenBrothers надає можливість
-                перевірки якість запчастин. " %}</div>
-              <p class="guarantees-item  wow animate__animated animate__lightSpeedInRight">{% trans "Повернути, або обміняти
-                товар, можна протягом" %} <span class="guarantees-weight">{% trans "7 календарних дні в" %}</span>
-                {% trans "з моменту отримання замовлення. Термін перевірки двигунів і КПП - 7 календарних днів. " %}</p>
-              <div class="guarantees-item  wow animate__animated animate__lightSpeedInLeft">{% trans "Звертаємо Вашу увагу, що
-                згідно ЗУ» Про захист прав споживачів', повернення або обмін вживаного товару можливий тільки за згодою
-                продавця." %}
-              </div>
-              <p class="guarantees-item  wow animate__animated animate__lightSpeedInRight">{% trans "Компанія Gen Brothers бере на
-                себе, на добровільній основі ці зобов’язання згідно " %}<span class="guarantees-weight">{% trans "ЗУ «Про захист прав
-                  споживачів» Ч.2 статті 8. " %}</span>
-                {% trans "Умови для товарів, котрі реалізуються вже вживаними — «щодо непродовольчих товарів, які перебували у
-                використанні та були реалізовані через роздрібні комісійні торговельні підприємства, вимоги споживача,
-                зазначені в частині першій статті 8, задовольняються за згодою продавця. Відповідно до цієї частини
-                задовольняються вимоги споживача щодо товарів, гарантійний термін на які не закінчився»." %}
-              </p>
-              <span class="guarantees-weight  wow animate__animated animate__lightSpeedInLeft">{% trans "Не підлягають поверненню
-                автозапчастини, якщо:" %}</span>
-              <ul class="guarantees-list  wow animate__animated animate__lightSpeedInRight">
-                <li>{% trans "автозапчастина була встановлена (експлуатувалася);" %}</li>
-                <li>{% trans "пошкоджена покупцем;" %}</li>
-                <li>{% trans "пломби та мітки були порушені." %}</li>
-              </ul>
-              <span class="guarantees-weight  wow animate__animated animate__lightSpeedInLeft">{% trans "Підлягають поверненню
-                автозапчастини, якщо:" %}</span>
-              <ul class="guarantees-list wow animate__animated animate__lightSpeedInRight">
-                <li>{% trans "запчастина не підходить до Вашого автомобіля (за умови, що ви дали повну та правильну інформацію);" %}
-                </li>
-                <li>{% trans "запчастина має приховані дефекти, що не були виявлені при покупці (необхідно надати фото або відео
-                  підтвердження);" %} </li>
-                <li>{% trans "пломби та мітки не порушені." %}</li>
-              </ul>
-              <span class="guarantees-importantly  wow animate__animated animate__heartBeat">{% trans "ВАЖЛИВО!!!" %} </span>
-              <div id="returns">
-                <ul>
-                  <li> {% trans "Протягом гарантійного терміну, забороняється проводити ремонт чи розбирання запчастин;" %}
-                  </li>
-                  <li>{% trans "Поверненню не підлягає електрика, електроніка, мікросхеми, блоки та інші види електротехнічних
-                    пристроїв. У виняткових випадках повернення можливе з утриманням комісії на розсуд продавця від 10%
-                    (але не менше 200 грн);" %}
-                  </li>
-                  <li>{% trans "Оренда запчастин для діагностики автомобіля складає 25% вартості запчастини, але не менше 1000
-                    грн. Доставку у разі оплачує покупець в обидві сторони, але для оренди не надаються: електротехнічні
-                    пристрої." %}
-                  </li>
-                  <li>{% trans "Якщо запчастина не знадобилася, при цьому немає провини компанії (напр. помилка підбору клієнтом,
-                    відмова кінцевого клієнта, затримка доставки з вини перевізника) стягується 10% але від вартості
-                    запчастини або прийом запчастини на реалізацію та після її продажу виплата повної суми." %}
-                  </li>
-                </ul>
-              </div>
-              <span class="guarantees-weight  wow animate__animated animate__heartBeat">{% trans "Повернення грошових коштів
-                відбувається тільки після отримання та перевірки запчастини (до 14 днів)." %}</span>
-            </div>
+          <div class="btn-to-catalog">
+            <a href="{% url "goods:catalog" %}">{% trans "Назад до каталогу" %}</a>
           </div>
-        </div>
-      </div>
-    <div class="btn-to-catalog">
-      <a href="../pages/catalog.html">{% trans "Назад до каталогу" %}</a>
-    </div>
-  
-    </section>
-    </main>
-{% endblock hero-section %}
 
-      </div>
-      <!-- Підключайте jQuery перед LightSlider та LightGallery -->
-      <script src="{% static 'assets/js/jquery/jquery-3.7.1.min.js' %}"></script>
-      <script src="{% static 'assets/js/plagins/lightslider.min.js' %}"></script>
-      <script src="{% static 'assets/js/plagins/lightgallery.min.js' %}"></script>
-      <script src="{% static 'assets/js/plagins/lightgallery.umd.js' %}"></script>
-      <script src="{% static 'assets/js/plagins/lg-thumbnail.min.js' %}"></script>
-      <script src="{% static 'assets/js/plagins/lg-zoom.min.js' %}"></script>
-      <script src="{% static 'assets/js/toast.js' %}"></script>
-      <script src="{% static 'assets/js/product.js' %}"></script>
-      <script src="{% static 'assets/js/helpers.js' %}"></script>
+        </section>
+      </main>
+      {% endblock hero-section %}
 
-    </div>
-    <span id="copyright">© <span id="year"></span> My Web Genius</span>
-  </div>
-  <!-- Модальное окно -->
-<div class="modal-overlay-cart">
-  <div class="modal-window">
-    <p>{% trans "Товар доданий в кошик!" %}</p>
-    <button class="continue-shopping">{% trans "Продовжити покупки" %}</button>
-    <button class="go-to-cart">{% trans "Перейти до кошику" %}</button>
-  </div>
-</div>
-
-</div>
-</body>
-
-</html>
+   

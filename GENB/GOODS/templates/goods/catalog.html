@@ -1,95 +1,160 @@
-
 {% extends "main/base.html" %}
 {% load static %}
-{% load i18n %} 
+{% load i18n %}
+{% load goods_tags %}
 
 {% block title_meta %}
-  <title>{% trans "Розбирання авто | Авторозбiрка АвтоПМР | Автозапчастини б/у" %}</title>
-  <meta name="description"
-    content={% trans "Підбір запчастин. Доставка автозапчастин здійснюється по всій Україні (Одеса, Київ, Харків, Львів, Дніпро, Запоріжжя, Чернігів)" %}>
+<title>{% trans "Розбирання авто | Авторозбiрка АвтоПМР | Автозапчастини б/у" %}</title>
+<meta name="description" content={%
+  trans "Підбір запчастин. Доставка автозапчастин здійснюється по всій Україні (Одеса, Київ, Харків, Львів, Дніпро, Запоріжжя, Чернігів)"
+  %}>
 {% endblock title_meta %}
 
-{% block hero-section %}      
-      <!-- hero-section -->
-      <section id="first-section">
-        <h1>{% trans "Розбирання автомобілів з США 'Gen Brothers'. Низькі ціни." %}</h1>
-        <div class="container ">
-          <div id="carAccordion"></div>
-          <div class="first_screan_catalog">
-            <div class="sidebar wow animate__animated animate__fadeInLeft">
-              <h2>{% trans "Пошук запчастин" %}</h2>
-              <form action="#" id="search-product">
-                <select name="markaavto" id="markaavto">
-                  <option value="">{% trans "--Марка авто--" %}</option>
-                </select>
-                <select name="model" id="model">
-                  <option value="">{% trans "--Модель--" %}</option>
-                </select>
-                <select name="rozdil" id="rozdil">
-                  <option value="">{% trans "--Розділ--" %}</option>
-                </select>
-                <select name="pidrozdil" id="pidrozdil">
-                  <option value="">{% trans "--Підрозділ--" %}</option>
-                </select>
-                <select name="zapchast" id="zapchast">
-                  <option value="">{% trans "--Запчастини--" %}</option>
-                </select>
-                <select name="originalnumber" id="originalnumber">
-                  <option value="">{% trans "--ОЕМ--" %}</option>
-                </select>
-                <button id="search-sidebar-catalog">{% trans " Пошук" %}</button>
-
-              </form>
-            </div>
-            <div id="cars-catalog"></div>
-          </div>
-        </div>
-      </section>
-      <section class="catalog_zapchast">
-        <div class="container">
-          <h2>{% trans "Каталог товарів" %}</h2>
-          <div class="product-list"></div>
-          <button class="load-more">{% trans "Завантажити більше" %}</button>
-        </div>
-      </section>
-      <section class="catalog_mark_avto">
-        <div class="hero-screan">
-          <div class="container">
-            <h2 class="wow animate__animated wow animate__animated animate__backInUp">{% trans "Каталог запчастин" %}</h2>
-            <div class="catalog">
-              <ul class="catalog-list wow animate__animated animate__backInUp">
-                <li><a href="#"><img src="{% static 'assets/img/acura.svg' %}" alt="acura"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/audi.svg' %}" alt="audi"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/bmw.svg' %}" alt="bmw"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/crysler.svg' %}" alt="crysler"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/dodge.svg' %}" alt="dodge"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/honda.svg' %}" alt="honda"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/hynday.svg' %}" alt="hynday"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/infiniti.svg' %}" alt="infiniti"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/jaguar.svg' %}" alt="jaguar"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/jeep.svg' %}" alt="jeep"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/linkoln.svg' %}" alt="linkoln"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/kia.svg' %}" alt="kia"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/land_rover.svg' %}" alt="landrover"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/nissan.svg' %}" alt="nissan"></a></li>
-                <li><a href="#"><img src="{% static 'assets/img/volkswagen.svg' %}" alt="volkswagen"></a></li>
-              </ul>
-            </div>
-          </div>
-        </div>  
-      </section>
-      <!-- Модальное окно -->
-      <div class="page-overlay" style="display: none;"></div> <!-- Затемняющий фон -->
-      <div id="cartModal" class="modal hidden">
-        <div class="modal-content">
-          <h3>{% trans "Товар доданий у кошик!" %}</h3>
-          <p>{% trans "Ви бажаєте продовжити покупки або оформити замовлення." %}</p>
-          <div class="modal-buttons">
-            <button onclick="closeCartModal()">{% trans "Продовжити покупки" %}</button>
-            <button onclick="proceedToCheckout()">{% trans "Оформити замовлення" %}</button>
-          </div>
+{% block hero-section %}
+<!-- hero-section -->
+<section id="first-section">
+  <h1>{% trans "Розбирання автомобілів з США 'Gen Brothers'. Низькі ціни." %}</h1>
+  <div class="container ">
+    <div id="carAccordion">
+      <div class="accordion-item">
+      {% tag_car as car %}
+      {% for cars in car %}
+        <h3 class="accordion-header">{{ cars.brand_car }}</h3>
+      {% endfor %}
+        <div class="accordion-content">
+          <p class="model-item"></p>
         </div>
       </div>
-      </main>
-{% endblock hero-section %}
+    </div>
+    <div class="first_screan_catalog">
+      <div class="sidebar wow animate__animated animate__fadeInLeft">
+        <h2>{% trans "Пошук запчастин" %}</h2>
+        <form action="#" id="search-product">
+          <select name="markaavto" id="markaavto">
+            <option value="">{% trans "Марка авто" %}</option>
+          </select>
+          <select name="model" id="model">
+            <option value="">{% trans "Модель" %}</option>
+          </select>
+          <select name="rozdil" id="rozdil">
+            <option value="">{% trans "Розділ" %}</option>
+          </select>
+          <select name="pidrozdil" id="pidrozdil">
+            <option value="">{% trans "Підрозділ" %}</option>
+          </select>
+          <select name="zapchast" id="zapchast">
+            <option value="">{% trans "Запчастини" %}</option>
+          </select>
+          <select name="originalnumber" id="originalnumber">
+            <option value="">{% trans "ОЕМ" %}</option>
+          </select>
+          <button id="search-sidebar-catalog">{% trans " Пошук" %}</button>
+
+        </form>
+      </div>
+
+
+      
+
+
+</section>
+<section>
+  <section class="catalog_zapchast">
+    <div class="container">
+      <h2>{% trans "Каталог товарів" %}</h2>
+      <div class="product-list">
+        {% for product in goods %}
+        <div class="product-card">
+          {% if product.photo %}
+          <img src="{{ product.photo.url }}" alt="">
+          {% endif %}
+          <h3>{% trans "Артикул:" %} {{ product.display_sku }}</h3>
+          <p>{% trans "Ціна:" %} {{ product.price }}</p>
+          <div class="btn-cart">
+            <button class="add-to-cart" data-id="{{ product.id }}" data-price="{{ product.price }}" data-name="{{ product.display_sku }}" data-photo="{{ product.photo.url }}">
+              {% trans "Додати до кошика" %}
+            </button>
+          </div>
+          <div class="product_btn">
+            <a href="{% url 'catalog:product' product.slug %}">{% trans "Детальніше" %}</a>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- Блок пагінації -->
+      <div class="pagination">
+        <ul>
+          {% if goods.has_previous %}
+          <li>
+            <a href="?page=1">{% trans "Перша" %}</a>
+          </li>
+          <li>
+            <a href="?page={{ goods.previous_page_number }}">{{ goods.previous_page_number }}</a>
+          </li>
+          {% endif %}
+          <li class="current">
+            <span>{{ goods.number }}</span>
+          </li>
+          {% if goods.has_next %}
+          <li>
+            <a href="?page={{ goods.next_page_number }}">{{ goods.next_page_number }}</a>
+          </li>
+          <li>
+            <a href="?page={{ goods.paginator.num_pages }}">{% trans "Остання" %}</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </section>
+</section>
+
+
+
     
+    {% comment %} </div>
+    <button class="load-more">{% trans "Завантажити більше" %}</button>
+  </div> {% endcomment %}
+  
+</section>
+<section class="catalog_mark_avto">
+  <div class="hero-screan">
+    <div class="container">
+      <h2 class="wow animate__animated wow animate__animated animate__backInUp">{% trans "Каталог запчастин" %}</h2>
+      <div class="catalog">
+        <ul class="catalog-list wow animate__animated animate__backInUp">
+          <li><a href="#"><img src="{% static 'assets/img/acura.svg' %}" alt="acura"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/audi.svg' %}" alt="audi"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/bmw.svg' %}" alt="bmw"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/crysler.svg' %}" alt="crysler"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/dodge.svg' %}" alt="dodge"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/honda.svg' %}" alt="honda"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/hynday.svg' %}" alt="hynday"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/infiniti.svg' %}" alt="infiniti"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/jaguar.svg' %}" alt="jaguar"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/jeep.svg' %}" alt="jeep"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/linkoln.svg' %}" alt="linkoln"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/kia.svg' %}" alt="kia"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/land_rover.svg' %}" alt="landrover"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/nissan.svg' %}" alt="nissan"></a></li>
+          <li><a href="#"><img src="{% static 'assets/img/volkswagen.svg' %}" alt="volkswagen"></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Модальное окно -->
+<div class="page-overlay" style="display: none;"></div> <!-- Затемняющий фон -->
+<div id="cartModal" class="modal hidden">
+  <div class="modal-content">
+    <h3>{% trans "Товар доданий у кошик!" %}</h3>
+    <p>{% trans "Ви бажаєте продовжити покупки або оформити замовлення." %}</p>
+    <div class="modal-buttons">
+      <button onclick="closeCartModal()">{% trans "Продовжити покупки" %}</button>
+      <button onclick="proceedToCheckout()">{% trans "Оформити замовлення" %}</button>
+    </div>
+  </div>
+</div>
+</main>
+{% endblock hero-section %}

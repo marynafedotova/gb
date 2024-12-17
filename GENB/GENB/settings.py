@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
-from django.conf.global_settings import LANGUAGES, LOCALE_PATHS, STATICFILES_DIRS
+from django.conf.global_settings import LANGUAGES, LOCALE_PATHS, MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 
@@ -42,6 +42,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    #Tools
+    "debug_toolbar",
+
     #my apps
     'MAIN',
     'GOODS',
@@ -55,6 +58,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    #TOOLS MIDDLEWARE
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
 
     #LANGUAGE MIDDLEWARE
     'django.middleware.locale.LocaleMiddleware',
@@ -142,6 +148,18 @@ LOCALE_PATHS = [
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [BASE_DIR / 'static']
+
+MEDIA_URL = 'media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+
+INTERNAL_IPS = [
+    # ...
+    "127.0.0.1",
+    # ...
+]
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

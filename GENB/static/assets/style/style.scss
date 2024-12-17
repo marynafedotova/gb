@@ -17,11 +17,11 @@ $green: #589a15;
 
 $background-color: #202020;
 
-$color--mine-shaft: #252525; // дял виділення картки товару при каведенні на неї в каталозі, додаткове затемнення
+$color--mine-shaft: #252525; 
 
-$color--torch-green : #00FF7F; // підсвітка заголовків, контктів, категорій товарів при наведенні на них
+$color--torch-green : #00FF7F; 
 
-$color--porcelain : #f1f3f4; // текст на сайті
+$color--porcelain : #f1f3f4; 
 
 $color--gray : #888; // ціна в доларах в карточці товара 
 
@@ -424,7 +424,7 @@ h1{
       flex-direction: column;
       flex-wrap: wrap-reverse;
       .sidebar_filter{
-        top: 6%;
+        top: 8%;
         border-radius: 16px;
         width: 25%;
         left: 4%;
@@ -448,13 +448,14 @@ h1{
             width: 100%;
             height: 40px;
             cursor: pointer;
+            padding-left: 8px;
             border: 1px solid $ForestGreen;
             border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
+            font-weight: 700;
             color: $color--mine-shaft;
             background-color: $color--porcelain;
-            letter-spacing: 1.1;
+            font-size: 1.1rem;
+            letter-spacing: 0rem;
             option:hover{
               border: 1px solid $black;
               background-color: #7E5AFF;

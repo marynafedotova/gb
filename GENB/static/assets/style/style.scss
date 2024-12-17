@@ -314,7 +314,7 @@ main {
     display: flex;
     padding: 10px;
     align-items: center;
-    background-color: $color--mine-shaft;
+    background-color: $color--oslo-gray;
 
     .hamburger-wrap {
       margin-left: 60px;
@@ -336,6 +336,17 @@ li{
   flex-direction: row;
   .account{
     margin-left: 0px; 
+  }
+  .language{
+    li {
+      display: inline-flex;
+      width: 30px;
+      height: 30px;
+      a> img{
+        width: 30px;
+        height: 30px;
+      }
+    }
   }
   .search-container{
     padding: 10px 10px 10px 20px;
@@ -2771,7 +2782,7 @@ h3{
     flex-wrap: wrap;
   }
   header .header-container .logo img {
-    width: 130px;
+    width: 200px;
     object-fit: contain;
   }
   header .account ul li img, header .language ul li img {

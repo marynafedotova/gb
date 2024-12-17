@@ -21,8 +21,8 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 }); //lazy
 
 var lazyLoadInstance = new LazyLoad({}); // wow
-// new WOW().init();
-//scroll
+
+new WOW().init(); //scroll
 // document.getElementById('scrollButton').addEventListener('click', function(event) {
 //   event.preventDefault();
 //   const targetElement = document.getElementById('news');
@@ -33,21 +33,21 @@ var lazyLoadInstance = new LazyLoad({}); // wow
 //   });
 // });
 //baner slider
-
-$(document).ready(function () {
-  $('#baner').lightSlider({
-    item: 1,
-    controls: false,
-    loop: true,
-    auto: true,
-    slideMove: 1,
-    slideMargin: 0,
-    speed: 900
-  });
-}); //advantages slider
+// $(document).ready(function() {
+//   $('#baner').lightSlider({
+//     item: 1,
+//     controls: false,
+//     loop: true,
+//     auto: true,
+//     slideMove: 1,
+//     slideMargin: 0,
+//     speed: 900
+//         });
+// });
+//advantages slider
 
 document.addEventListener('DOMContentLoaded', function () {
-  fetch('assets/data/advantages.json').then(function (response) {
+  fetch(dataJsonAdv).then(function (response) {
     return response.json();
   }).then(function (data) {
     createAdvantagesSlider('advantages_slider', data);
@@ -60,7 +60,7 @@ function createAdvantagesSlider(elementId, jsonData) {
   var sliderContainer = $("#" + elementId);
   var ulElement = $("<ul></ul>");
   jsonData.forEach(function (item) {
-    var slideElement = $("\n      <li>\n      <div class=\"adventages-slide\">\n        <img data-src=\"".concat(item.image, "\" alt=\"\" class=\"lazy\">\n        <div class=\"adventages-text\">").concat(item.text, "</div>\n      </li>\n      </div>\n    "));
+    var slideElement = $("\n      <li>\n      <div class=\"adventages-slide\">\n        <img src=\"".concat(item.image, "\" alt=\"").concat(item.text, "\">\n        <div class=\"adventages-text\">").concat(item.text, "</div>\n      </li>\n      </div>\n    "));
     ulElement.append(slideElement);
   });
   sliderContainer.append(ulElement);
@@ -168,7 +168,7 @@ function fetchProducts() {
         case 0:
           _context2.prev = 0;
           _context2.next = 3;
-          return regeneratorRuntime.awrap(fetch(dataJsonUrl));
+          return regeneratorRuntime.awrap(fetch('assets/data/data_ukr.json'));
 
         case 3:
           response = _context2.sent;
@@ -196,20 +196,21 @@ function fetchProducts() {
 
         case 11:
           products = data.Sheet1;
-          _context2.next = 17;
+          console.log('Loaded products:', products);
+          _context2.next = 18;
           break;
 
-        case 14:
-          _context2.prev = 14;
+        case 15:
+          _context2.prev = 15;
           _context2.t0 = _context2["catch"](0);
           console.error('Ошибка при получении данных продуктов:', _context2.t0);
 
-        case 17:
+        case 18:
         case "end":
           return _context2.stop();
       }
     }
-  }, null, null, [[0, 14]]);
+  }, null, null, [[0, 15]]);
 } // Функция для отображения продуктов
 
 
@@ -220,37 +221,105 @@ function displayProducts(filteredProducts) {
   if (!productContainer || !loadMoreButton) {
     console.error('Контейнер для товаров или кнопка "Загрузить ещё" не найдены');
     return;
-  } // Если это первый запуск, очищаем контейнер
+  } // Если это первая загрузка, очищаем контейнер
 
 
   if (displayedProductCount === 0) {
     productContainer.innerHTML = '';
-  } // Если нет товаров
+  } // Определяем текущий диапазон отображаемых товаров
 
 
-  if (filteredProducts.length === 0) {
-    productContainer.innerHTML = '<p>Ничего не найдено.</p>';
-    return;
-  } // Отображаем товары постранично
-
-
-  var nextProducts = filteredProducts.slice(displayedProductCount, displayedProductCount + PRODUCTS_PER_PAGE);
-  nextProducts.forEach(function (product) {
+  var productsToDisplay = filteredProducts.slice(displayedProductCount, displayedProductCount + PRODUCTS_PER_PAGE);
+  productsToDisplay.forEach(function (product) {
     var priceInUah = Math.ceil(product.zena * usdToUahRate);
     var photoUrl = product.photo ? product.photo.split(',')[0].trim() : 'default-photo.jpg';
-    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(photoUrl, "\" alt=\"").concat(product.zapchast, "\">\n        <div>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</div>\n        <h3>").concat(product.zapchast, "</h3>\n        <p>\u0426\u0435\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" data-id=\"").concat(product.ID_EXT, "\" data-price=\"").concat(priceInUah, "\">\u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430</button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"assets/pages/product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
+    var productCard = "\n      <div class=\"product-card\">\n        <img src=\"".concat(photoUrl, "\" alt=\"").concat(product.zapchast, "\">\n        <div>\u0410\u0440\u0442\u0438\u043A\u0443\u043B: ").concat(product.ID_EXT, "</div>\n        <h3>").concat(product.zapchast, "</h3>\n        <p>\u0426\u0435\u043D\u0430: ").concat(product.zena, " ").concat(product.valyuta, " / ").concat(priceInUah, " \u0433\u0440\u043D</p>\n        <div class=\"btn-cart\">\n          <button class=\"add-to-cart\" \n                  data-id=\"").concat(product.ID_EXT, "\" \n                  data-name=\"").concat(product.zapchast, "\" \n                  data-price=\"").concat(priceInUah, "\" \n                  data-photo=\"").concat(photoUrl, "\">\n              \u0414\u043E\u0434\u0430\u0442\u0438 \u0434\u043E \u043A\u043E\u0448\u0438\u043A\u0430\n          </button>\n        </div>\n        <div class=\"product_btn\">\n          <a href=\"assets/pages/product.html?id=").concat(product.ID_EXT, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</a>\n        </div>\n      </div>");
     productContainer.insertAdjacentHTML('beforeend', productCard);
-  }); // Обновляем счётчик отображённых товаров
+  }); // Обновляем счетчик отображенных товаров
 
-  displayedProductCount += nextProducts.length; // Показываем кнопку, если есть ещё товары
+  displayedProductCount += productsToDisplay.length; // Показываем или скрываем кнопку "Загрузить ещё"
 
   if (displayedProductCount < filteredProducts.length) {
     loadMoreButton.style.display = 'block';
   } else {
     loadMoreButton.style.display = 'none';
   }
-} // Обработчик кнопки "Загрузить ещё"
+} //cart
+// Обработчик для кнопок добавления товара в корзину
 
+
+document.addEventListener('click', function (event) {
+  if (event.target.classList.contains('add-to-cart')) {
+    var item = {
+      id: event.target.dataset.id,
+      name: event.target.dataset.name,
+      price: parseFloat(event.target.dataset.price || 0),
+      quantity: 1,
+      photo: event.target.dataset.photo
+    };
+    addToCart(item);
+  }
+}); // Функция для добавления товара в корзину
+
+function addToCart(item) {
+  var cart = JSON.parse(sessionStorage.getItem("cart")) || [];
+  var existingItemIndex = cart.findIndex(function (cartItem) {
+    return cartItem.id === item.id;
+  });
+
+  if (existingItemIndex > -1) {
+    cart[existingItemIndex].quantity += 1;
+  } else {
+    cart.push(item);
+  }
+
+  sessionStorage.setItem("cart", JSON.stringify(cart));
+  console.log('Корзина обновлена:', cart);
+  showCartModal();
+} // Функция для отображения модального окна
+
+
+function showCartModal() {
+  var modal = document.getElementById("cartModal");
+  var overlay = document.querySelector(".overlay");
+
+  if (modal && overlay) {
+    console.log("Показываем модальное окно"); // Для проверки
+
+    modal.classList.remove("hidden");
+    overlay.style.display = "block"; // Проверим текущие стили модального окна
+
+    console.log("Стили модального окна:", window.getComputedStyle(modal));
+  } else {
+    console.error('Модальное окно или затемняющий фон не найдены!');
+  }
+} // Функция для закрытия модального окна
+
+
+function closeCartModal() {
+  var modal = document.getElementById("cartModal");
+  var overlay = document.querySelector(".overlay");
+
+  if (modal && overlay) {
+    modal.classList.add("hidden");
+    overlay.style.display = "none";
+    document.body.style.overflow = ""; // Разрешаем прокрутку страницы, если была заблокирована
+  } else {
+    console.error('Модальное окно или затемняющий фон не найдены!');
+  }
+} // Функция для перехода к оформлению заказа
+
+
+function proceedToCheckout() {
+  closeCartModal();
+  window.location.href = "assets/pages/cart.html";
+}
+
+document.getElementById('continueShopping').addEventListener('click', function (event) {
+  event.preventDefault(); // Отменяет переход по ссылке
+
+  closeCartModal();
+}); // Обработчик кнопки "Загрузить ещё"
 
 document.querySelector('.load-more-search').addEventListener('click', function () {
   var query = document.getElementById('search-input').value.trim().toLowerCase();
@@ -398,36 +467,67 @@ document.addEventListener('DOMContentLoaded', function () {
       toast.error('Помилка: ' + error.message);
     });
   });
-  telFld.addEventListener('input', function (e) {
-    var input = e.target.value.replace(/\D/g, '');
-    var formattedInput = '';
 
-    if (input.length > 0) {
-      formattedInput += '+38 (';
-    }
+  if (telFld) {
+    telFld.addEventListener('input', function (e) {
+      var input = e.target.value.replace(/\D/g, ''); // Удаляем все нецифровые символы
 
-    if (input.length >= 1) {
-      formattedInput += input.substring(0, 3);
-    }
+      var prefix = '38'; // Префикс для Украины
 
-    if (input.length >= 4) {
-      formattedInput += ') ' + input.substring(3, 6);
-    }
+      var maxLength = 12; // Максимальная длина номера
 
-    if (input.length >= 7) {
-      formattedInput += '-' + input.substring(6, 8);
-    }
+      if (!input.startsWith(prefix)) {
+        input = prefix + input;
+      }
 
-    if (input.length >= 9) {
-      formattedInput += '-' + input.substring(8, 10);
-    }
+      if (input.length > maxLength) {
+        input = input.substring(0, maxLength);
+      }
 
-    e.target.value = formattedInput;
-  });
+      var formattedInput = '+38';
+
+      if (input.length > 2) {
+        formattedInput += ' (' + input.substring(2, 5);
+      }
+
+      if (input.length > 5) {
+        formattedInput += ') ' + input.substring(5, 8);
+      }
+
+      if (input.length > 8) {
+        formattedInput += '-' + input.substring(8, 10);
+      }
+
+      if (input.length > 10) {
+        formattedInput += '-' + input.substring(10, 12);
+      }
+
+      var cursorPosition = e.target.selectionStart;
+      var prevLength = e.target.value.length;
+      var newLength = formattedInput.length;
+      var diff = newLength - prevLength;
+      e.target.value = formattedInput;
+
+      if (diff > 0 && cursorPosition >= prevLength) {
+        e.target.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
+      } else if (diff < 0 && cursorPosition > newLength) {
+        e.target.setSelectionRange(newLength, newLength);
+      } else {
+        e.target.setSelectionRange(cursorPosition, cursorPosition);
+      }
+    });
+  }
+
   nameFld.addEventListener('input', function (e) {
     var input = e.target.value;
     e.target.value = input.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
   });
+  var currentYear = new Date().getFullYear();
+  var yearElement = document.getElementById('year');
+
+  if (yearElement) {
+    yearElement.textContent = currentYear;
+  }
 }); //copiraite
 
 document.addEventListener("DOMContentLoaded", function () {

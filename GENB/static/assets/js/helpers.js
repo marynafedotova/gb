@@ -22,7 +22,7 @@ document.getElementById('hamb-btn-mobile').addEventListener('click', function ()
 })
 //lazy
 
-//  var lazyLoadInstance = new LazyLoad({});
+  var lazyLoadInstance = new LazyLoad({});
 
 //  wow
 new WOW().init();
@@ -119,34 +119,64 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  telFld.addEventListener('input', function (e) {
-    let input = e.target.value.replace(/\D/g, '');
-    let formattedInput = '';
+  if (telFld) {
+    telFld.addEventListener('input', function (e) {
+      let input = e.target.value.replace(/\D/g, ''); // Удаляем все нецифровые символы
+      const prefix = '38'; // Префикс для Украины
+      const maxLength = 12; // Максимальная длина номера
+  
+      if (!input.startsWith(prefix)) {
+        input = prefix + input;
+      }
+  
+      if (input.length > maxLength) {
+        input = input.substring(0, maxLength);
+      }
 
-    if (input.length > 0) {
-      formattedInput += '+38 (';
-    }
-    if (input.length >= 1) {
-      formattedInput += input.substring(0, 3);
-    }
-    if (input.length >= 4) {
-      formattedInput += ') ' + input.substring(3, 6);
-    }
-    if (input.length >= 7) {
-      formattedInput += '-' + input.substring(6, 8);
-    }
-    if (input.length >= 9) {
-      formattedInput += '-' + input.substring(8, 10);
-    }
+      let formattedInput = '+38';
+      if (input.length > 2) {
+        formattedInput += ' (' + input.substring(2, 5); 
+      }
+      if (input.length > 5) {
+        formattedInput += ') ' + input.substring(5, 8); 
+      }
+      if (input.length > 8) {
+        formattedInput += '-' + input.substring(8, 10);
+      }
+      if (input.length > 10) {
+        formattedInput += '-' + input.substring(10, 12); 
+      }
 
-    e.target.value = formattedInput;
-  });
+      const cursorPosition = e.target.selectionStart; 
+      const prevLength = e.target.value.length; 
+      const newLength = formattedInput.length;
+      const diff = newLength - prevLength;
+  
+      e.target.value = formattedInput;
+  
+      if (diff > 0 && cursorPosition >= prevLength) {
+        e.target.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
+      } else if (diff < 0 && cursorPosition > newLength) {
+        e.target.setSelectionRange(newLength, newLength);
+      } else {
+        e.target.setSelectionRange(cursorPosition, cursorPosition);
+      }
+    });
+  }
+
   nameFld.addEventListener('input', function (e) {
-  let input = e.target.value;
-   e.target.value = input.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
+    let input = e.target.value;
+    e.target.value = input.replace(/[^A-Za-zА-Яа-яІіЇїЄє']/g, '');
+  });
+
+  const currentYear = new Date().getFullYear();
+  const yearElement = document.getElementById('year');
+  if (yearElement) {
+    yearElement.textContent = currentYear;
+  }
 });
-});
-//copiraite
+
+//копірайт
 document.addEventListener("DOMContentLoaded", function() {
   const currentYear = new Date().getFullYear();
   document.getElementById("year").textContent = currentYear;
@@ -156,17 +186,16 @@ document.addEventListener("DOMContentLoaded", function() {
 const urlMonoBank = 'https://api.monobank.ua/bank/currency';
 let products = [];
 let usdToUahRate = 1;
-let displayedProductCount = 0; // Счётчик отображённых товаров
-const PRODUCTS_PER_PAGE = 12; // Количество товаров на одну "страницу"
+let displayedProductCount = 0;
+const PRODUCTS_PER_PAGE = 12; 
 
-// Функция для получения курса валют
+
 async function fetchCurrencyRate() {
   try {
     const cachedRate = localStorage.getItem('usdToUahRate');
     const cachedTime = localStorage.getItem('usdToUahRateTime');
     const now = Date.now();
 
-    // Если кэш действителен (меньше 5 минут)
     if (cachedRate && cachedTime && now - cachedTime < 5 * 60 * 1000) {
       usdToUahRate = parseFloat(cachedRate);
       return;
@@ -267,32 +296,130 @@ document.querySelector('.load-more-search').addEventListener('click', function (
 });
 
 // Обработчик формы поиска
-document.getElementById('search-form').addEventListener('submit', async function(event) {
+document.getElementById('search-form').addEventListener('submit', function(event) {
   event.preventDefault();
-  await fetchCurrencyRate(); // Получаем актуальный курс валют
 
   const query = document.getElementById('search-input').value.trim().toLowerCase();
+  console.log('Search query:', query);
   if (query) {
-    const filteredProducts = products.filter(product => 
-      (product.zapchast && product.zapchast.toLowerCase().includes(query)) ||
-      (product.markaavto && product.markaavto.toLowerCase().includes(query)) ||
-      (product.model && product.model.toLowerCase().includes(query))
-    );
 
-    displayedProductCount = 0; // Сбрасываем счётчик отображённых товаров
+    const filteredProducts = products.filter(product => {
+      return (product.ID_EXT && product.ID_EXT.toLowerCase().includes(query)) || 
+             (product.zapchast && product.zapchast.toLowerCase().includes(query)) || 
+             (product.markaavto && product.markaavto.toLowerCase().includes(query)) ||
+             (product.model && product.model.toLowerCase().includes(query)) ||
+            (product.category && product.category.toLowerCase().includes(query)) ||
+            (product.dop_category && product.dop_category.toLowerCase().includes(query)) ||
+            (product.originalnumber && product.originalnumber.toLowerCase().includes(query));
+    });
+    console.log('Filtered products:', filteredProducts); 
+    displayedProductCount = 0;
     displayProducts(filteredProducts);
   } else {
-    // Если поле пустое, очищаем результаты
     displayedProductCount = 0;
     displayProducts([]);
   }
 
-  // Прокрутка к результатам поиска
   const resultsContainer = document.querySelector('.search-results');
   if (resultsContainer) {
     resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 });
+
+
+document.getElementById('search-input').addEventListener('input', function() {
+  const query = this.value.trim().toLowerCase();
+
+  if (query) {
+    const filteredProducts = products.filter(product => {
+      return (product.ID_EXT && product.ID_EXT.toLowerCase().includes(query)) || 
+             (product.zapchast && product.zapchast.toLowerCase().includes(query)) || 
+             (product.markaavto && product.markaavto.toLowerCase().includes(query)) ||
+             (product.model && product.model.toLowerCase().includes(query)) ||
+            (product.category && product.category.toLowerCase().includes(query)) ||
+            (product.dop_category && product.dop_category.toLowerCase().includes(query)) ||
+            (product.originalnumber && product.originalnumber.toLowerCase().includes(query));
+    });
+
+    displayedProductCount = 0;  
+    displayProducts(filteredProducts);
+  } else {
+    displayedProductCount = 0;
+    displayProducts([]);
+  }
+});
+
+//cart
+
+// Обработчик для кнопок добавления товара в корзину
+document.addEventListener('click', function (event) {
+  if (event.target.classList.contains('add-to-cart')) {
+    const item = {
+      id: event.target.dataset.id, 
+      name: event.target.dataset.name, 
+      price: parseFloat(event.target.dataset.price || 0), 
+      quantity: 1, 
+      photo: event.target.dataset.photo 
+    };
+
+    addToCart(item);
+  }
+});
+
+
+// Функция для добавления товара в корзину
+function addToCart(item) {
+  let cart = JSON.parse(sessionStorage.getItem("cart")) || []; 
+
+  const existingItemIndex = cart.findIndex(cartItem => cartItem.id === item.id);
+  if (existingItemIndex > -1) {
+    cart[existingItemIndex].quantity += 1; 
+  } else {
+    cart.push(item); 
+  }
+
+  sessionStorage.setItem("cart", JSON.stringify(cart)); 
+  console.log('Корзина обновлена:', cart); 
+  showCartModal(); 
+}
+
+// Функция для отображения модального окна
+function showCartModal() {
+  const modal = document.getElementById("cartModal");
+  const overlay = document.querySelector(".overlay");
+
+  if (modal && overlay) {
+    console.log("Показываем модальное окно");  
+    modal.classList.remove("hidden");
+    overlay.style.display = "block";
+
+    console.log("Стили модального окна:", window.getComputedStyle(modal));
+  } else {
+    console.error('Модальное окно или затемняющий фон не найдены!');
+  }
+}
+
+
+// Функция для закрытия модального окна
+function closeCartModal() {
+  const modal = document.getElementById("cartModal");
+  const overlay = document.querySelector(".overlay");
+
+  if (modal && overlay) {
+    modal.classList.add("hidden");  // Добавляем класс hidden для модального окна
+    overlay.style.display = "none";  // Убираем стиль display: none для оверлея
+  } else {
+    console.error('Модальное окно или затемняющий фон не найдены!');
+  }
+}
+
+
+
+// Функция для перехода к оформлению заказа
+function proceedToCheckout() {
+  closeCartModal();
+  window.location.href = "cart.html";
+}
 
 // Инициализация
 async function initialize() {

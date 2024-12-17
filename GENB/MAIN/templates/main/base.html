@@ -64,6 +64,23 @@
             </form>
           </div>
         </li>
+        <li>
+           <div class="account">
+          <ul>
+            <li><a href="{% static 'assets/pages/cart.html' %}" target="_parent" rel="noopener noreferrer"><img src="{% static 'assets/img/cart-large-svgrepo-com.svg' %}" alt="cart"></a></li>
+          </ul>
+        </div>
+          <div class="language">
+          <ul>
+            <li>
+              <a href="{% url 'main:set_language' %}?language=ru&next={{ request.path }}">
+                <img src="{% static 'assets/img/russia.svg' %}" alt="{% trans 'Russian language' %}"></a></li>
+            <li>
+              <a href="{% url 'main:set_language' %}?language=uk&next={{ request.path }}">
+                <img src="{% static 'assets/img/ukraine.svg' %}" alt="{% trans 'Ukrainian language' %}"></a></li>
+          </ul>
+        </div>
+        <li>
       </ul>
     </nav>
   </div>
@@ -92,7 +109,6 @@
         </div>
         <div class="account">
           <ul>
-            <li><img src="{% static 'assets/img/person-circle-fill-svgrepo-com.svg' %}" alt=""></li>
             <li><a href="{% static 'assets/pages/cart.html' %}" target="_parent" rel="noopener noreferrer"><img src="{% static 'assets/img/cart-large-svgrepo-com.svg' %}" alt="cart"></a></li>
           </ul>
         </div>
@@ -262,6 +278,7 @@
       <script src="{% static 'assets/js/wow.min.js' %}"></script>
       <script src="{% static 'assets/js/lazyload.min.js' %}"></script>
       <script src="{% static 'assets/js/toast.js' %}"></script>
+       <script src="{% static 'assets/js/helpers}"></script>
       <script src="{% static 'assets/js/newsSLider.js' %}"></script>
       <script src="{% static 'assets/js/main.js' %}"></script>
       <script src="{% static 'assets/js/dynamic_choices.js' %}"></script>

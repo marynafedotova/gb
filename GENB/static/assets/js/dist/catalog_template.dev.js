@@ -1,6 +1,5 @@
 "use strict";
 
-// Код для обработки кликов по ссылкам
 document.querySelectorAll('.submenu a').forEach(function (link) {
   link.addEventListener('click', function (event) {
     event.preventDefault();
@@ -93,7 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
       console.error('Элемент с id="content" не найден.');
     }
   }
-}); // Функция для загрузки данных из JSON
+});
 
 function loadData() {
   var response, data;
@@ -103,7 +102,7 @@ function loadData() {
         case 0:
           _context.prev = 0;
           _context.next = 3;
-          return regeneratorRuntime.awrap(fetch('..data/data_ukr.json'));
+          return regeneratorRuntime.awrap(fetch('../data/data_ukr.json'));
 
         case 3:
           response = _context.sent;
@@ -126,38 +125,70 @@ function loadData() {
       }
     }
   }, null, null, [[0, 10]]);
-} // Функция для фильтрации данных по марке и году
+}
 
+function groupByUniqueCars(cars) {
+  var uniqueCars = new Map();
+  cars.forEach(function (car) {
+    var key = "".concat(car.markaavto.toLowerCase(), "-").concat(car.model.toLowerCase(), "-").concat(car.god);
+
+    if (!uniqueCars.has(key)) {
+      uniqueCars.set(key, car);
+    }
+  });
+  return Array.from(uniqueCars.values());
+}
 
 function filterCars(cars, brand) {
   var minYear = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 2000;
-  return cars.filter(function (car) {
-    return car.markaavto.toLowerCase() === brand.toLowerCase() && car.god >= minYear;
+  var filteredCars = cars.filter(function (car) {
+    return car.markaavto && car.markaavto.toLowerCase() === brand.toLowerCase() && car.god >= minYear;
   });
-} // Функция для создания карточек автомобилей
-
+  return groupByUniqueCars(filteredCars);
+}
 
 function createCarCards(brand) {
   var minYear = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2000;
   loadData().then(function (cars) {
     var filteredCars = filterCars(cars, brand, minYear);
-    var contentElement = document.getElementById('content');
-    if (!contentElement) return;
-    contentElement.innerHTML = '';
+    var catalogElement = document.getElementById('cars-catalog');
+
+    if (!catalogElement) {
+      console.error('Элемент с id="cars-catalog" не найден.');
+      return;
+    }
+
+    catalogElement.innerHTML = '';
 
     if (filteredCars.length === 0) {
-      contentElement.innerHTML = '<p>Нет автомобилей для отображения по выбранному фильтру.</p>';
+      catalogElement.innerHTML = '<p>Нет автомобилей для отображения по выбранному фильтру.</p>';
       return;
     }
 
     filteredCars.forEach(function (car) {
       var card = document.createElement('div');
-      card.classList.add('car-card'); // Создаем HTML для карточки
-
-      card.innerHTML = "\n          <div class=\"car-image\">\n            <img src=\"".concat(car.pictures.split(',')[0], "\" alt=\"").concat(car.model, "\" />\n          </div>\n          <div class=\"car-details\">\n            <h3>").concat(car.markaavto, " ").concat(car.model, " (").concat(car.god, ")</h3>\n            <p><strong>\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435:</strong> ").concat(car.description, "</p>\n            <p><strong>\u0426\u0435\u043D\u0430:</strong> ").concat(car.price, " ").concat(car.currency, "</p>\n            <p><a href=\"").concat(car.link, "\" target=\"_blank\">\u041F\u043E\u0434\u0440\u043E\u0431\u043D\u0435\u0435</a></p>\n          </div>\n        ");
-      contentElement.appendChild(card);
+      card.classList.add('car-card');
+      card.innerHTML = "\n        <img src=\"".concat(car.pictures.split(',')[0], "\" alt=\"").concat(car.model, "\">\n        <div class=\"car-details\">\n          <h2>").concat(car.markaavto, " ").concat(car.model, "</h2>\n          <p>\u0420\u0456\u043A: ").concat(car.god, "</p>\n          <button class=\"view-details-btn\" data-make=\"").concat(car.markaavto, "\" data-model=\"").concat(car.model, "\" data-year=\"").concat(car.god, "\">\u0414\u0435\u0442\u0430\u043B\u044C\u043D\u0456\u0448\u0435</button>\n        </div>\n      ");
+      catalogElement.appendChild(card);
     });
+    document.querySelectorAll('.view-details-btn').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var make = this.dataset.make;
+        var model = this.dataset.model;
+        var year = this.dataset.year;
+        window.location.href = "car-page.html?make=".concat(make, "&model=").concat(model, "&year=").concat(year);
+      });
+    });
+  })["catch"](function (error) {
+    console.error('Ошибка при создании карточек:', error);
   });
 }
 
-createCarCards('Jaguar', 2012);
+document.addEventListener('DOMContentLoaded', function () {
+  var urlParams = new URLSearchParams(window.location.search);
+  var brand = urlParams.get('brand');
+
+  if (brand) {
+    createCarCards(brand);
+  }
+});

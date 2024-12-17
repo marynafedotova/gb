@@ -1,4 +1,3 @@
-  // Код для обработки кликов по ссылкам
 document.querySelectorAll('.submenu a').forEach(link => {
   link.addEventListener('click', function (event) {
     event.preventDefault();
@@ -94,10 +93,9 @@ document.querySelectorAll('.submenu a').forEach(link => {
       }
     });
   
-  // Функция для загрузки данных из JSON
   async function loadData() {
     try {
-      const response = await fetch('..data/data_ukr.json');
+      const response = await fetch('../data/data_ukr.json');
       const data = await response.json();
       return data.Sheet1; 
     } catch (error) {
@@ -106,51 +104,77 @@ document.querySelectorAll('.submenu a').forEach(link => {
     }
   }
   
-  // Функция для фильтрации данных по марке и году
-  function filterCars(cars, brand, minYear = 2000) {
-    return cars.filter(car => car.markaavto.toLowerCase() === brand.toLowerCase() && car.god >= minYear);
-  }
-  
-  // Функция для создания карточек автомобилей
-  function createCarCards(brand, minYear = 2000) {
-    loadData().then(cars => {
-     
-      const filteredCars = filterCars(cars, brand, minYear);
-  
-      const contentElement = document.getElementById('content');
-      if (!contentElement) return;
-  
-      contentElement.innerHTML = '';
-  
-      if (filteredCars.length === 0) {
-        contentElement.innerHTML = '<p>Нет автомобилей для отображения по выбранному фильтру.</p>';
-        return;
-      }
-  
-   
-      filteredCars.forEach(car => {
-        const card = document.createElement('div');
-        card.classList.add('car-card'); 
-  
-        // Создаем HTML для карточки
-        card.innerHTML = `
-          <div class="car-image">
-            <img src="${car.pictures.split(',')[0]}" alt="${car.model}" />
-          </div>
-          <div class="car-details">
-            <h3>${car.markaavto} ${car.model} (${car.god})</h3>
-            <p><strong>Описание:</strong> ${car.description}</p>
-            <p><strong>Цена:</strong> ${car.price} ${car.currency}</p>
-            <p><a href="${car.link}" target="_blank">Подробнее</a></p>
-          </div>
-        `;
-  
-        
-        contentElement.appendChild(card);
+function groupByUniqueCars(cars) {
+  const uniqueCars = new Map();
+  cars.forEach(car => {
+    const key = `${car.markaavto.toLowerCase()}-${car.model.toLowerCase()}-${car.god}`;
+    if (!uniqueCars.has(key)) {
+      uniqueCars.set(key, car);
+    }
+  });
+  return Array.from(uniqueCars.values());
+}
+
+function filterCars(cars, brand, minYear = 2000) {
+  const filteredCars = cars.filter(car => 
+    car.markaavto && 
+    car.markaavto.toLowerCase() === brand.toLowerCase() && 
+    car.god >= minYear
+  );
+  return groupByUniqueCars(filteredCars); 
+}
+
+
+function createCarCards(brand, minYear = 2000) {
+  loadData().then(cars => {
+    const filteredCars = filterCars(cars, brand, minYear);
+
+    const catalogElement = document.getElementById('cars-catalog');
+    if (!catalogElement) {
+      console.error('Элемент с id="cars-catalog" не найден.');
+      return;
+    }
+
+    catalogElement.innerHTML = '';
+
+    if (filteredCars.length === 0) {
+      catalogElement.innerHTML = '<p>Нет автомобилей для отображения по выбранному фильтру.</p>';
+      return;
+    }
+
+    filteredCars.forEach(car => {
+      const card = document.createElement('div');
+      card.classList.add('car-card');
+      card.innerHTML = `
+        <img src="${car.pictures.split(',')[0]}" alt="${car.model}">
+        <div class="car-details">
+          <h2>${car.markaavto} ${car.model}</h2>
+          <p>Рік: ${car.god}</p>
+          <button class="view-details-btn" data-make="${car.markaavto}" data-model="${car.model}" data-year="${car.god}">Детальніше</button>
+        </div>
+      `;
+
+      catalogElement.appendChild(card);
+    });
+    document.querySelectorAll('.view-details-btn').forEach(button => {
+      button.addEventListener('click', function () {
+        const make = this.dataset.make;
+        const model = this.dataset.model;
+        const year = this.dataset.year;
+        window.location.href = `car-page.html?make=${make}&model=${model}&year=${year}`;
       });
     });
+  }).catch(error => {
+    console.error('Ошибка при создании карточек:', error);
+  });
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  const brand = urlParams.get('brand');
+  if (brand) {
+    createCarCards(brand);
   }
-  
-  
-  createCarCards('Jaguar', 2012);
-  
+});
+

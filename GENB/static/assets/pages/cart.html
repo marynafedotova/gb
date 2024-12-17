@@ -22,7 +22,8 @@
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff"> -->
   <title>Кошик</title>
-  <meta name="description" content="Замовити запчастини на автомобілі з США з доставкою по Україні  ✔️ Висока якість ✔️ Гарантії ✔️ Низькі ціни ☎️ 38 (068) 925-52-52 38 | (050) 925-52-52">
+  <meta name="description"
+    content="Замовити запчастини на автомобілі з США з доставкою по Україні  ✔️ Висока якість ✔️ Гарантії ✔️ Низькі ціни ☎️ 38 (068) 925-52-52 38 | (050) 925-52-52">
 
 </head>
 
@@ -50,7 +51,6 @@
         <li><a href="news.html" target="_parent">Статті та новини</a></li>
         <li>
           <!-- <a href="#"><img src="../img/person-circle-fill-svgrepo-com.svg" alt=""></a> -->
-
           <a href="cart.html"><img src="../img/cart-large-svgrepo-com.svg" alt="cart"></a>
           <div class="search-container">
             <form id="search-form-m">
@@ -77,21 +77,26 @@
         </div>
         <div class="social-link">
           <ul>
-            <li><a href="https://www.facebook.com/?locale=uk_UA" target="_blank" rel="nofollow"><img src="../img/facebook-176-svgrepo-com.svg" alt="link facebook"></a></li>
-            <li><a href="https://www.instagram.com/" target="_blank" rel="nofollow"><img src="../img//instagram-167-svgrepo-com.svg" alt="link instagram"></a></li>
-            <li><a href="https://www.tiktok.com/uk-UA/" target="_blank" rel="nofollow"><img src="../img/tiktok-fill-svgrepo-com.svg" alt="link tik-tok"></a></li>
+            <li><a href="https://www.facebook.com/?locale=uk_UA" target="_blank" rel="nofollow"><img
+                  src="../img/facebook-176-svgrepo-com.svg" alt="link facebook"></a></li>
+            <li><a href="https://www.instagram.com/" target="_blank" rel="nofollow"><img
+                  src="../img//instagram-167-svgrepo-com.svg" alt="link instagram"></a></li>
+            <li><a href="https://www.tiktok.com/uk-UA/" target="_blank" rel="nofollow"><img
+                  src="../img/tiktok-fill-svgrepo-com.svg" alt="link tik-tok"></a></li>
           </ul>
         </div>
         <div class="account">
           <ul>
             <!-- <li><img src="../img/person-circle-fill-svgrepo-com.svg" alt=""></li> -->
-            <li><a href="cart.html" target="_parent" rel="noopener noreferrer"><img src="../img/cart-large-svgrepo-com.svg" alt="cart"></a></li>
+            <li><a href="cart.html" target="_parent" rel="noopener noreferrer"><img
+                  src="../img/cart-large-svgrepo-com.svg" alt="cart"></a></li>
           </ul>
         </div>
         <div class="language">
           <ul>
-             <li><img src="../img/russia.svg" alt="ru lamguage"></li>
-<li><img src="../img/ukraine.svg" alt="ua language"></li>          </ul>
+            <li><img src="../img/russia.svg" alt="ru lamguage"></li>
+            <li><img src="../img/ukraine.svg" alt="ua language"></li>
+          </ul>
         </div>
       </div>
       <div class="nav-container">
@@ -127,14 +132,12 @@
                 <div class="search-container">
                   <form id="search-form">
                     <input type="text" id="search-input" placeholder="Пошук..." name="search">
-                    <button id="search-btn" type="submit"><img src="../img/search.svg"
-                        alt=""></button>
+                    <button id="search-btn" type="submit"><img src="../img/search.svg" alt=""></button>
                   </form>
                 </div>
               </li>
             </ul>
           </nav>
-  
           <div class="hamburger-wrap">
             <button id="hamb-btn" class="hamburger hamburger--squeeze" type="button">
               <span class="hamburger-box">
@@ -142,26 +145,132 @@
               </span>
             </button>
           </div>
-  
+
         </div>
     </header>
     <main>
       <section id="search-res">
         <div class="container">
-          <div class="search-results"></div> 
+          <div class="search-results"></div>
           <div class="btn-res">
             <a href="#" class="load-more-search" style="display: none;">Завантажити більше</a>
           </div>
         </div>
       </section>
-
       <div class="container">
-          <h1>Ваш Кошик</h1>
+        <h1>Ваш Кошик</h1>
+        <div id="cart">
           <div id="cartItems"></div>
-        
-         
-        
+          <div class="cart-data">
+            <div class="contacts-cart">
+              <div class="contacts-title">Ваші контактні дані</div>
+              <form action="#" method="post">
+                <div class="form-contacts-item">
+                  <label for="name">Ім'я: </label>
+                  <input type="text" name="name" id="name" required />
+                </div>
+                <div class="form-contacts-item">
+                  <label for="last_name">Прізвище: </label>
+                  <input type="text" name="last_name" id="last_name" required />
+                </div>
+                <div class="form-contacts-item">
+                  <label for="telephon">Мобільний телефон: </label>
+                  <input type="tel" name="telephon" id="telephon" required />
+                </div>
+                <div class="form-contacts-item">
+                  <label for="email">Електронна пошта: </label>
+                  <input type="email" name="email" id="email" required />
+                </div>
+              </form>
+            </div>
+            <div class="delivery-cart">
+              <div class="delivery-cart-title">Доставка</div>
+              <form id="deliveryForm">
+                <fieldset>
+                  <div>
+                    <input type="radio" id="Pickup" name="delivery" value="Pickup" />
+                    <label for="Pickup">Самовивіз</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="NovaPost" name="delivery" value="NovaPostDepartment" />
+                    <label for="NovaPost">Нова пошта (У відділення/поштомат)</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="NovaPostAddress" name="delivery" value="NovaPostAddress" />
+                    <label for="NovaPostAddress">Нова пошта (Адресна доставка)</label>
+                  </div>
+                </fieldset>
+              </form>
+              <div id="pickupMap" class="delivery-option hidden">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2943.6638286068915!2d30.418003591876904!3d50.40369461746685!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40d4c95d4e866af9%3A0x98cd6298be791376!2z0LLRg9C70LjRhtGPINCf0YDQvtC10LrRgtC90LAsIDcsINCa0LjRl9CyLCAwMjAwMA!5e1!3m2!1suk!2sua!4v1733755923106!5m2!1suk!2sua"
+                 width="600" height="450" style="border:0;"
+                 allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+              <div id="novaPostDepartment" class="delivery-option hidden">
+                <div style="position: relative; width: 500px;">
+                  <input
+                    type="text"
+                    id="cityInput"
+                    placeholder="Введіть назву населенyого пункту"
+                    autocomplete="off"
+                    style="width: 100%; padding: 10px; box-sizing: border-box;"
+                  />
+                  <ul id="citySuggestions" class="suggestions"></ul>
+                </div>
+                <div>
+                  <select id="department">
+                    <option>Вибиріть відділення</option>
+                  </select>
+                </div>
+              </div>
+              <div id="addressDelivery" class="delivery-option hidden">
+                <div  class="addressDeliveryScrean">
+                  <div>
+                    <label for="deliveryCity">Місто:</label>
+                    <input type="text" id="deliveryCity" name="deliveryCity" />
+                  </div>
+                  <div>
+                    <label for="street">Вулиця:</label>
+                    <input type="text" id="street" name="street" />
+                  </div>
+                  <div>
+                    <label for="house">Будинок:</label>
+                    <input type="text" id="house" name="house" />
+                  </div>
+                  <div>
+                    <label for="apartment">Квартира:</label>
+                    <input type="text" id="apartment" name="apartment" />
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="payment-cart">
+              <div class="payment-cart-title">Оплата</div>
+              <form action="#" method="post">
+                <fieldset>
+                  <div>
+                    <input type="radio" id="CashOnPickup" name="payment" value="CashOnPickup" />
+                    <label for="CashOnPickup">Готівкою при самовивозі</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="CashlessForLegalEntities" name="payment" value="CashlessForLegalEntities" />
+                    <label for="CashlessForLegalEntities">Безготівкова для юридичних осіб</label>
+                  </div>
+                  <div>
+                    <input type="radio" id="CashlessForIndividuals" name="payment" value="CashlessForIndividuals" />
+                    <label for="CashlessForIndividuals">Безготівкова для фізичних осіб</label>
+                  </div>
+                </fieldset>
+              </form>
+            </div>
+          </div>
       </div>
+      <div class="btn-send">
+        <button id="sendToTelegram">Відправити</button>
+      </div>
+    </div>
     </main>
     <footer>
       <div class="container">
@@ -199,7 +308,7 @@
         <div class="form-footer">
           <div class="text-form wow animate__animated animate__fadeInRight">Якщо у Вас виникла складність із замовленням
             або з якістю обслуговування – заповніть просту форму. Ми вирішуватимемо Ваше питання.</div>
-          <form id="feedback_form"  method="post">
+          <form id="feedback_form" method="post">
             <div class="name">
               <input type="text" id="exampleInputName" name="name" placeholder="Ім'я">
             </div>
@@ -209,7 +318,8 @@
 
             <button type="submit" class="btn-primary">Відправити</button>
           </form>
-        </div>      </div>
+        </div>
+      </div>
     </footer>
     <div class="footer-menu">
       <div class="container">
@@ -217,7 +327,7 @@
           <div class="f-link"><a
               href="https://docs.google.com/document/d/12RRHKT9s_c_SQxfQrxV2p-_1SnwbsVVU8oOIIhv8MzQ/edit#heading=h.k3lgmxj1tfcj">Договір
               публічної оферти</a></div>
-              <div class="f-link"><a href="#">Співпраця</a></div>
+          <div class="f-link"><a href="#">Співпраця</a></div>
           <div class="f-link"><a href="../pages/pdf-catalogy.html">PDF каталоги</a></div>
           <div class="f-link"><a href="../pages/news.html">Статті та новини</a></div>
           <!-- <div class="f-link"><a href="#">Спеціальні рішення</a></div> -->
@@ -225,34 +335,36 @@
           <div class="f-link"><a href="../pages/deliverypayment.html">Доставка і оплата</a></div>
           <div class="f-link"><a href="#">Відгуки</a></div>
           <div class="f-link"><a href="../pages/abuotus.html">Про нас</a></div>
-          <div class="f-link"><a href="https://www.work.ua/jobs/by-company/2506907/"  target="_blank" rel="nofollow">Вакансії</a></div>
+          <div class="f-link"><a href="https://www.work.ua/jobs/by-company/2506907/" target="_blank"
+              rel="nofollow">Вакансії</a></div>
         </div>
 
       </div>
       <span id="copyright">© <span id="year"></span> My Web Genius</span>
 
     </div>
-    <script src="../js/jquery/jquery-3.7.1.min.js"></script>
-    <script src="../js/wow.min.js"></script>
-    <script src="../js/toast.js"></script>
-    <!-- <script src="../js/cart.js"></script> -->
-    <script>
-      // Получаем данные корзины из sessionStorage
-      const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-      
-      // Контейнер для отображения товаров
-      const cartItemsContainer = document.getElementById("cartItems");
-  
-      // Отображаем товары в корзине
-      cart.forEach(item => {
-        const itemElement = document.createElement("div");
-        itemElement.textContent = `Товар: ${item.name}, Цена: ${item.price} грн, Количество: ${item.quantity}`;
-        cartItemsContainer.appendChild(itemElement);
-      });
-    </script>
-    <script src="../js/helpers.js"></script>
-
+    <!-- Модальне вікно корзини-->
+    <div class="overlay" style="display: none;"></div> ->
+    <div id="cartModal" class="modal hidden">
+      <div class="modal-content">
+        <h3>Товар доданий у кошик!</h3>
+        <p>Ви бажаєте продовжити покупки або оформити замовлення.</p>
+        <div class="modal-buttons">
+          <button id="continueShopping" onclick="closeCartModal()">Продовжити покупки</button>
+          <button id="checkout" onclick="proceedToCheckout()">Оформити замовлення</button>
+        </div>
+      </div>
+    </div>
   </div>
+  <script src="../js/jquery/jquery-3.7.1.min.js"></script>
+  <script src="../js/lazyload.min.js"></script>
+  <script src="../js/wow.min.js"></script>
+  <script src="../js/toast.js"></script>
+  <!-- <script src="../js/email.min.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/helpers.js"></script>
+
 </body>
 
 </html>

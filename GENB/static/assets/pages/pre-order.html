@@ -138,8 +138,7 @@
               <div class="search-container">
                 <form id="search-form">
                   <input type="text" id="search-input" placeholder="Пошук..." name="search">
-                  <button id="search-btn" type="submit"><img src="../img/search.svg
-"
+                  <button id="search-btn" type="submit"><img src="../img/search.svg"
                       alt=""></button>
                 </form>
               </div>
@@ -166,46 +165,10 @@
           </div>
         </div>
       </section>
-
       <!-- hero-section -->
       <div class="container">
         <h1 class="name-section wow animate__animated animate__backInUp">Автозапчастини на авто з США під замовлення </h1>
         <div id="cars-table" class="wow animate__animated animate__fadeInLeft"></div>
-        <div id="car-modal" class="modal">
-        </div>
-      </div>
-      <div class="overlay"></div>
-      <div class="container">
-        <div id="feedback-modal" class="modal">
-          <div class="modal-content">
-            <div class="feedback-header">
-              <span class="feedback-title">Форма бронювання</span>
-              <span class="close-feedback">&times;</span>
-            </div>
-            <form id="feedback-form_cars">
-              <input type="text" id="name" name="name" required placeholder="Ваше ім'я">
-              <input type="tel" id="phone" name="phone" required placeholder="Ваш номер телефону">
-              <input type="email" id="email" name="email" required placeholder="Ваш email">
-              <input type="text" id="rozdil" name="rozdil" required placeholder="Розділ запчастин">
-              <input type="text" id="pidrozdil" name="pidrozdil" required placeholder="Підрозділ запчастин">
-              <input type="text" id="zapchast" name="zapchastyny" required placeholder="Запчастини">
-              <textarea id="comments" name="comments" placeholder="Ваше повідомлення"></textarea>
-              <div class="btn"><button type="submit" id="btn-cars-order">Відправити</button> </div>
-            </form>
-          </div>
-        </div>
-      </div>
-      <!-- Модальное окно -->
-      <div class="page-overlay" style="display: none;"></div> <!-- Затемняющий фон -->
-      <div id="cartModal" class="modal hidden">
-        <div class="modal-content">
-          <h3>Товар доданий у кошик!</h3>
-          <p>Ви бажаєте продовжити покупки або оформити замовлення.</p>
-          <div class="modal-buttons">
-            <button onclick="closeCartModal()">Продовжити покупки</button>
-            <button onclick="proceedToCheckout()">Оформити замовлення</button>
-          </div>
-        </div>
       </div>
     </main>
     <footer>
@@ -278,9 +241,42 @@
       <span id="copyright">© <span id="year"></span> My Web Genius</span>
 
     </div>
+          <!-- Модальное окно бронирование авто -->
+          <div id="car-modal" class="modal" style="display: none;">
+            <div class="container">
+              <div id="car-order-modal">
+                <div class="modal-content">
+                  <div class="car-order-header">
+                    <div class="car-order-title">Форма бронювання</div>
+                    <div class="close-feedback">&times;</div>
+                  </div>
+                  <form id="car-order-form_cars">
+                    <div id="car-name"></div>
+                    <input type="text" id="name" name="name" required placeholder="Ваше ім'я">
+                    <input type="tel" id="phone" name="phone" required placeholder="Ваш номер телефону">
+                    <input type="email" id="email" name="email" required placeholder="Ваш email">
+                    <textarea id="comments" name="comments" placeholder="Ваше повідомлення"></textarea>
+                    <div class="btn"><button type="submit" id="btn-cars-order">Відправити</button> </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="overlay-feedback-modal" style="display: none;"></div>
+          </div>
+           <!-- Модальне вікно корзини--> 
+          <div class="overlay" style="display: none;"></div> ->
+          <div id="cartModal" class="modal hidden">
+            <div class="modal-content">
+              <h3>Товар доданий у кошик!</h3>
+              <p>Ви бажаєте продовжити покупки або оформити замовлення.</p>
+              <div class="modal-buttons">
+                <button id="continueShopping" onclick="closeCartModal()">Продовжити покупки</button>
+                <button id="checkout" onclick="proceedToCheckout()">Оформити замовлення</button>
+              </div>
+            </div>
+          </div>
     <script src="../js/jquery/jquery-3.7.1.min.js"></script>
     <script src="../js/plagins/lightslider.min.js"></script>
-    <!-- <script src="../js/plagins/lightgallery.min.js"></script> -->
     <script src="../js/plagins/lightgallery.umd.js"></script>
     <script src="../js/plagins/lg-thumbnail.min.js"></script>
     <script src="../js/plagins/lg-zoom.min.js"></script>
@@ -289,8 +285,6 @@
     <script src="../js/toast.js"></script>
     <script src="../js/cars.js"></script>
     <script src="../js/helpers.js"></script>
-
-
   </div>
 </body>
 

@@ -65,8 +65,9 @@
       <div class="product-list">
         {% for product in goods %}
         <div class="product-card">
+        <div> Cтан </div>
           {% if product.photo %}
-          <img src="{{ product.photo.url }}" alt="">
+          <img src="{{ product.photo.url }}" alt="{{ product.sku }}">
           {% endif %}
           <h3>{% trans "Артикул:" %} {{ product.sku }}</h3>
           <p>{% trans "Ціна:" %} {{ product.price }}</p>

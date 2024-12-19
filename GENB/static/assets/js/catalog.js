@@ -232,102 +232,102 @@ document.getElementById('search-input').addEventListener('input', function() {
 
 
 // Функция инициализации каталога
-async function initializeCatalog() {
-  await fetchCurrencyRate();
+// async function initializeCatalog() {
+//   await fetchCurrencyRate();
 
-  try {
-    const response = await fetch('../data/data_ukr.json');
-    if (!response.ok) throw new Error('Ошибка загрузки JSON');
-    const data = await response.json();
-    if (!data || !data.Sheet1) throw new Error('Некорректный формат данных');
-    products = data.Sheet1;
-    displayProducts();  
+//   try {
+//     const response = await fetch('../data/data_ukr.json');
+//     if (!response.ok) throw new Error('Ошибка загрузки JSON');
+//     const data = await response.json();
+//     if (!data || !data.Sheet1) throw new Error('Некорректный формат данных');
+//     products = data.Sheet1;
+//     displayProducts();  
 
-    document.querySelector('.load-more').addEventListener('click', event => {
-      event.preventDefault();
-      displayProducts();
-    });
-  } catch (error) {
-    console.error('Ошибка инициализации каталога:', error);
-  }
-}
+//     document.querySelector('.load-more').addEventListener('click', event => {
+//       event.preventDefault();
+//       displayProducts();
+//     });
+//   } catch (error) {
+//     console.error('Ошибка инициализации каталога:', error);
+//   }
+// }
 
 // Инициализация
 initializeCatalog();
 
 //accordion
-fetch('../data/data_ukr.json')
-    .then(response => response.json())
-    .then(data => {
-        const cars = data.Sheet1
-            .filter(item => item.markaavto && item.model && item.god)
-            .map(item => ({
-                markaavto: item.markaavto,
-                model: item.model,
-                god: item.god // Добавляем год для передачи в ссылку
-            }));
+// fetch('../data/data_ukr.json')
+//     .then(response => response.json())
+//     .then(data => {
+//         const cars = data.Sheet1
+//             .filter(item => item.markaavto && item.model && item.god)
+//             .map(item => ({
+//                 markaavto: item.markaavto,
+//                 model: item.model,
+//                 god: item.god // Добавляем год для передачи в ссылку
+//             }));
 
-        const carAccordionData = cars.reduce((acc, car) => {
-            if (!acc[car.markaavto]) {
-                acc[car.markaavto] = {};
-            }
-            if (!acc[car.markaavto][car.model]) {
-                acc[car.markaavto][car.model] = new Set(); // Используем Set для уникальных годов
-            }
-            acc[car.markaavto][car.model].add(car.god); // Добавляем только уникальные года
-            return acc;
-        }, {});
+//         const carAccordionData = cars.reduce((acc, car) => {
+//             if (!acc[car.markaavto]) {
+//                 acc[car.markaavto] = {};
+//             }
+//             if (!acc[car.markaavto][car.model]) {
+//                 acc[car.markaavto][car.model] = new Set(); // Используем Set для уникальных годов
+//             }
+//             acc[car.markaavto][car.model].add(car.god); // Добавляем только уникальные года
+//             return acc;
+//         }, {});
 
-        const accordionContainer = document.getElementById('carAccordion');
-        for (const [make, models] of Object.entries(carAccordionData)) {
-            if (!make) continue; // Пропускаем, если марка null или пустая
+//         const accordionContainer = document.getElementById('carAccordion');
+//         for (const [make, models] of Object.entries(carAccordionData)) {
+//             if (!make) continue; // Пропускаем, если марка null или пустая
 
-            const makeDiv = document.createElement('div');
-            makeDiv.classList.add('accordion-item');
+//             const makeDiv = document.createElement('div');
+//             makeDiv.classList.add('accordion-item');
 
-            const makeHeader = document.createElement('h3');
-            makeHeader.textContent = make;
-            makeHeader.classList.add('accordion-header');
-            makeHeader.addEventListener('click', function() {
-                const modelList = this.nextElementSibling;
-                modelList.classList.toggle('active');
-            });
-            makeDiv.appendChild(makeHeader);
+//             const makeHeader = document.createElement('h3');
+//             makeHeader.textContent = make;
+//             makeHeader.classList.add('accordion-header');
+//             makeHeader.addEventListener('click', function() {
+//                 const modelList = this.nextElementSibling;
+//                 modelList.classList.toggle('active');
+//             });
+//             makeDiv.appendChild(makeHeader);
 
-            const modelList = document.createElement('div');
-            modelList.classList.add('accordion-content');
+//             const modelList = document.createElement('div');
+//             modelList.classList.add('accordion-content');
 
-            for (const [model, years] of Object.entries(models)) {
-                const modelHeader = document.createElement('h4');
-                modelHeader.textContent = model;
-                modelHeader.classList.add('model-header');
-                modelHeader.addEventListener('click', function() {
-                    const yearList = this.nextElementSibling;
-                    yearList.classList.toggle('active');
-                });
-                modelList.appendChild(modelHeader);
+//             for (const [model, years] of Object.entries(models)) {
+//                 const modelHeader = document.createElement('h4');
+//                 modelHeader.textContent = model;
+//                 modelHeader.classList.add('model-header');
+//                 modelHeader.addEventListener('click', function() {
+//                     const yearList = this.nextElementSibling;
+//                     yearList.classList.toggle('active');
+//                 });
+//                 modelList.appendChild(modelHeader);
 
-                const yearList = document.createElement('div');
-                yearList.classList.add('year-list');
+//                 const yearList = document.createElement('div');
+//                 yearList.classList.add('year-list');
 
-                years.forEach(year => {
-                    const yearItem = document.createElement('p');
-                    yearItem.textContent = `Год: ${year}`;
-                    yearItem.classList.add('year-item');
-                    yearItem.addEventListener('click', () => {
-                        window.location.href = `./car-page.html?make=${make}&model=${model}&year=${year}`;
-                    });
-                    yearList.appendChild(yearItem);
-                });
+//                 years.forEach(year => {
+//                     const yearItem = document.createElement('p');
+//                     yearItem.textContent = `Год: ${year}`;
+//                     yearItem.classList.add('year-item');
+//                     yearItem.addEventListener('click', () => {
+//                         window.location.href = `./car-page.html?make=${make}&model=${model}&year=${year}`;
+//                     });
+//                     yearList.appendChild(yearItem);
+//                 });
 
-                modelList.appendChild(yearList);
-            }
+//                 modelList.appendChild(yearList);
+//             }
 
-            makeDiv.appendChild(modelList);
-            accordionContainer.appendChild(makeDiv);
-        }
-    })
-    .catch(error => console.error('Помилка завантаження даних:', error));
+//             makeDiv.appendChild(modelList);
+//             accordionContainer.appendChild(makeDiv);
+//         }
+//     })
+//     .catch(error => console.error('Помилка завантаження даних:', error));
 
 
 
@@ -339,68 +339,68 @@ fetch('../data/data_ukr.json')
 
 
 //cars card
-fetch('../data/data_ukr.json')
-    .then(response => response.json())
-    .then(data => {
-        const carsCatalog = document.getElementById('cars-catalog');
-        const uniqueCars = new Set();
-        const carsArray = [];
+// fetch('../data/data_ukr.json')
+//     .then(response => response.json())
+//     .then(data => {
+//         const carsCatalog = document.getElementById('cars-catalog');
+//         const uniqueCars = new Set();
+//         const carsArray = [];
 
-        data.Sheet1.forEach(car => {
-            // Проверяем, что марка, модель и год не null и не пусты
-            if (car.markaavto && car.model && car.god) {
-                const uniqueKey = `${car.markaavto}-${car.model}-${car.god}`;
+//         data.Sheet1.forEach(car => {
+//             // Проверяем, что марка, модель и год не null и не пусты
+//             if (car.markaavto && car.model && car.god) {
+//                 const uniqueKey = `${car.markaavto}-${car.model}-${car.god}`;
 
-                if (!uniqueCars.has(uniqueKey)) {
-                    uniqueCars.add(uniqueKey);
+//                 if (!uniqueCars.has(uniqueKey)) {
+//                     uniqueCars.add(uniqueKey);
 
-                    const carObject = {
-                        markaavto: car.markaavto,
-                        model: car.model,
-                        god: car.god,
-                        pictures: car.pictures
-                    };
-                    carsArray.push(carObject);
-                }
-            }
-        });
+//                     const carObject = {
+//                         markaavto: car.markaavto,
+//                         model: car.model,
+//                         god: car.god,
+//                         pictures: car.pictures
+//                     };
+//                     carsArray.push(carObject);
+//                 }
+//             }
+//         });
 
-        const sortedCars = carsArray.sort((a, b) => {
-            const makeA = a.markaavto || '';
-            const makeB = b.markaavto || '';
-            return makeA.localeCompare(makeB);
-        });
+//         const sortedCars = carsArray.sort((a, b) => {
+//             const makeA = a.markaavto || '';
+//             const makeB = b.markaavto || '';
+//             return makeA.localeCompare(makeB);
+//         });
 
-        sortedCars.forEach(car => {
-            const carCard = document.createElement('div');
-            carCard.classList.add('car-card');
+//         sortedCars.forEach(car => {
+//             const carCard = document.createElement('div');
+//             carCard.classList.add('car-card');
 
-            const carImage = document.createElement('img');
-            carImage.src = car.pictures;
-            carImage.alt = `${car.markaavto} ${car.model}`;
-            carCard.appendChild(carImage);
+//             const carImage = document.createElement('img');
+//             carImage.src = car.pictures;
+//             carImage.alt = `${car.markaavto} ${car.model}`;
+//             carCard.appendChild(carImage);
 
-            const carDetails = document.createElement('div');
-            carDetails.classList.add('car-details');
+//             const carDetails = document.createElement('div');
+//             carDetails.classList.add('car-details');
 
-            const carMakeModel = document.createElement('h3');
-            carMakeModel.textContent = `${car.markaavto} ${car.model}`;
-            carDetails.appendChild(carMakeModel);
+//             const carMakeModel = document.createElement('h3');
+//             carMakeModel.textContent = `${car.markaavto} ${car.model}`;
+//             carDetails.appendChild(carMakeModel);
 
-            const carYear = document.createElement('p');
-            carYear.textContent = `Рік: ${car.god}`;
-            carDetails.appendChild(carYear);
+//             const carYear = document.createElement('p');
+//             carYear.textContent = `Рік: ${car.god}`;
+//             carDetails.appendChild(carYear);
 
-            // Обработчик события для картки машины
-            carCard.addEventListener('click', () => {
-                window.location.href = `./car-page.html?make=${car.markaavto}&model=${car.model}&year=${car.god}`;
-            });
+//             // Обработчик события для картки машины
+//             carCard.addEventListener('click', () => {
+//                 window.location.href = `./car-page.html?make=${car.markaavto}&model=${car.model}&year=${car.god}`;
+//             });
 
-            carCard.appendChild(carDetails);
-            carsCatalog.appendChild(carCard);
-        });
-    })
-    .catch(error => console.error('Помилка завантаження даних:', error));
+//             carCard.appendChild(carDetails);
+//             carsCatalog.appendChild(carCard);
+//         });
+//     })
+//     .catch(error => console.error('Помилка завантаження даних:', error));
 
 
 //cart

@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
         case "Pickup":
           break;
         case "NovaPostDepartment":
-          loadCitiesAndDepartments();
+          // loadCitiesAndDepartments();
           break;
         case "NovaPostAddress":
           break;
@@ -163,122 +163,161 @@ document.addEventListener("DOMContentLoaded", () => {
   hideAllDeliveryOptions();
 });
 
-// Функция для загрузки городов и отделений
-// Функция для загрузки городов и отделений
-function loadCitiesAndDepartments() {
-  const cityInput = document.getElementById("cityInput");
-  const citySuggestions = document.getElementById("citySuggestions");
-  const departmentSelect = document.getElementById("department");
-
-  // Функция для поиска городов
-  cityInput.addEventListener("input", function () {
-    const query = cityInput.value.trim();
-
-    if (query.length > 1) {
-      fetch("https://api.novaposhta.ua/v2.0/json/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          apiKey: "42c819c8fa548077af98a2bfca982d5e",
-          modelName: "Address",
-          calledMethod: "searchSettlements",
-          methodProperties: {
-            CityName: query,
-            Limit: 10, // ограничение по количеству результатов
-          },
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          citySuggestions.innerHTML = "";
-
-          if (data.success && data.data && data.data.length > 0) {
-            data.data[0].Addresses.forEach((address) => {
-              const listItem = document.createElement("li");
-              listItem.textContent = `${address.MainDescription}, ${address.Area}, ${address.Region}`;
-              listItem.dataset.ref = address.Ref;
-
-              listItem.addEventListener("click", () => {
-                cityInput.value = listItem.textContent;
-                citySuggestions.innerHTML = "";
-
-                // Загружаем отделения для выбранного города с учетом рефки
-                loadDepartmentsForCity(address.Ref);
-              });
-
-              citySuggestions.appendChild(listItem);
-            });
-          } else {
-            citySuggestions.innerHTML = "<li>Нічого не знайдено</li>";
-          }
-        })
-        .catch((error) => {
-          console.error("Ошибка поиска городов:", error);
-          citySuggestions.innerHTML = "<li>Ошибка загрузки городов</li>";
-        });
-    } else {
-      citySuggestions.innerHTML = "";
-    }
-  });
-
-  // Закрытие подсказок при клике вне поля
-  document.addEventListener("click", (event) => {
-    if (!cityInput.contains(event.target) && !citySuggestions.contains(event.target)) {
-      citySuggestions.innerHTML = "";
-    }
-  });
-
-  // Функция для загрузки отделений
-  function loadDepartmentsForCity(cityRef) {
-    console.log("CityRef для загрузки отделений:", cityRef);
-
-    if (!cityRef || cityRef.length === 0) {
-      console.warn("CityRef отсутствует или некорректен.");
-      departmentSelect.innerHTML = "<option>Виберіть інше місто</option>";
-      return;
-    }
-
-    departmentSelect.innerHTML = "<option>Загрузка...</option>";
-
-    fetch("https://api.novaposhta.ua/v2.0/json/", {
+// Універсальна функція запиту до API Нової Пошти
+async function fetchNovaPoshtaData(modelName, calledMethod, methodProperties) {
+  try {
+    const response = await fetch("https://api.novaposhta.ua/v2.0/json/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         apiKey: "42c819c8fa548077af98a2bfca982d5e",
-        modelName: "Address",
-        calledMethod: "getWarehouses",
-        methodProperties: { CityRef: cityRef }, // используем CityRef
+        modelName: modelName,
+        calledMethod: calledMethod,
+        methodProperties: methodProperties,
       }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Ответ API для отделений:", data);
+    });
 
-        departmentSelect.innerHTML = "";
+    const data = await response.json();
 
-        if (data.success && data.data && data.data.length > 0) {
-          data.data.forEach((department) => {
-            const option = document.createElement("option");
-            option.value = department.Ref;
-            option.textContent = department.Description;
-            departmentSelect.appendChild(option);
-          });
-        } else {
-          console.warn("Отделения не найдены для CityRef:", cityRef);
-          departmentSelect.innerHTML = "<option>Відділення не знайдені. Виберіть інше місто.</option>";
-        }
-      })
-      .catch((error) => {
-        console.error("Ошибка загрузки отделений:", error);
-        departmentSelect.innerHTML = "<option>Ошибка загрузки</option>";
-      });
+    if (!data.success) {
+      const errorMessages = data.errors ? data.errors.join(", ") : "Unknown API error";
+      throw new Error(errorMessages);
+    }
+
+    return data.data || [];
+  } catch (error) {
+    console.error("Помилка запиту до API:", error, { modelName, calledMethod, methodProperties });
+    throw error;
   }
 }
 
+// Ініціалізація пошуку міст і завантаження відділень
+function initCityAndDepartmentSearch() {
+  const cityInput = document.getElementById("cityInput");
+  const citySuggestions = document.getElementById("citySuggestions");
+  const departmentSelect = document.getElementById("department");
+
+  // Пошук міст
+  cityInput.addEventListener("input", async function () {
+    const query = cityInput.value.trim();
+
+    if (query.length > 1) {
+      try {
+        const results = await loadCities(query);
+        renderCitySuggestions(results, cityInput, citySuggestions, departmentSelect);
+      } catch (error) {
+        console.error("Помилка завантаження міст:", error);
+        citySuggestions.innerHTML = "<li>Помилка завантаження міст</li>";
+      }
+    } else {
+      clearSuggestions();
+    }
+  });
+
+  // Закриття підказок при натисканні поза полем
+  document.addEventListener("click", (event) => {
+    if (!cityInput.contains(event.target) && !citySuggestions.contains(event.target)) {
+      clearSuggestions();
+    }
+  });
+}
+
+// Завантаження міст
+async function loadCities(query) {
+  if (!query || query.length <= 1) {
+    return [];
+  }
+
+  const results = await fetchNovaPoshtaData("Address", "searchSettlements", {
+    CityName: query,
+    Limit: 10,
+  });
+
+  // Перевіряємо, чи є дані і чи мають результати потрібні властивості
+  if (results.length > 0 && results[0] && results[0].Addresses) {
+    return results[0].Addresses;
+  }
+
+  return [];
+}
+
+// Рендеринг підказок міст
+function renderCitySuggestions(results, cityInput, citySuggestions, departmentSelect) {
+  citySuggestions.innerHTML = "";
+
+  if (results.length > 0) {
+    results.forEach((city) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = `${city.MainDescription}, ${city.Area}, ${city.Region}`;
+      listItem.dataset.ref = city.Ref;
+
+      listItem.addEventListener("click", () => {
+        cityInput.value = listItem.textContent;
+        clearSuggestions();
+
+        // Завантаження відділень для вибраного міста
+        const cityRef = listItem.dataset.ref;
+        if (cityRef) {
+          loadDepartmentsForCity(cityRef, departmentSelect);
+        }
+      });
+
+      citySuggestions.appendChild(listItem);
+    });
+  } else {
+    citySuggestions.innerHTML = "<li>Місто не знайдено</li>";
+  }
+}
+
+// Завантаження відділень
+async function loadDepartmentsForCity(cityRef, departmentSelect) {
+  if (!cityRef || cityRef.trim().length === 0) {
+    console.error("CityRef відсутній або некоректний.");
+    departmentSelect.innerHTML = "<option>Оберіть інше місто</option>";
+    return;
+  }
+
+  departmentSelect.innerHTML = "<option>Завантаження...</option>";
+
+  try {
+    const results = await fetchNovaPoshtaData("Address", "getWarehouses", {
+      CityRef: cityRef,
+    });
+
+    renderDepartments(results, departmentSelect);
+  } catch (error) {
+    console.error("Помилка завантаження відділень:", error);
+    departmentSelect.innerHTML = "<option>Помилка завантаження</option>";
+  }
+}
+
+// Рендеринг відділень
+function renderDepartments(departments, departmentSelect) {
+  departmentSelect.innerHTML = "";
+
+  if (departments.length > 0) {
+    departments.forEach((department) => {
+      const option = document.createElement("option");
+      option.value = department.Ref;
+      option.textContent = department.Description;
+      departmentSelect.appendChild(option);
+    });
+  } else {
+    departmentSelect.innerHTML = "<option>Відділення не знайдені</option>";
+  }
+}
+
+// Очищення підказок
+function clearSuggestions() {
+  const citySuggestions = document.getElementById("citySuggestions");
+  citySuggestions.innerHTML = "";
+}
+
+// Ініціалізація функціоналу
+document.addEventListener("DOMContentLoaded", initCityAndDepartmentSearch);
+
 
 // Вызов функции
-loadCitiesAndDepartments();
-
 
 
 function loadWarehousesAndPostomats() {

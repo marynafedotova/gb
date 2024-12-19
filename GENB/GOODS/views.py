@@ -2,7 +2,7 @@ from tkinter import S
 from unicodedata import category
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, HttpResponseNotFound, JsonResponse
 from django.template.loader import render_to_string
 from django.contrib import messages
 from GOODS.models import SparePart, Car, Categories
@@ -54,24 +54,33 @@ def catalog(request):
     except EmptyPage:
         cars = cars_paginator.page(cars_paginator.num_pages)
 
-    brands = cars_list.values_list('brand_car', flat=True).distinct()
+    # Отримання брендів, моделей та років
+    brand_models = {}
+    for car in cars_list:
+        if car.brand_car not in brand_models:
+            brand_models[car.brand_car] = {}
+        if car.model_car not in brand_models[car.brand_car]:
+            brand_models[car.brand_car][car.model_car] = []
+        brand_models[car.brand_car][car.model_car].append(car.year)
 
     # Формування контексту
     context = {
         'goods': goods,
         'cars': cars,
         'form': form,
-        'brands': brands,
+        'brands': cars_list.values_list('brand_car', flat=True).distinct(),
         'parts': parts,
+        'brand_models': brand_models,
+        'cars_list': cars_list,
     }
     return render(request, 'goods/catalog.html', context)
+
 
 
 def get_models(request):
     brand = request.GET.get('brand_car')
     models = Car.objects.filter(brand_car=brand).values_list('model_car', flat=True).distinct()
     return JsonResponse({'models': list(models)})
-
 
 
 
@@ -93,16 +102,15 @@ def product(request, product_slug):
         'product': product
     }
 
-    return render(request, 'goods/product.html', context=context)
+    return render(request, 'goods/product.html', context)
 
 
 def car(request, car_slug):
-
-    car= get_object_or_404(Car, slug=car_slug)
-
+    car = get_object_or_404(Car, slug=car_slug)
+    
     context = {
-        'car': car
+        'car': car,
     }
+    return render(request, 'goods/car-page.html', context)
 
-    return render(request, 'goods/car-page.html', context=context)
 

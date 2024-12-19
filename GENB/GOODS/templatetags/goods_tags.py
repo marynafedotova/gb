@@ -14,4 +14,9 @@ def tag_sparepart():
 def tag_car():
     return Car.objects.all()
 
+@register.filter
+def first_car_for_year(cars, year):
+    """Фільтр повертає перший автомобіль для вказаного року."""
+    return next((car for car in cars if car.year == year), None)
+
 

@@ -260,30 +260,55 @@ document.querySelector('.load-more-search').addEventListener('click', function (
 });
 
 // Обработчик формы поиска
-document.getElementById('search-form').addEventListener('submit', async function(event) {
+document.getElementById('search-form').addEventListener('submit', function(event) {
   event.preventDefault();
-  await fetchCurrencyRate(); // Получаем актуальный курс валют
 
   const query = document.getElementById('search-input').value.trim().toLowerCase();
+  console.log('Search query:', query);
   if (query) {
-    const filteredProducts = products.filter(product => 
-      (product.zapchast && product.zapchast.toLowerCase().includes(query)) ||
-      (product.markaavto && product.markaavto.toLowerCase().includes(query)) ||
-      (product.model && product.model.toLowerCase().includes(query))
-    );
 
-    displayedProductCount = 0; // Сбрасываем счётчик отображённых товаров
+    const filteredProducts = products.filter(product => {
+      return (typeof product.ID_EXT === 'string' && product.ID_EXT.toLowerCase().includes(query)) || 
+             (typeof product.zapchast === 'string' && product.zapchast.toLowerCase().includes(query)) || 
+             (typeof product.markaavto === 'string' && product.markaavto.toLowerCase().includes(query)) ||
+             (typeof product.model === 'string' && product.model.toLowerCase().includes(query)) ||
+             (typeof product.category === 'string' && product.category.toLowerCase().includes(query)) ||
+             (typeof product.dop_category === 'string' && product.dop_category.toLowerCase().includes(query)) ||
+             (typeof product.originalnumber === 'string' && product.originalnumber.toLowerCase().includes(query));
+    });
+    console.log('Filtered products:', filteredProducts); 
+    displayedProductCount = 0;
     displayProducts(filteredProducts);
   } else {
-    // Если поле пустое, очищаем результаты
     displayedProductCount = 0;
     displayProducts([]);
   }
 
-  // Прокрутка к результатам поиска
   const resultsContainer = document.querySelector('.search-results');
   if (resultsContainer) {
     resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+
+document.getElementById('search-input').addEventListener('input', function() {
+  const query = this.value.trim().toLowerCase();
+
+  if (query) {
+    const filteredProducts = products.filter(product => {
+      return (typeof product.ID_EXT === 'string' && product.ID_EXT.toLowerCase().includes(query)) || 
+             (typeof product.zapchast === 'string' && product.zapchast.toLowerCase().includes(query)) || 
+             (typeof product.markaavto === 'string' && product.markaavto.toLowerCase().includes(query)) ||
+             (typeof product.model === 'string' && product.model.toLowerCase().includes(query)) ||
+             (typeof product.category === 'string' && product.category.toLowerCase().includes(query)) ||
+             (typeof product.dop_category === 'string' && product.dop_category.toLowerCase().includes(query)) ||
+             (typeof product.originalnumber === 'string' && product.originalnumber.toLowerCase().includes(query));
+    });
+
+    displayedProductCount = 0;  
+    displayProducts(filteredProducts);
+  } else {
+    displayedProductCount = 0;
+    displayProducts([]);
   }
 });
 

@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 from django.contrib import messages
 from GOODS.models import SparePart, Car, Categories
 from GOODS.forms_for_filters import CarPartFilterForm
+from GOODS.utils import q_search
 from django.core.paginator import Paginator
 
 
@@ -18,20 +19,26 @@ def catalog(request):
     # Фільтрація товарів
     form = CarPartFilterForm(request.GET)
     parts = SparePart.objects.all()
+    query = request.GET.get('q', None)  # Правильне отримання значення 'q'
 
-    if form.is_valid():
-        if form.cleaned_data['brand_car']:
-            parts = parts.filter(car__brand_car=form.cleaned_data['brand_car'])
-        if form.cleaned_data['model_car']:
-            parts = parts.filter(car__model_car=form.cleaned_data['model_car'])
-        if form.cleaned_data['category']:
-            parts = parts.filter(category__name=form.cleaned_data['category'])
-        if form.cleaned_data['sub_category']:
-            parts = parts.filter(sub_category__name=form.cleaned_data['sub_category'])
-        if form.cleaned_data['car_spare']:
-            parts = parts.filter(car__model_car=form.cleaned_data['car_spare'])
-        if form.cleaned_data['oem_code']:
-            parts = parts.filter(oem_code=form.cleaned_data['oem_code'])
+    if query:
+    # Логіка пошуку за текстовим запитом (залежить від реалізації q_search)
+        parts = parts.filter(name__icontains=query)  
+    else:
+    # Використання фільтрів з форми
+        if form.is_valid():  
+            if form.cleaned_data['brand_car']:
+                parts = parts.filter(car__brand_car=form.cleaned_data['brand_car'])
+            if form.cleaned_data['model_car']:
+                parts = parts.filter(car__model_car=form.cleaned_data['model_car'])
+            if form.cleaned_data['category']:
+                parts = parts.filter(category__name=form.cleaned_data['category'])
+            if form.cleaned_data['sub_category']:
+                parts = parts.filter(sub_category__name=form.cleaned_data['sub_category'])
+            if form.cleaned_data['car_spare']:
+                parts = parts.filter(car__model_car=form.cleaned_data['car_spare'])
+            if form.cleaned_data['oem_code']:
+                parts = parts.filter(oem_code=form.cleaned_data['oem_code'])    
 
     # Пагінація для товарів
     page_number_goods = request.GET.get('goods_page', 1)

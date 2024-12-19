@@ -10,9 +10,9 @@ app_name='goods'
 
 urlpatterns = [
     path('', views.catalog, name='catalog'),
-    path('car/<slug:car_slug>/', views.car, name='car'),
+    path('ajax/get_models/', views.get_models, name='get_models'),
+    path('get_years/', views.get_years, name='get_years'),
+    path('catalog/car/<slug:car_slug>/', views.car, name='car'),
+    path('search/', views.catalog, name='search'),
     path('product/<slug:product_slug>/', views.product, name='product'),
-    
-
-    
 ]

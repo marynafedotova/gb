@@ -1,71 +1,93 @@
 from tkinter import S
+from unicodedata import category
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.http import HttpResponse, JsonResponse
 from django.template.loader import render_to_string
 from django.contrib import messages
-from GOODS.models import SparePart, Car
-
+from GOODS.models import SparePart, Car, Categories
+from GOODS.forms_for_filters import CarPartFilterForm
 from django.core.paginator import Paginator
 
 
  
 
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+
 def catalog(request):
-    # Отримання списку товарів
-    goods = SparePart.objects.all()
-    
-    # Пагінація
-    try:
-        page_number = int(request.GET.get('page', 1))
-    except ValueError:
-        page_number = 1
+    # Фільтрація товарів
+    form = CarPartFilterForm(request.GET)
+    parts = SparePart.objects.all()
 
-    paginator = Paginator(goods, 8)  # 8 товарів на сторінку
+    if form.is_valid():
+        if form.cleaned_data['brand_car']:
+            parts = parts.filter(car__brand_car=form.cleaned_data['brand_car'])
+        if form.cleaned_data['model_car']:
+            parts = parts.filter(car__model_car=form.cleaned_data['model_car'])
+        if form.cleaned_data['category']:
+            parts = parts.filter(category__name=form.cleaned_data['category'])
+        if form.cleaned_data['sub_category']:
+            parts = parts.filter(sub_category__name=form.cleaned_data['sub_category'])
+        if form.cleaned_data['car_spare']:
+            parts = parts.filter(car__model_car=form.cleaned_data['car_spare'])
+        if form.cleaned_data['oem_code']:
+            parts = parts.filter(oem_code=form.cleaned_data['oem_code'])
+
+    # Пагінація для товарів
+    page_number_goods = request.GET.get('goods_page', 1)
+    goods_paginator = Paginator(parts, 8)
     try:
-        goods = paginator.page(page_number)
+        goods = goods_paginator.page(page_number_goods)
     except PageNotAnInteger:
-        goods = paginator.page(1)
+        goods = goods_paginator.page(1)
     except EmptyPage:
-        goods = paginator.page(paginator.num_pages)
+        goods = goods_paginator.page(goods_paginator.num_pages)
 
-    # Перевірка наявності товарів
-    if not goods.object_list:
-        messages.info(request, "Товари не знайдено.")
-
-
-    cars = Car.objects.all()
-    
-    # Пагінація
+    # Пагінація для авто
+    cars_list = Car.objects.all()
+    page_number_cars = request.GET.get('cars_page', 1)
+    cars_paginator = Paginator(cars_list, 12)
     try:
-        page_number_car = int(request.GET.get('page', 1))
-    except ValueError:
-        page_number_car = 1
-
-    paginator_car = Paginator(goods, 8)  # 8 товарів на сторінку
-    try:
-        cars = paginator_car.page(page_number_car)
+        cars = cars_paginator.page(page_number_cars)
     except PageNotAnInteger:
-        cars = paginator_car.page(1)
+        cars = cars_paginator.page(1)
     except EmptyPage:
-        cars = paginator_car.page(paginator_car.num_pages)
+        cars = cars_paginator.page(cars_paginator.num_pages)
 
-    # Перевірка наявності товарів
-    if not cars.object_list:
-        messages.info(request, "Товари не знайдено.")
+    brands = cars_list.values_list('brand_car', flat=True).distinct()
 
+    # Формування контексту
     context = {
         'goods': goods,
-         'cars': cars,
-
-
-        }
+        'cars': cars,
+        'form': form,
+        'brands': brands,
+        'parts': parts,
+    }
     return render(request, 'goods/catalog.html', context)
+
+
+def get_models(request):
+    brand = request.GET.get('brand_car')
+    models = Car.objects.filter(brand_car=brand).values_list('model_car', flat=True).distinct()
+    return JsonResponse({'models': list(models)})
+
+
+
+
+
+def get_years(request):
+    brand = request.GET.get('brand_car')
+    model = request.GET.get('model_car')
+    years = Car.objects.filter(brand_car=brand, model_car=model).values_list('year', flat=True).distinct()
+    return JsonResponse({'years': list(years)})
+
+
 
 
 def product(request, product_slug):
 
-    product= SparePart.objects.get(slug=product_slug)
+    product = get_object_or_404(SparePart, slug=product_slug)
 
     context = {
         'product': product
@@ -76,7 +98,7 @@ def product(request, product_slug):
 
 def car(request, car_slug):
 
-    car= Car.objects.get(slug=car_slug)
+    car= get_object_or_404(Car, slug=car_slug)
 
     context = {
         'car': car

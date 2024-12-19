@@ -14,65 +14,112 @@
 <!-- hero-section -->
 <section id="first-section">
   <h1>{% trans "Розборка Gen Brothers" %}</h1>
-  <div class="container ">
-    <div id="carAccordion">
+  <div class="container">
+    <div class="accordion" id="carAccordion">
+      {% for brand in brands %}
       <div class="accordion-item">
-      {% tag_car as car %}
-      {% for cars in car %}
-        <h3 class="accordion-header">{{ cars.brand_car }}</h3>
+          <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse{{ forloop.counter }}">
+                  {{ brand }}
+              </button>
+          </h2>
+          <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#carAccordion">
+              <div class="accordion-body">
+                  <ul id="models-{{ forloop.counter }}" class="list-group"></ul>
+              </div>
+          </div>
+      </div>
       {% endfor %}
-        <div class="accordion-content">
-          <p class="model-item"></p>
-        </div>
-      </div>
+  </div>
+  
     </div>
-    <div class="first_screan_catalog">
-      <div class="sidebar wow animate__animated animate__fadeInLeft">
-        <h2>{% trans "Пошук запчастин" %}</h2>
-        <form action="#" id="search-product">
-          <select name="markaavto" id="markaavto">
-            <option value="">{% trans "Марка авто" %}</option>
-          </select>
-          <select name="model" id="model">
-            <option value="">{% trans "Модель" %}</option>
-          </select>
-          <select name="rozdil" id="rozdil">
-            <option value="">{% trans "Розділ" %}</option>
-          </select>
-          <select name="pidrozdil" id="pidrozdil">
-            <option value="">{% trans "Підрозділ" %}</option>
-          </select>
-          <select name="zapchast" id="zapchast">
-            <option value="">{% trans "Запчастини" %}</option>
-          </select>
-          <select name="originalnumber" id="originalnumber">
-            <option value="">{% trans "ОЕМ" %}</option>
-          </select>
-          <button id="search-sidebar-catalog">{% trans " Пошук" %}</button>
-
-        </form>
-      </div>
-
-
+    
       
-
+      <div id="cars-catalog">
+        {% for car in cars %}
+          <a href="{% url 'catalog:car' car.slug %}" class="car-card">        
+            <div>
+              {% if car.photo %}
+                <img src="{{ car.photo.url }}" alt="">
+              {% else  %}
+                <img src={% static "assets/img/image_not_foud.jpg.jpg" %} alt="">
+              {% endif %}
+                <div class="car-details">
+                    <h2>{{ car.brand_car }} {{ car.model_car }}</h2>
+                    <p>Рік: {{ car.year }}</p>
+                </div>
+            </div>
+          </a>
+        {% endfor %}
+        <!-- Пагінатор авто -->
+        <div class="pagination">
+            {% if cars.has_previous %}
+                <a href="?cars_page={{ cars.previous_page_number }}">Попередня</a>
+            {% endif %}
+            <span>{{ cars.number }} з {{ cars.paginator.num_pages }}</span>
+            {% if cars.has_next %}
+                <a href="?cars_page={{ cars.next_page_number }}">Наступна</a>
+            {% endif %}
+        </div>
 
 </section>
-<section>
+
+
+
+
+
   <section class="catalog_zapchast">
     <div class="container">
       <h2>{% trans "Каталог товарів" %}</h2>
+
+
+      
+      <div class="first_screan_catalog">
+        <div class="sidebar wow animate__animated animate__fadeInLeft">
+          <h2>{% trans "Пошук запчастин" %}</h2>
+          <form action=" {% if request.GET.q %}{% url "catalog:search" %}{% else %}{% url "catalog:catalog" %}{% endif %} " method="get">
+            {% if request.GET.q %}
+              <input type="hidden" name='q' value" {} ">
+            {% endif %}
+            {{ forms.as_p }}
+            <label for="brand_car"></label>
+            {{form.brand_car}}
+
+            {{ forms.as_p }}
+            <label for="model_car"></label>
+            {{form.model_car}}
+
+            <label for="category"></label>
+            {{form.category}}
+
+            <label for="sub_category"></label>
+            {{form.sub_category}}
+
+            <label for="car_spare"></label>
+            {{form.car_spare}}
+
+            <label for="oem_code"></label>
+            {{form.oem_code}}
+
+            <button type="submit">{% trans " Пошук" %}</button>
+          </form>
+        </div>
+
+
       <div class="product-list">
         {% for product in goods %}
         <div class="product-card">
         <div class="product-stan">  </div>
           {% if product.photo %}
-          <img src="{{ product.photo.url }}" alt="{{ product.sku }}">
+            <img src="{{ product.photo.url }}" alt="{{ product.sku }}">
+          {% else  %}
+              <img src={% static "assets/img/image_not_foud.jpg.jpg" %} alt="">
           {% endif %}
           <h3>{% trans "Артикул:" %} {{ product.sku }}</h3>
+          <h3>{{ product.name }}</h3>
           <p>{% trans "Ціна:" %} {{ product.price }}</p>
           <div class="btn-cart">
-            <button class="add-to-cart" data-id="{{ product.id }}" data-price="{{ product.price }}" data-name="{{ product.sku }}" data-photo="{{ product.photo.url }}">
+            <button class="add-to-cart" data-id="{{ product.id }}" data-price="{{ product.price }}" data-name="{{ product.sku }}"  data-photo="{% if product.photo %}{{ product.photo.url }}{% else %}#{% endif %}">
               {% trans "Додати до кошика" %}
             </button>
           </div>
@@ -83,42 +130,28 @@
         {% endfor %}
       </div>
 
-      <!-- Блок пагінації -->
-      <div class="pagination">
-        <ul>
-          {% if goods.has_previous %}
-          <li>
-            <a href="?page=1">{% trans "Перша" %}</a>
-          </li>
-          <li>
-            <a href="?page={{ goods.previous_page_number }}">{{ goods.previous_page_number }}</a>
-          </li>
-          {% endif %}
-          <li class="current">
-            <span>{{ goods.number }}</span>
-          </li>
-          {% if goods.has_next %}
-          <li>
-            <a href="?page={{ goods.next_page_number }}">{{ goods.next_page_number }}</a>
-          </li>
-          <li>
-            <a href="?page={{ goods.paginator.num_pages }}">{% trans "Остання" %}</a>
-          </li>
-          {% endif %}
-        </ul>
-      </div>
+    <!-- Пагінатор товарів -->
+    <div class="pagination">
+      {% if goods.has_previous %}
+          <a href="?goods_page={{ goods.previous_page_number }}">Попередня</a>
+      {% endif %}
+      <span>{{ goods.number }} з {{ goods.paginator.num_pages }}</span>
+      {% if goods.has_next %}
+          <a href="?goods_page={{ goods.next_page_number }}">Наступна</a>
+      {% endif %}
+  </div>
+</div>
     </div>
   </section>
 </section>
-
-
-
     
     {% comment %} </div>
     <button class="load-more">{% trans "Завантажити більше" %}</button>
   </div> {% endcomment %}
   
 </section>
+
+
 <section class="catalog_mark_avto">
   <div class="hero-screan">
     <div class="container">
@@ -159,3 +192,4 @@
 </div>
 </main>
 {% endblock hero-section %}
+

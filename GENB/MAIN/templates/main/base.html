@@ -156,8 +156,8 @@
         <li><a href="{% static 'assets/pages/news.html' %}" target="_parent" rel="noopener">{% trans "Статті та новини" %}</a></li> 
             <li>
               <div class="search-container">
-                <form id="search-form">
-                  <input type="text" id="search-input" placeholder="Пошук..." name="search">
+                <form id="search-form" role="search" action=" {% url "catalog:search" %} " method="get">
+                  <input type="search"  id="search-input" placeholder="Пошук..." name="q" arial-label="Search">
                   <button id="search-btn" type="submit">
                     <img src="{% static 'assets/img/search.svg' %}" alt="search button">
                   </button>
@@ -265,6 +265,7 @@
         var dataJsonUrl = "{% static 'assets/data/data_ukr.json' %}";
         var dataJsonNews = "{% static 'assets/data/news_slider.json' %}";
         var dataJsonAdv = "{% static 'assets/data/advantages.json' %}";
+        const getModelsUrl = "{{ get_models_url }}";
       </script>
 
       
@@ -280,10 +281,12 @@
       <script src="{% static 'assets/js/toast.js' %}"></script>
       <script src="{% static 'assets/js/product.js' %}"></script>
       <script src="{% static 'assets/js/cart.js' %}"></script>
-       <script src="{% static 'assets/js/helpers}"></script>
+      <script src="{% static 'assets/js/helpers}' %}"></script>
       <script src="{% static 'assets/js/newsSLider.js' %}"></script>
       <script src="{% static 'assets/js/main.js' %}"></script>
       <script src="{% static 'assets/js/dynamic_choices.js' %}"></script>
+      <script src="{% static 'assets/js/spare_filters_scrits.js' %}"></script>
+
 
   
     </div>

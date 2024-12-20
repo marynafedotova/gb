@@ -70,6 +70,8 @@ def catalog(request):
             brand_models[car.brand_car][car.model_car] = []
         brand_models[car.brand_car][car.model_car].append(car.year)
 
+    spare_parts_img = SparePart.objects.prefetch_related('images').all()
+
     # Формування контексту
     context = {
         'goods': goods,
@@ -79,6 +81,7 @@ def catalog(request):
         'parts': parts,
         'brand_models': brand_models,
         'cars_list': cars_list,
+        'spare_parts_img': spare_parts_img,
     }
     return render(request, 'goods/catalog.html', context)
 
@@ -112,11 +115,14 @@ def product(request, product_slug):
     return render(request, 'goods/product.html', context)
 
 
-def car(request, car_slug):
+def car(request, car_slug, car_id=None):
     car = get_object_or_404(Car, slug=car_slug)
+
+    total_parts = car.cars.count()
     
     context = {
         'car': car,
+        'total_parts': total_parts,
     }
     return render(request, 'goods/car-page.html', context)
 

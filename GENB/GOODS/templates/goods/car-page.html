@@ -19,8 +19,25 @@
         </div>
       </section>
       <div class="container">
-        <h1>{% trans "Деталі автомобіля" %}</h1>
-        <div id="car-info"></div> <!-- Здесь будет отображена информация об автомобиле -->
+        <h1>Деталі автомобіля</h1>
+        <div id="car-info">
+          <h2> {{ car.brand_car }} {{ car.model_car }}  {{car.year}} </h2>  
+           <!--назва ы модель машини у h2  -->
+          <div class="car-info-card">
+            <div class="car-info-img">
+              {% if product.photo %}
+                <img src="{{ car.photo.url }}" alt="{{ car.brand_car }} {{ car.model_car }}  {{car.year}}">
+              {% else  %}
+                <img src={% static "assets/img/image_not_foud.jpg.jpg" %} alt="">
+              {% endif %}
+              </div>
+                <div class="car-info-total"> <h2>{% trans "Загальна кількість деталей:" %} {{ total_parts }} </h2></div>
+                <div class="totalParts">
+              </div>
+            </div>
+          </div>
+        </div>
+
 
         <div id="tabs">
           <!-- Заголовки вкладок -->

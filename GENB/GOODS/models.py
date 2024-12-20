@@ -1,10 +1,4 @@
-from asyncio.windows_events import NULL
-from email.policy import default
-from hmac import new
-from os import name
-from random import choices
-from tabnanny import verbose
-from unicodedata import category
+
 from django.db import models
 
 import csv
@@ -176,7 +170,7 @@ class Car(models.Model):
             ('green', 'Зелений'),
         ],
         verbose_name='Колір')
-    photo = models.ImageField(upload_to='car_image', blank=True, null=True, verbose_name='Фото авто')
+    #photo = models.ImageField(upload_to='car_image', blank=True, null=True, verbose_name='Фото авто')
     
 
 
@@ -188,11 +182,22 @@ class Car(models.Model):
 
     def __str__(self) -> str:
         return f'{self.brand_car} {self.model_car} {self.year} | {self.vin_code}'
+    
+
+class CarImage(models.Model):
+    cars = models.ForeignKey(Car, on_delete=models.CASCADE, related_name='images')
+    photo = models.ImageField(upload_to='car_image/')
+
+
+    def __str__(self):
+        return f"Зображення для {self.cars.brand_car} {self.cars.model_car}"
+
+
 
 
 class SparePart(models.Model):
 
-    car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True, verbose_name='Автомобіль')
+    car = models.ForeignKey(Car, on_delete=models.SET_NULL, null=True, related_name='cars', verbose_name='Автомобіль')
     oem_code = models.CharField(max_length=50, unique=True, verbose_name='Оригінальний номер запчастини')
     name = models.CharField(max_length=150, verbose_name='Назва запчастини')
     slug = models.SlugField(max_length=200, unique=True, blank=True, null=True, verbose_name='URL')
@@ -246,7 +251,7 @@ class SparePart(models.Model):
         verbose_name='Статус'
     )
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Ціна')
-    photo = models.ImageField(upload_to='spare_parts', blank=True, null=True, verbose_name='Фото')
+    #photo = models.ImageField(upload_to='spare_parts', blank=True, null=True, verbose_name='Фото')
 
 
     class Meta:
@@ -272,3 +277,12 @@ class SparePart(models.Model):
             self.sku = f"{vin_last_digits}-{self.id}"
         super().save(*args, **kwargs)  # Повторне збереження з оновленим sku
  # Зберегти об'єкт вдруге з оновленим sku
+
+
+class SparePartImage(models.Model):
+    spareparts = models.ForeignKey(SparePart, on_delete=models.CASCADE, related_name='images')
+    photo = models.ImageField(upload_to='spare_parts/')
+
+
+    def __str__(self):
+        return f"Зображення для {self.cars.brand_car} {self.cars.model_car}"

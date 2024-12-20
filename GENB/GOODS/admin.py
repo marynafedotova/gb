@@ -3,7 +3,7 @@ from os import name
 from pyexpat import model
 from django.contrib import admin
 
-from GOODS.models import Categories, SparePart, SubCategory, AdditionalСategory, Car
+from GOODS.models import Categories, SparePart, SubCategory, AdditionalСategory, Car, CarImage, SparePartImage
 from django.forms import ModelForm
 
 
@@ -46,14 +46,27 @@ class AdditionalСategoryAdmin(admin.ModelAdmin):
 
 
 
+
+class CarImageInline(admin.TabularInline):
+    model = CarImage
+    extra = 4
+
+
 @admin.register(Car)
 class CarAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('vin_code',)}
+    inlines = [CarImageInline]
+
+
+class SparePartsImageInline(admin.TabularInline):
+    model = SparePartImage
+    extra = 4
 
 
 @admin.register(SparePart)
 class SparePartAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
+    inlines = [SparePartsImageInline]
 
     form = SparePartForm
     class Media:

@@ -67,12 +67,12 @@ img {
 }
 
 body {
-  font-family: 'Montserrat';
-  font-size: 1rem;
+  font-family: 'Montserrat' !important;
+  font-size: 1rem !important;
   line-height: 1.5;
-  background-size: contain;
-  background-color: rgb(43, 43, 43);
-  color: #E4E4E4;
+  background-size: contain !important;
+  background-color: rgb(43, 43, 43) !important;
+  color: #E4E4E4 !important;
 }
 
 .page-wrapper {
@@ -91,7 +91,6 @@ header {
   top: 0;
   min-height: 54px;
   padding: 20px 10px 0px;
-  background-color: rgba(32, 29, 34, 0.13);
   
   .header-container {
     width: 100%;
@@ -146,6 +145,7 @@ header {
       img {
         width: 100%;
         height: 100%;
+        object-fit: contain;
       }
     }
   }
@@ -900,6 +900,7 @@ li {
 
 #search-res{
   text-align: center;
+  background-color: $color--mine-shaft;
   .container{
     .btn-res{
       padding: 24px 40%;
@@ -1231,9 +1232,11 @@ font-weight: 700;
 #car-modal {
   height: 100%;
   width: 100%;
+  top: 50%;
   .container{
-    top: 50%;
+ 
     #car-order-modal{
+      padding-top: 40%;
       .modal-content{
         background-color: $color--oslo-gray;
         z-index: 1000;
@@ -1652,9 +1655,75 @@ fieldset {
     
   }
 }
+:root{
+  --bs-body-bg: transparent;
+
+}
 .catalog_zapchast{
+  background-color: $color--mine-shaft;
   .container{
     text-align: center;
+    h3{
+      color:$color--porcelain;
+      margin-bottom: 100px;
+    }
+    .first_screan_catalog {
+      flex-grow: 1;
+      width: 100%;
+      background-color: $color--mine-shaft;
+      box-shadow: 8px 8px 16px rgba(240, 235, 235, 0.1); 
+      border-radius: 8px;
+      z-index: 10;
+      .sidebar {
+        padding: 8px;
+
+        h4 {
+          text-align: center;
+          padding-bottom: 16px;
+          color: #228B22;
+        }
+
+        form#search-product {
+          display: flex;
+          gap: 8px;
+
+          select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid $ForestGreen;
+            border-radius: 4px;
+          }
+
+          #search-sidebar-catalog {
+            width: 100%;
+            padding: 12px;
+            background-color: #228B22;
+            color: #fff;
+            font-weight: 700;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1);
+          }
+        }
+      }
+      .pagination{
+        a{
+          text-decoration: none;
+          color: $color--porcelain;
+          border: 1px solid $background-icon;
+          border-radius: 50%;
+          padding: 8px 11px;
+          font-weight: 700;
+          transition: all 0.4s ease;
+          &:hover{
+            background-color: $ForestGreen;
+            scale: 1.1;
+          }
+        }
+      }
+    }
     .load-more{
         padding: 8px 16px;
         border: 2px solid $ForestGreen;
@@ -1814,6 +1883,7 @@ fieldset {
   color: $ForestGreen;
 }
 .catalog_mark_avto{
+  background-color: $color--mine-shaft;
   .hero-screan{
     padding-top: 42px;
     .container{
@@ -1851,7 +1921,9 @@ fieldset {
   
 }
 
-
+footer, .footer-menu{
+  background-color: $color--mine-shaft;
+}
 .hero-screan{
   .container{
     .catalog {
@@ -1882,98 +1954,168 @@ fieldset {
 
   }
 }
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
 #first-section {
   padding-bottom: 64px;
-  h1 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-
-  .container {
+  background-color: $color--mine-shaft;
+.container{
   display: flex;
   flex-direction: row;
-    #carAccordion {
-      width: 25%;
-      padding: 16px;
-      border-radius: 8px;
-    }
-
-    .accordion-header {
-      cursor: pointer;
-      margin-bottom: 8px;
-      padding: 10px;
-      background-color: $ForestGreen;
-      color: #fff;
-      border-radius: 4px;
-      text-align: left;
-      font-size: 16px;
-      transition: background-color 0.4s;
-      &:hover{
-        background-color: $background-icon;
-      }
-    }
-
-    .accordion-content {
-      display: none;
-      padding: 10px;
-      background-color: $background-color;
-      color: #fff;
-      transition: all 0.5s ease;
-      p{
-        padding: 2px 8px;
-      }
-       p:hover {
-        background-color: $form-text;
-        cursor: pointer;
-      }
-    }
-
-    .accordion-content.active {
-      display: block;
-    }
-
-    .first_screan_catalog {
-      flex-grow: 1;
-      width: 60%;
-      background-color: $color--mine-shaft;
-      box-shadow: 8px 8px 16px rgba(240, 235, 235, 0.1); 
-      border-radius: 8px;
-      .sidebar {
-        padding: 8px;
-
-        h2 {
-          text-align: center;
-          padding-bottom: 16px;
-          color: #228B22;
-        }
-
-        form#search-product {
-          display: flex;
-          gap: 8px;
-
-          select {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid $ForestGreen;
-            border-radius: 4px;
-          }
-
-          #search-sidebar-catalog {
-            width: 100%;
-            padding: 12px;
-            background-color: #228B22;
-            color: #fff;
-            font-weight: 700;
-            text-transform: uppercase;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1);
-          }
-        }
-      }
-    }
+  #brandAccordion {
+    width: 20%;
+    background-color: $color--mine-shaft;
+    border-radius: 8px;
   }
+  .accordion{
+    --bs-accordion-bg: $color--mine-shaft;
+    --bs-accordion-border-color: $ForestGreen;
+    --bs-accordion-btn-padding-y: 0;
+    --bs-accordion-btn-padding-x: 0;
+    --bs-accordion-border-width: 400px;
+    --bs-accordion-body-padding-y: 0;
+    --bs-accordion-btn-icon-width: 0;
+    --bs-accordion-body-padding-x: 0;
+
+  }
+  .accordion-item:first-of-type .accordion-button{
+    border-top-left-radius: none;
+    border-top-right-radius: none;
+  }
+  .accordion-item:first-of-type .accordion-button {
+    border-top-left-radius: none;
+    border-top-right-radius: none;
+  }
+    .accordion-item{
+     
+      .accordion-header {
+        cursor: pointer;
+        padding: 16px 24px 16px 8px;
+        background-color: $ForestGreen !important;
+        border-radius: 4px !important;
+        border: none !important;
+        margin-bottom: 8px;
+        transition: background-color 0.4s;
+        &:hover{
+          background-color: $background-icon !important;
+          .accordion-button {
+            background-color: $background-icon !important;
+          }
+        }
+        .accordion-button {
+          background-color: $ForestGreen;
+          transition: background-color 0.4s;
+          color: $color--porcelain;
+          text-align: left;
+          font-size: 1.1rem;
+          font-weight: 600;
+          padding-right: 80px;
+        }
+      }
+    .accordion-body{
+
+      .accordion.model{
+        .accordion-item-model .accordion-header-model {
+          width: 100%;
+          // padding: 0px 24px;
+          background-color: $color--gray;
+          .accordion-button-modal{
+            padding: 16px 130px 16px 30px;
+
+            background-color: $color--gray;
+            border: none;
+            font-size: 1rem;
+          }
+        }
+        .accordion-header-model:hover{
+          background-color: $background-icon !important;
+          color: $color--porcelain;
+          .accordion-button-modal {
+            color: $color--porcelain;
+              background-color: $background-icon !important;
+            }
+        }
+        .accordion-item-model .accordion-year{
+          background-color: $color--gray;
+          .accordion-body ul {
+            width: 100%;
+            padding: 0;
+            li {
+              width: 100%;
+              a{
+                color: $black;
+                font-size: 1.1rem;
+                font-weight: 600;
+                width: 100%;
+                padding-left: 16px;
+                margin-bottom: 8px;
+                transition: all .4s ease;
+              }
+            }
+          }
+        }
+        .accordion-item-model .accordion-year .accordion-body ul li:hover{
+          a{
+            color: $color--porcelain;
+          }
+          background-color: $background-icon;
+        }
+      }
+    }
+    }
+
+
+    #cars-catalog{
+      box-shadow: 0 4px 8px rgba(240, 235, 235, 0.1); 
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 8px;
+      width: 80%;
+      .pagination{
+        span{
+          color: $color--porcelain;
+        }
+      }
+       a>.car-card{
+          background-color: #fff;
+          border: 1px solid $ForestGreen;
+          border-radius: 8px;
+          margin-bottom: 22px;
+          width: 240px;
+          height: 100%;
+          padding: 16px;
+          display: flex;
+          flex-direction: column;
+          transition: all .5s ease;
+          justify-content: center;
+          color: $ForestGreen;
+          .car-card-img>img{
+            padding-bottom: 8px;
+            width: 200px;
+            height: 133px;
+            object-fit:contain;
+            flex-grow: 1;
+            margin: 0 auto;
+          }
+          &:hover{
+            cursor: pointer;
+            scale: 1.1;
+            border: 1px solid linear-gradient(to top right, rgba(215, 224, 217, 0.9), rgba(219, 171, 12, 0.7));
+          }
+          .car-details{
+            h2{
+              font-size: 1.1rem;
+            }
+          }
+        }
+      
+    }
+}
 }
 
 //pdf catalogy

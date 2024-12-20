@@ -12,7 +12,8 @@
 
 {% block hero-section %}
 <!-- hero-section -->
-<section id="first-section">
+<section id="first-section" >
+<div class="container">
   <div class="accordion" id="brandAccordion">
     {% for brand, models in brand_models.items %}
     <div class="accordion-item">
@@ -23,15 +24,15 @@
       </h2>
       <div id="collapseBrand{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="headingBrand{{ forloop.counter }}" data-bs-parent="#brandAccordion">
         <div class="accordion-body">
-          <div class="accordion" id="modelAccordion{{ forloop.counter }}">
+          <div class="accordion model" id="modelAccordion{{ forloop.counter }}">
             {% for model, years in models.items %}
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingModel{{ forloop.counter }}">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseModel{{ forloop.parentloop.counter }}{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseModel{{ forloop.parentloop.counter }}{{ forloop.counter }}">
+            <div class="accordion-item-model">
+              <h2 class="accordion-header-model" id="headingModel{{ forloop.counter }}">
+                <button class="accordion-button-modal collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseModel{{ forloop.parentloop.counter }}{{ forloop.counter }}" aria-expanded="false" aria-controls="collapseModel{{ forloop.parentloop.counter }}{{ forloop.counter }}">
                   {{ model }}
                 </button>
               </h2>
-              <div id="collapseModel{{ forloop.parentloop.counter }}{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="headingModel{{ forloop.parentloop.counter }}{{ forloop.counter }}" data-bs-parent="#modelAccordion{{ forloop.parentloop.counter }}">
+              <div id="collapseModel{{ forloop.parentloop.counter }}{{ forloop.counter }}" class="accordion-collapse collapse accordion-year" aria-labelledby="headingModel{{ forloop.parentloop.counter }}{{ forloop.counter }}" data-bs-parent="#modelAccordion{{ forloop.parentloop.counter }}">
                 <div class="accordion-body">
                   <ul>
                   {% for year in years %}
@@ -59,13 +60,15 @@
       
       <div id="cars-catalog">
         {% for car in cars %}
-          <a href="{% url 'catalog:car' car.slug %}" class="car-card">        
-            <div>
+          <a href="{% url 'catalog:car' car.slug %}" >        
+            <div class="car-card">
+              <div class="car-card-img">
               {% if car.photo %}
                 <img src="{{ car.photo.url }}" alt="">
               {% else  %}
                 <img src={% static "assets/img/image_not_foud.jpg.jpg" %} alt="">
               {% endif %}
+              </div>
                 <div class="car-details">
                     <h2>{{ car.brand_car }} {{ car.model_car }}</h2>
                     <p>Рік: {{ car.year }}</p>
@@ -83,7 +86,7 @@
                 <a href="?cars_page={{ cars.next_page_number }}">Наступна</a>
             {% endif %}
         </div>
-
+<div>
 </section>
 
 
@@ -92,14 +95,14 @@
 
   <section class="catalog_zapchast">
     <div class="container">
-      <h2>{% trans "Каталог товарів" %}</h2>
+      <h3>{% trans "Каталог товарів" %}</h3>
 
 
       
       <div class="first_screan_catalog">
         <div class="sidebar wow animate__animated animate__fadeInLeft">
-          <h2>{% trans "Пошук запчастин" %}</h2>
-          <form action=" {% if request.GET.q %}{% url "catalog:search" %}{% else %}{% url "catalog:catalog" %}{% endif %} " method="get">
+          <h4>{% trans "Пошук запчастин" %}</h4>
+          <form id="search-product" action=" {% if request.GET.q %}{% url "catalog:search" %}{% else %}{% url "catalog:catalog" %}{% endif %} " method="get">
             {% if request.GET.q %}
               <input type="hidden" name='q' value" {} ">
             {% endif %}
@@ -123,7 +126,7 @@
             <label for="oem_code"></label>
             {{form.oem_code}}
 
-            <button type="submit">{% trans " Пошук" %}</button>
+            <button id="search-sidebar-catalog" type="submit">{% trans " Пошук" %}</button>
           </form>
         </div>
 
@@ -155,11 +158,11 @@
     <!-- Пагінатор товарів -->
     <div class="pagination">
       {% if goods.has_previous %}
-          <a href="?goods_page={{ goods.previous_page_number }}">Попередня</a>
+          <a href="?goods_page={{ goods.previous_page_number }}"><</a>
       {% endif %}
       <span>{{ goods.number }} з {{ goods.paginator.num_pages }}</span>
       {% if goods.has_next %}
-          <a href="?goods_page={{ goods.next_page_number }}">Наступна</a>
+          <a href="?goods_page={{ goods.next_page_number }}">></a>
       {% endif %}
   </div>
 </div>

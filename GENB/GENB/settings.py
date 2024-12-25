@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
-from django.conf.global_settings import LANGUAGES, LOCALE_PATHS, MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS
+from django.conf.global_settings import AUTH_USER_MODEL, LANGUAGES, LOCALE_PATHS, MEDIA_ROOT, MEDIA_URL, STATICFILES_DIRS
 from django.utils.translation import gettext
 from django.utils.translation import gettext_lazy as _
 
@@ -35,20 +35,37 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    'CAR',
+    'SPARE',
+    'CONTENT',
+    'USERS',
+    'ORDERS',
+
+
 
     #Tools
     "debug_toolbar",
 
     #my apps
     'MAIN',
-    'GOODS',
+
+    'grappelli',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    
 ]
+
+
+GRAPPELLI_ADMIN_TITLE = "GEN GROTHERS"
+
+GRAPPELLI_INDEX_DASHBOARD = "GENB.dashboard.CustomIndexDashboard"
+
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -68,12 +85,15 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
 ]
 
+GRAPPELLI_INDEX_DASHBOARD = None
+
+
 ROOT_URLCONF = 'GENB.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -117,6 +137,8 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
 
 
 # Internationalization
@@ -164,3 +186,5 @@ INTERNAL_IPS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+

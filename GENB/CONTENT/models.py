@@ -78,7 +78,7 @@ class CarОnTheRoad(models.Model):
    
 
 class CarОnTheRoadImage(models.Model):
-    news = models.ForeignKey(CarОnTheRoad, on_delete=models.CASCADE, related_name='image')
+    news = models.ForeignKey(CarОnTheRoad, on_delete=models.CASCADE, related_name='imagess')
     photo = models.ImageField(upload_to='carontheroad_image/')
 
     class Meta:

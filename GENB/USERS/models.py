@@ -16,16 +16,14 @@ def validate_ukrainian_phone_number(value):
 class CustomUser(models.Model):
     user_name = models.CharField(max_length=150, verbose_name="Ім'я")
     user_last_name  = models.CharField(max_length=150, verbose_name="Прізвище")
-    user_car = models.ForeignKey(Car, on_delete=models.SET_NULL, 
-        related_name='user_model_auto', 
-        null=True,
-        blank=True,
-        verbose_name='Авто'
-    )
+    user_car_marka = models.CharField(max_length=150, null=True, blank=True, verbose_name="Марка")
+    user_car_model = models.CharField(max_length=150, null=True, blank=True, verbose_name="Модель")
 
     user_phone_number = models.CharField(
         max_length=13,  # Довжина: +380XXXXXXXXX
         validators=[validate_ukrainian_phone_number],
+        null=True,
+        blank=True,
         verbose_name="Номер телефону"
     )
     
@@ -46,5 +44,5 @@ class CustomUser(models.Model):
         
 
     def __str__(self) -> str:
-        return f'{self.user_name} {self.user_last_name} {self.user_phone_number} -- {self.user_car}'
+        return f'{self.user_name} {self.user_last_name} {self.user_phone_number} -- {self.user_car_marka} {self.user_car_model}'
 

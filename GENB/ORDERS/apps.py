@@ -5,3 +5,7 @@ class OrdersConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     name = 'ORDERS'
     verbose_name='Замовлення'
+
+
+    def ready(self):
+        import ORDERS.signals  # Підключення сигналів

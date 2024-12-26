@@ -56,8 +56,8 @@ class CarOnTheRoadAdmin(admin.ModelAdmin):
 
 
     def thumbnail(self, obj):
-        if obj.images.exists():
-            image = obj.images.first()
+        if obj.imagess.exists():
+            image = obj.imagess.first()
             if image and image.photo:
                 return format_html('<img src="{}" style="width: 70px; height: auto;">', image.photo.url)
         return "Немає зображення"
